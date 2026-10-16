@@ -24,8 +24,8 @@
 <body>
   <div class="container">
 
-    <!-- Top Navigation with Integrated Music Player Bar -->
-    <header class="top-navbar">
+    <!-- Top Navigation Header with Integrated Class Scoreboard -->
+    <header class="top-navbar" style="margin-bottom: 20px;">
       <div class="brand-wrapper">
         <div class="brand-icon">
           <svg viewBox="0 0 24 24">
@@ -36,77 +36,40 @@
         </div>
         <div>
           <h1 class="brand-title">Transition Words Quiz Show</h1>
-          <div class="brand-subtitle">Presenters: Elsa • Sofia • Irfan • Ahmad</div>
+          <div class="brand-subtitle">Interactive Presentation • Elsa • Sofia • Irfan • Ahmad</div>
         </div>
       </div>
 
-      <!-- Integrated Header Chill Music Player -->
-      <div class="header-music-player">
-        <button class="music-toggle-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Play/Pause Chill Music">
-          ▶
-        </button>
-        <div style="display:flex; flex-direction:column; gap:2px;">
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span class="music-track-label" id="musicTrackName">☕ Chill Lo-Fi</span>
-            <div class="soundwave" id="soundwaveAnim">
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-            </div>
+      <!-- Right Header: Class Scoreboard Button & Sound FX Toggle -->
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="header-scoreboard-btn" onclick="switchTab('score')" id="headerScoreboardBtn" title="View Live Class Scoreboard">
+          <span class="scoreboard-cup-icon">🏆</span>
+          <div class="scoreboard-btn-info">
+            <span class="scoreboard-btn-title">Class Scoreboard</span>
+            <span class="scoreboard-btn-count"><span id="headerScoreCount">0</span> Active Participants</span>
           </div>
-        </div>
-        <select class="form-control" id="trackSelect" onchange="changeTrack()"
-          style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08); border-radius:var(--radius-sm);">
-          <option value="lofi">☕ Lo-Fi</option>
-          <option value="ambient">🌌 Ambient</option>
-        </select>
-        <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25"
-          oninput="changeVolume(this.value)" title="Music Volume" />
-        <button class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:0.8rem;"
-          onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
-      </div>
+        </button>
 
-      <!-- Room & Connection Badges -->
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span class="badge badge-room" id="roomBadge">Live Session</span>
-        <span class="badge badge-live" id="statusBadge">
-          <span class="pulse-dot" id="statusDot"></span>
-          <span id="statusText">Ready</span>
+        <button class="sfx-toggle-btn" onclick="toggleSFX()" id="sfxToggleBtn" title="Toggle Sound Effects">
+          <span id="sfxIcon">🔔</span>
+        </button>
+
+        <span class="badge badge-live" title="Live Zoom Presentation Screen">
+          <span class="pulse-dot"></span>
+          <span>Live Screen</span>
         </span>
       </div>
     </header>
 
-    <!-- Zoom Presentation Game Show Header Banner -->
-    <div class="glass-card"
-      style="padding: 14px 20px; margin-bottom: 20px; border-left: 4px solid var(--primary); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <span style="font-size: 1.6rem;">🎮</span>
-        <div>
-          <h2 style="font-family: var(--font-heading); font-size: 1.15rem; margin: 0; color: #f8fafc;">
-            Live Classroom Game Show & Discussion Mode
-          </h2>
-          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top:2px;">
-            Share screen on Zoom • Read question aloud • Audiens angkat tangan • Klik jawaban & langsung reveal benar/salah!
-          </div>
-        </div>
-      </div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <button class="btn btn-secondary btn-sm" onclick="switchTab('score')" id="quickScoreBtn" style="font-weight:600;">
-          🏆 Class Scoreboard (<span id="scoreActiveCount">0</span> active)
-        </button>
-      </div>
-    </div>
-
-    <!-- Mode Selector Tabs with Bulletproof SVG Icons -->
-    <div class="nav-tabs">
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs" style="margin-bottom: 22px;">
       <button class="tab-btn active" onclick="switchTab('pg')" id="tabBtnPg">
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"></circle>
           <circle cx="12" cy="12" r="6"></circle>
           <circle cx="12" cy="12" r="2"></circle>
         </svg>
-        <span>🎯 Multiple Choice (10 Questions)</span>
+        <span>Multiple Choice (10)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
         <svg viewBox="0 0 24 24">
@@ -114,21 +77,24 @@
           <polyline points="14 2 14 8 20 8"></polyline>
           <line x1="16" y1="13" x2="8" y2="13"></line>
           <line x1="16" y1="17" x2="8" y2="17"></line>
-          <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        <span>📝 Essay Case Analysis (4 Cases)</span>
+        <span>Case Study Analysis (4)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
         <svg viewBox="0 0 24 24">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
-        <span>💬 Q&A Discussion Prompts (5)</span>
+        <span>Discussion Prompts (5)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('score')" id="tabNavBtnScore">
         <svg viewBox="0 0 24 24">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+          <path d="M4 22h16"></path>
+          <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path>
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
         </svg>
-        <span>🏆 Class Scoreboard</span>
+        <span>Class Scoreboard</span>
       </button>
     </div>
 
@@ -138,14 +104,16 @@
       <!-- Question Jump Strip -->
       <div class="question-strip-wrapper">
         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-          <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Question Jump:</span>
+          <span style="font-size:0.86rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">
+            Question Navigator:
+          </span>
           <div class="question-pills-grid" id="questionPillsContainer">
-            <!-- Pills 1 to 10 generated via JS -->
+            <!-- Circular Pills 1 to 10 generated via JS -->
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px;">
+        <div>
           <button class="btn btn-secondary btn-sm" onclick="resetAllQuestions()" title="Reset all answers for a fresh run">
-            🔄 Reset All
+            🔄 Reset All (10)
           </button>
         </div>
       </div>
@@ -163,7 +131,7 @@
           </button>
           
           <div style="display:flex; align-items:center; gap:10px;">
-            <button class="btn btn-secondary btn-sm" onclick="resetCurrentQuestion()" id="btnResetCurrent" title="Reset this question to try again">
+            <button class="btn btn-secondary btn-sm" onclick="resetCurrentQuestion()" id="btnResetCurrent" title="Reset this question so another friend can guess">
               🔄 Try Again / Reset
             </button>
             <button class="btn btn-secondary btn-sm" onclick="revealDirectKey()" id="btnDirectReveal" title="Reveal the correct answer directly">
@@ -181,13 +149,13 @@
 
     <!-- TAB 2: Essay / Case Analysis (4 Questions) -->
     <div id="tabContentEssay" class="tab-pane" style="display: none;">
-      <div class="glass-card" style="border-left: 4px solid var(--elsa);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
-          <span class="badge badge-elsa">Group Discussion & Breakdown</span>
+      <div class="glass-card" style="border-left: 4px solid var(--primary); margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color:#f8fafc;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
+          <span class="badge badge-live">Classroom Analysis</span>
         </div>
-        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6;">
-          Presenter reads each paragraph aloud on Zoom. Ask participant representatives to identify the 2 transition words, classify their categories, and explain their functional usage. Click <strong>"Reveal Analysis Key"</strong> to highlight transitions in the passage and show the rubric breakdown!
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6; margin:0;">
+          Read each academic passage aloud on Zoom. Ask participant representatives to identify the 2 transition words, classify their categories, and explain their functional usage. Click <strong>"Reveal Analysis Key"</strong> to highlight transitions and show the rubric!
         </p>
       </div>
 
@@ -198,13 +166,13 @@
 
     <!-- TAB 3: Q&A Discussion Session (5 Questions) -->
     <div id="tabContentTanya" class="tab-pane" style="display: none;">
-      <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Prompts (5 Inquirers)</h3>
-          <span class="badge badge-ahmad">Interactive Class Floor</span>
+      <div class="glass-card" style="border-left: 4px solid #8b5cf6; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color:#f8fafc;">💬 Open Q&A Discussion Prompts (5 Inquirers)</h3>
+          <span class="badge badge-room">Interactive Floor</span>
         </div>
-        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6;">
-          Use these curated discussion starter prompts if chosen during the Q&A session. Presenters can click <strong>"Show Recommended Discussion Key"</strong> to display background context and talking points.
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6; margin:0;">
+          Use these curated discussion starter prompts if chosen during the Q&A session. Click <strong>"Show Recommended Discussion Key"</strong> to display background context and talking points.
         </p>
       </div>
 
@@ -215,27 +183,33 @@
 
     <!-- TAB 4: Class Scoreboard (Papan Keaktifan Mahasiswa) -->
     <div id="tabContentScore" class="tab-pane" style="display: none;">
-      <div class="glass-card" style="border-left: 4px solid #f59e0b;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap:wrap; gap:10px;">
+      <div class="glass-card" style="border-left: 4px solid #f59e0b; margin-bottom: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:12px;">
           <div>
-            <h3 style="font-family: var(--font-heading); font-size: 1.2rem; color:#f8fafc;">
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color:#f8fafc; margin-bottom:4px;">
               🏆 Live Class Participation Scoreboard
             </h3>
             <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
-              Realtime log of class participants who raised hands and answered questions during the Zoom meeting.
+              Realtime leaderboard of students who raised hands and answered questions during the Zoom meeting.
             </p>
           </div>
-          <div style="display:flex; gap:10px;">
-            <button class="btn btn-secondary btn-sm" onclick="copyScoreboardSummary()">
-              📋 Copy Summary for Lecturer / Zoom Chat
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="copyScoreboardSummary()">
+              📋 Copy Summary for Zoom Chat
             </button>
             <button class="btn btn-secondary btn-sm" onclick="clearScoreboard()">
-              🗑️ Clear
+              🗑️ Reset Scores
             </button>
           </div>
         </div>
       </div>
 
+      <!-- Top 3 Podium Cards -->
+      <div class="podium-grid" id="podiumGridContainer">
+        <!-- Generated via JS -->
+      </div>
+
+      <!-- Full Participant Table -->
       <div class="glass-card" style="padding:0; overflow:hidden;">
         <table class="table-custom" style="width:100%; border-collapse:collapse;">
           <thead>
@@ -244,34 +218,19 @@
               <th>Student Name</th>
               <th style="text-align:center;">Questions Answered</th>
               <th style="text-align:center;">Correct Answers</th>
+              <th style="text-align:center;">Accuracy</th>
               <th style="text-align:center;">Total Points</th>
               <th style="text-align:center;">Status</th>
             </tr>
           </thead>
           <tbody id="scoreboardTableBody">
             <tr>
-              <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
-                No answers recorded yet. Start calling students on Zoom and clicking options!
+              <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-dim);">
+                No answers recorded yet. Call on students in Zoom and click options!
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- Result / Confirmation Modal -->
-    <div class="modal-overlay" id="resultModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="modalTitle">🎉 Notification</h3>
-          <button class="modal-close" onclick="closeModal()">&times;</button>
-        </div>
-        <div id="modalBody" style="font-size: 0.95rem; line-height: 1.6;">
-          <!-- Injected via JS -->
-        </div>
-        <div style="margin-top: 20px; text-align: right;">
-          <button class="btn btn-primary" onclick="closeModal()">Close</button>
-        </div>
       </div>
     </div>
 
@@ -293,6 +252,9 @@
     // Discussion talking points reveal state
     let tanyaRevealed = {};
 
+    // Sound FX mute state
+    let isSfxMuted = false;
+
     // 19 Class participant name suggestions for quick random picker
     const CLASS_STUDENT_NAMES = [
       "Sofi", "Budi Santoso", "Rina Marlina", "Aditya Pratama", "Dewi Lestari", 
@@ -302,7 +264,7 @@
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Load questions.json
+      // Load questions.json
       fetch('questions.json')
         .then(res => res.json())
         .then(data => {
@@ -316,19 +278,6 @@
         .catch(err => {
           console.error("Failed to load questions.json", err);
         });
-
-      // 2. Audio BGM Listeners
-      AudioManager.onBgmStateChange((state) => {
-        const btn = document.getElementById('musicPlayBtn');
-        const wave = document.getElementById('soundwaveAnim');
-        if (state.isPlaying && !state.isMuted) {
-          btn.innerHTML = "⏸";
-          wave.classList.add('playing');
-        } else {
-          btn.innerHTML = "▶";
-          wave.classList.remove('playing');
-        }
-      });
     });
 
     // Toggle Tabs
@@ -352,24 +301,41 @@
         renderScoreboard();
       }
 
-      AudioManager.click();
+      playSfx('click');
     }
 
-    // Music Player Controls
-    function toggleBgm() {
-      AudioManager.toggleBGM();
+    // Sound FX Manager (No Background Music)
+    function toggleSFX() {
+      isSfxMuted = !isSfxMuted;
+      const btn = document.getElementById('sfxToggleBtn');
+      const icon = document.getElementById('sfxIcon');
+      if (isSfxMuted) {
+        btn.classList.add('muted');
+        icon.innerText = "🔕";
+      } else {
+        btn.classList.remove('muted');
+        icon.innerText = "🔔";
+        playSfx('click');
+      }
     }
 
-    function changeVolume(val) {
-      AudioManager.setBgmVolume(parseFloat(val));
-    }
-
-    function changeTrack() {
-      const mode = document.getElementById('trackSelect').value;
-      AudioManager.setBgmMode(mode);
-      const label = document.getElementById('musicTrackName');
-      if (mode === 'lofi') label.innerText = "☕ Chill Lo-Fi";
-      else if (mode === 'ambient') label.innerText = "🌌 Ambient";
+    function playSfx(type) {
+      if (isSfxMuted) return;
+      try {
+        if (type === 'correct') {
+          AudioManager.correct();
+        } else if (type === 'wrong') {
+          AudioManager.wrong();
+        } else if (type === 'chime') {
+          AudioManager.chime();
+        } else if (type === 'spinTick') {
+          AudioManager.spinTick();
+        } else {
+          AudioManager.click();
+        }
+      } catch (e) {
+        console.warn("Audio SFX error", e);
+      }
     }
 
     // Build Question Jump Pills (1 - 10)
@@ -380,24 +346,25 @@
       container.innerHTML = "";
       questionsData.pg.forEach((q, idx) => {
         const pill = document.createElement('div');
-        pill.className = `question-pill ${idx === currentQuestionIndex ? 'active' : ''}`;
+        const isActive = (idx === currentQuestionIndex);
         
-        const state = liveQuestionsState[q.id];
+        let stateClass = "";
         let statusBadge = "";
+        const state = liveQuestionsState[q.id];
+        
         if (state) {
           if (state.isCorrect) {
-            pill.style.borderColor = "#10b981";
-            pill.style.background = "rgba(16, 185, 129, 0.18)";
-            statusBadge = " ✅";
+            stateClass = " correct";
+            statusBadge = `<span style="font-size:0.7rem; margin-left:2px;">✓</span>`;
           } else {
-            pill.style.borderColor = "#ef4444";
-            pill.style.background = "rgba(239, 68, 68, 0.18)";
-            statusBadge = " ❌";
+            stateClass = " wrong";
+            statusBadge = `<span style="font-size:0.7rem; margin-left:2px;">✕</span>`;
           }
         }
 
-        pill.innerHTML = `<strong>${idx + 1}</strong>${statusBadge}`;
-        pill.title = `Question ${idx + 1}: ${q.category} (${q.presenter})`;
+        pill.className = `question-pill ${isActive ? 'active' : ''}${stateClass}`;
+        pill.innerHTML = `<span>${idx + 1}</span>${statusBadge}`;
+        pill.title = `Question ${idx + 1}: ${q.category}`;
         pill.onclick = () => jumpToQuestion(idx);
         container.appendChild(pill);
       });
@@ -408,7 +375,7 @@
       currentQuestionIndex = idx;
       renderFocusQuestion();
       buildQuestionPills();
-      AudioManager.click();
+      playSfx('click');
     }
 
     function prevQuestion() {
@@ -423,7 +390,7 @@
       }
     }
 
-    // Render Current Question Card in Focus Mode
+    // Render Current Question Card in Focus Mode (NO PRESENTER NAMES!)
     function renderFocusQuestion() {
       const card = document.getElementById('currentFocusCard');
       if (!card || !questionsData) return;
@@ -440,11 +407,6 @@
       } else if (state && state.respondent) {
         currentRespondent = state.respondent;
       }
-
-      let presenterColor = "var(--irfan)";
-      if (q.presenter.includes("Elsa")) presenterColor = "var(--elsa)";
-      else if (q.presenter.includes("Sofia")) presenterColor = "var(--sofia)";
-      else if (q.presenter.includes("Ahmad")) presenterColor = "var(--ahmad)";
 
       let optionsHtml = q.options.map(opt => {
         const letter = opt.trim().charAt(0);
@@ -477,20 +439,20 @@
       let explanationHtml = "";
       if (isAnswered) {
         const outcomeTitle = state.isCorrect 
-          ? `🎉 Correct! Great job, <strong>${escapeHtml(state.respondent)}</strong>!` 
+          ? `🎉 Correct! Outstanding answer, <strong>${escapeHtml(state.respondent)}</strong>!` 
           : `❌ Not quite! <strong>${escapeHtml(state.respondent)}</strong> chose (${state.chosen}), but the correct key is (${q.correct}).`;
         
         const outcomeBg = state.isCorrect 
-          ? "border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.4);" 
-          : "border-left: 5px solid #ef4444; border-color: rgba(239, 68, 68, 0.4);";
+          ? "border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.45);" 
+          : "border-left: 5px solid #ef4444; border-color: rgba(239, 68, 68, 0.45);";
 
         explanationHtml = `
           <div class="explanation-card" style="${outcomeBg}">
             <div class="explanation-title">
               <span>${outcomeTitle}</span>
             </div>
-            <div style="font-size:0.88rem; color:#a5b4fc; font-weight:700; margin-bottom:6px;">
-              📘 Category: ${escapeHtml(q.category)} • Presented by ${escapeHtml(q.presenter)}
+            <div style="font-size:0.88rem; color:#a5b4fc; font-weight:700; margin-bottom:8px;">
+              📘 Grammatical Focus: ${escapeHtml(q.category)}
             </div>
             <div class="explanation-text">
               ${escapeHtml(q.explanation)}
@@ -499,37 +461,39 @@
         `;
       }
 
+      // NOTE: Presenter badges (Irfan, etc.) have been completely removed!
       card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; align-items:center; gap:8px;">
-            <span class="badge badge-room" style="font-size:0.9rem; padding:6px 12px;">Question ${currentQuestionIndex + 1} of 10</span>
-            <span class="badge" style="background:rgba(99,102,241,0.15); border:1px solid ${presenterColor}; color:#f8fafc;">
-              ${escapeHtml(q.presenter)}
+            <span class="badge badge-room" style="font-size:0.92rem; padding:6px 14px; font-weight:800; background:rgba(99,102,241,0.18);">
+              Question ${currentQuestionIndex + 1} of 10
             </span>
           </div>
-          <span class="badge badge-live">Category: ${escapeHtml(q.category)}</span>
+          <span class="badge badge-live" style="font-size:0.86rem; padding:6px 14px; font-weight:700;">
+            Category: ${escapeHtml(q.category)}
+          </span>
         </div>
 
         <!-- Question Passage Box with Large Font for Zoom Screen Share -->
-        <div class="passage-box" style="font-size: 1.28rem; line-height: 1.6; margin-bottom: 16px; color: #f8fafc; font-style: normal;">
+        <div class="passage-box" style="font-size: 1.26rem; line-height: 1.65; margin-bottom: 18px; color: #f8fafc; font-style: normal; border-left: 4px solid #6366f1;">
           "${escapeHtml(q.q)}"
         </div>
 
-        <p style="font-size: 1.05rem; font-weight: 700; color: #cbd5e1; margin-bottom: 16px;">
+        <p style="font-size: 1.05rem; font-weight: 700; color: #cbd5e1; margin-bottom: 18px;">
           ${escapeHtml(q.instruction)}
         </p>
 
         <!-- Live Respondent Input Bar (Who is answering on Zoom?) -->
         <div class="respondent-bar">
-          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:240px;">
-            <span style="font-size:1.1rem;">🙋‍♂️</span>
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:240px;">
+            <span style="font-size:1.25rem;">🙋‍♂️</span>
             <label style="font-size:0.88rem; font-weight:700; color:#e2e8f0; white-space:nowrap;">
               Who is answering?
             </label>
             <input type="text" id="respondentNameInput" class="form-control" 
-              placeholder="e.g. Sofi (participant who raised hand)" 
+              placeholder="Type participant's name (e.g. Sofi)" 
               value="${escapeHtml(currentRespondent)}"
-              style="padding:6px 12px; font-size:0.88rem; height:36px; border-radius:var(--radius-sm);"
+              style="padding:8px 14px; font-size:0.9rem; height:38px; border-radius:var(--radius-sm);"
               ${isAnswered ? 'disabled' : ''} />
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
@@ -580,10 +544,10 @@
 
       // Play Sound Effect & Confetti
       if (isCorrect) {
-        AudioManager.correct();
+        playSfx('correct');
         triggerConfetti();
       } else {
-        AudioManager.wrong();
+        playSfx('wrong');
       }
 
       // Record to Scoreboard
@@ -604,7 +568,7 @@
       }
       renderFocusQuestion();
       buildQuestionPills();
-      AudioManager.click();
+      playSfx('click');
     }
 
     // Direct Reveal Key (if no student answers)
@@ -618,7 +582,7 @@
         respondent: "Presenter Direct Reveal",
         isCorrect: true
       };
-      AudioManager.chime();
+      playSfx('chime');
       renderFocusQuestion();
       buildQuestionPills();
     }
@@ -630,7 +594,7 @@
         currentQuestionIndex = 0;
         renderFocusQuestion();
         buildQuestionPills();
-        AudioManager.click();
+        playSfx('click');
       }
     }
 
@@ -643,7 +607,7 @@
         input.value = name;
         input.focus();
       }
-      AudioManager.spinTick();
+      playSfx('spinTick');
     }
 
     // Record Score to Live Scoreboard
@@ -660,7 +624,7 @@
         classScores[cleanName].correct += 1;
         classScores[cleanName].points += 10;
       } else {
-        classScores[cleanName].points += 2; // Apresiasi keaktifan mencoba menjawab
+        classScores[cleanName].points += 2; // Participation credit
       }
 
       updateScoreboardBadge();
@@ -668,20 +632,22 @@
 
     function updateScoreboardBadge() {
       const count = Object.keys(classScores).length;
-      const el = document.getElementById('scoreActiveCount');
+      const el = document.getElementById('headerScoreCount');
       if (el) el.innerText = count;
     }
 
-    // Render Class Scoreboard
+    // Render Class Scoreboard with Top 3 Podium Cards
     function renderScoreboard() {
       const tbody = document.getElementById('scoreboardTableBody');
+      const podiumContainer = document.getElementById('podiumGridContainer');
       if (!tbody) return;
 
       const names = Object.keys(classScores);
       if (names.length === 0) {
+        if (podiumContainer) podiumContainer.innerHTML = "";
         tbody.innerHTML = `
           <tr>
-            <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
+            <td colspan="7" style="text-align:center; padding: 40px; color: var(--text-dim);">
               No answers recorded yet. Call on students in Zoom and click options!
             </td>
           </tr>
@@ -695,6 +661,48 @@
         ...classScores[name]
       })).sort((a, b) => b.points - a.points || b.correct - a.correct);
 
+      // Render Top 3 Podium
+      if (podiumContainer) {
+        let podiumHtml = "";
+        
+        // 1st Place
+        if (sorted[0]) {
+          podiumHtml += `
+            <div class="podium-card first">
+              <div class="podium-rank-icon">🥇</div>
+              <div style="font-size:0.75rem; font-weight:800; color:#fbbf24; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">1st Place</div>
+              <div class="podium-name">${escapeHtml(sorted[0].name)}</div>
+              <div class="podium-score">${sorted[0].points} Pts (${sorted[0].correct}/${sorted[0].answered} Correct)</div>
+            </div>
+          `;
+        }
+        // 2nd Place
+        if (sorted[1]) {
+          podiumHtml += `
+            <div class="podium-card second">
+              <div class="podium-rank-icon">🥈</div>
+              <div style="font-size:0.75rem; font-weight:800; color:#cbd5e1; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">2nd Place</div>
+              <div class="podium-name">${escapeHtml(sorted[1].name)}</div>
+              <div class="podium-score">${sorted[1].points} Pts (${sorted[1].correct}/${sorted[1].answered} Correct)</div>
+            </div>
+          `;
+        }
+        // 3rd Place
+        if (sorted[2]) {
+          podiumHtml += `
+            <div class="podium-card third">
+              <div class="podium-rank-icon">🥉</div>
+              <div style="font-size:0.75rem; font-weight:800; color:#f59e0b; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">3rd Place</div>
+              <div class="podium-name">${escapeHtml(sorted[2].name)}</div>
+              <div class="podium-score">${sorted[2].points} Pts (${sorted[2].correct}/${sorted[2].answered} Correct)</div>
+            </div>
+          `;
+        }
+
+        podiumContainer.innerHTML = podiumHtml;
+      }
+
+      // Render Table Rows
       tbody.innerHTML = sorted.map((student, idx) => {
         let rankBadge = `${idx + 1}`;
         if (idx === 0) rankBadge = "🥇 1";
@@ -709,7 +717,8 @@
             <td style="text-align:center; font-weight:700; font-size:1.05rem;">${rankBadge}</td>
             <td><strong>${escapeHtml(student.name)}</strong></td>
             <td style="text-align:center;">${student.answered}</td>
-            <td style="text-align:center; color:#10b981; font-weight:700;">${student.correct} (${accuracy}%)</td>
+            <td style="text-align:center; color:#10b981; font-weight:700;">${student.correct}</td>
+            <td style="text-align:center; font-weight:600; color:#94a3b8;">${accuracy}%</td>
             <td style="text-align:center;"><span class="score-badge ${statusClass}">${student.points} pts</span></td>
             <td style="text-align:center;"><span class="badge badge-live">Active</span></td>
           </tr>
@@ -734,7 +743,7 @@
       sorted.forEach((s, i) => {
         text += `${i + 1}. ${s.name}: ${s.correct}/${s.answered} Correct (${s.points} Pts)\n`;
       });
-      text += "\nThank you everyone for participating actively in Elsa, Sofia, Irfan & Ahmad's presentation!";
+      text += "\nThank you everyone for participating actively in our Transition Words presentation!";
 
       navigator.clipboard.writeText(text).then(() => {
         alert("Scoreboard summary copied to clipboard! You can paste it into Zoom chat or report.");
@@ -756,44 +765,41 @@
       return opt.replace(/^[A-D]\.\s*/i, '').trim();
     }
 
-    // TAB 2: Render Essay / Case Analysis
+    // TAB 2: Render Essay / Case Analysis (NO PRESENTER NAMES!)
     function renderEssayQuestions() {
       const container = document.getElementById('essayContainer');
       if (!container || !questionsData) return;
 
       container.innerHTML = questionsData.essay.map((item, idx) => {
         const isRevealed = !!essayRevealed[item.id];
-        let presenterBadge = "badge-elsa";
-        if (item.presenter.includes("Sofia")) presenterBadge = "badge-sofia";
-        else if (item.presenter.includes("Irfan")) presenterBadge = "badge-irfan";
-        else if (item.presenter.includes("Ahmad")) presenterBadge = "badge-ahmad";
 
         let keyContentHtml = "";
         if (isRevealed) {
           keyContentHtml = `
-            <div class="explanation-card" style="margin-top:14px; border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.4);">
+            <div class="explanation-card" style="margin-top:16px; border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.45);">
               <div class="explanation-title" style="color:#34d399;">
                 🔍 Analysis Rubric & Identified Transitions:
               </div>
-              <ul style="padding-left:20px; margin: 8px 0; color:#f1f5f9; line-height:1.7;">
+              <ul style="padding-left:20px; margin: 8px 0; color:#f1f5f9; line-height:1.75;">
                 ${item.key_points.map(kp => `<li>${escapeHtml(kp)}</li>`).join('')}
               </ul>
             </div>
           `;
         }
 
+        // NOTE: Presenter badge removed!
         return `
           <div class="glass-card" style="margin-bottom: 20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
               <span class="question-number">CASE #${idx + 1}</span>
-              <span class="badge ${presenterBadge}">${item.presenter} • ${item.topic}</span>
+              <span class="badge badge-elsa">Topic: ${escapeHtml(item.topic)}</span>
             </div>
 
-            <div class="passage-box" style="font-size:1.12rem; line-height:1.65; margin-bottom:14px;">
+            <div class="passage-box" style="font-size:1.15rem; line-height:1.7; margin-bottom:16px;">
               "${escapeHtml(item.source_text)}"
             </div>
 
-            <p style="font-weight:700; font-size:1.02rem; color:#cbd5e1; margin-bottom:14px;">
+            <p style="font-weight:700; font-size:1.02rem; color:#cbd5e1; margin-bottom:16px;">
               ${escapeHtml(item.question)}
             </p>
 
@@ -812,10 +818,10 @@
     function toggleEssayKey(id) {
       essayRevealed[id] = !essayRevealed[id];
       renderEssayQuestions();
-      AudioManager.click();
+      playSfx('click');
     }
 
-    // TAB 3: Render Q&A Discussion Prompts
+    // TAB 3: Render Q&A Discussion Prompts (NO PRESENTER NAMES!)
     function renderTanyaBebas() {
       const container = document.getElementById('tanyaContainer');
       if (!container || !questionsData) return;
@@ -826,7 +832,7 @@
         let talkingPointsHtml = "";
         if (isRevealed) {
           talkingPointsHtml = `
-            <div class="explanation-card" style="margin-top:12px; border-left: 5px solid #6366f1;">
+            <div class="explanation-card" style="margin-top:14px; border-left: 5px solid #6366f1;">
               <div class="explanation-title" style="color:#a5b4fc;">
                 💡 Recommended Presenter Talking Points:
               </div>
@@ -837,13 +843,13 @@
           `;
         }
 
+        // NOTE: Presenter target badge removed!
         return `
           <div class="glass-card" style="margin-bottom: 18px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
-              <span class="badge badge-live">${t.student_label}</span>
-              <span class="badge badge-room">Target: ${t.target_presenter}</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge badge-live">Discussion Topic #${idx + 1}</span>
             </div>
-            <p style="font-size:1.15rem; font-weight:700; color:#f8fafc; margin-bottom:12px; line-height:1.5;">
+            <p style="font-size:1.18rem; font-weight:700; color:#f8fafc; margin-bottom:14px; line-height:1.55;">
               "${escapeHtml(t.prompt_question)}"
             </p>
             <div style="display:flex; justify-content:flex-end;">
@@ -860,7 +866,7 @@
     function toggleTanyaKey(id) {
       tanyaRevealed[id] = !tanyaRevealed[id];
       renderTanyaBebas();
-      AudioManager.click();
+      playSfx('click');
     }
 
     function triggerConfetti() {
@@ -871,10 +877,6 @@
           origin: { y: 0.6 }
         });
       }
-    }
-
-    function closeModal() {
-      document.getElementById('resultModal').classList.remove('active');
     }
 
     function escapeHtml(str) {
