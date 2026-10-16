@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Quiz: Transition Words & Connectors</title>
-  
+
   <!-- Modern Fonts & Styles -->
   <link rel="stylesheet" href="assets/style.css" />
 
@@ -19,15 +20,18 @@
   <script src="assets/audio.js"></script>
   <script src="assets/realtime.js"></script>
 </head>
+
 <body>
   <div class="container">
-    
+
     <!-- Top Navigation with Integrated Music Player Bar -->
     <header class="top-navbar">
       <div class="brand-wrapper">
         <div class="brand-icon">
           <svg viewBox="0 0 24 24">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
           </svg>
         </div>
         <div>
@@ -52,12 +56,15 @@
             </div>
           </div>
         </div>
-        <select class="form-control" id="trackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08); border-radius:var(--radius-sm);">
+        <select class="form-control" id="trackSelect" onchange="changeTrack()"
+          style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08); border-radius:var(--radius-sm);">
           <option value="lofi">☕ Lo-Fi</option>
           <option value="ambient">🌌 Ambient</option>
         </select>
-        <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Music Volume" />
-        <button class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:0.8rem;" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
+        <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25"
+          oninput="changeVolume(this.value)" title="Music Volume" />
+        <button class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:0.8rem;"
+          onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
       </div>
 
       <!-- Room & Connection Badges -->
@@ -85,11 +92,13 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">NIP (Employee / Student ID)</label>
-          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001" autocomplete="off" value="" required />
+          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001"
+            autocomplete="off" value="" required />
         </div>
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Full Name</label>
-          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" autocomplete="off" value="" required />
+          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" autocomplete="off"
+            value="" required />
         </div>
       </div>
     </div>
@@ -124,7 +133,7 @@
 
     <!-- TAB 1: Multiple Choice (10 Questions) -->
     <div id="tabContentPg" class="tab-pane">
-      
+
       <!-- View Mode & Jump Navigator Strip -->
       <div class="question-strip-wrapper">
         <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -170,11 +179,13 @@
     <div id="tabContentEssay" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--elsa);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4
+            Cases)</h3>
           <span class="badge badge-elsa">Assigned Representatives</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Allocated for the assigned participant representatives. Analyze the passage sentences carefully, identify transition words, classify their categories, and explain their functional purpose.
+          Allocated for the assigned participant representatives. Analyze the passage sentences carefully, identify
+          transition words, classify their categories, and explain their functional purpose.
         </p>
       </div>
 
@@ -193,11 +204,13 @@
     <div id="tabContentTanya" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Guide (5 Inquirers)</h3>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Guide (5 Inquirers)
+          </h3>
           <span class="badge badge-ahmad">Participants 15 - 19</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Use these curated discussion starter prompts if chosen during the Q&A session, or formulate your own critical question directly to Elsa, Sofia, Irfan, or Ahmad!
+          Use these curated discussion starter prompts if chosen during the Q&A session, or formulate your own critical
+          question directly to Elsa, Sofia, Irfan, or Ahmad!
         </p>
       </div>
 
@@ -207,20 +220,24 @@
 
       <!-- Custom Question Form -->
       <div class="glass-card">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Submit Your Own Question to Presenters:</h4>
+        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Submit Your Own Question to Presenters:
+        </h4>
         <div class="form-group">
           <label class="form-label">Direct Question To:</label>
           <select id="targetPresenterSelect" class="form-control">
             <option value="All Presenters">All Presenters (Elsa, Sofia, Irfan, Ahmad)</option>
             <option value="Elsa (#1 - Addition & Clarification)">Elsa (#1 - Addition & Clarification)</option>
             <option value="Sofia (#2 - Location, Time, Conclusion)">Sofia (#2 - Location, Time, Conclusion)</option>
-            <option value="Irfan (#3 - Comparison, Contrast, Concession, Condition)">Irfan (#3 - Comparison, Contrast, Concession, Condition)</option>
-            <option value="Ahmad (#4 - Cause, Reason, Purpose, Result)">Ahmad (#4 - Cause, Reason, Purpose, Result)</option>
+            <option value="Irfan (#3 - Comparison, Contrast, Concession, Condition)">Irfan (#3 - Comparison, Contrast,
+              Concession, Condition)</option>
+            <option value="Ahmad (#4 - Cause, Reason, Purpose, Result)">Ahmad (#4 - Cause, Reason, Purpose, Result)
+            </option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Your Question:</label>
-          <textarea id="customQuestionText" class="form-control" rows="3" placeholder="Type your academic inquiry here..."></textarea>
+          <textarea id="customQuestionText" class="form-control" rows="3"
+            placeholder="Type your academic inquiry here..."></textarea>
         </div>
         <button class="btn btn-primary btn-block" onclick="submitCustomQuestion()">
           📨 Transmit Question to Presenter Screen
@@ -319,7 +336,7 @@
       try {
         localStorage.removeItem('student_name');
         localStorage.removeItem('student_nip');
-      } catch (e) {}
+      } catch (e) { }
       const nipEl = document.getElementById('studentNip');
       const nameEl = document.getElementById('studentName');
       if (nipEl) nipEl.value = '';
@@ -450,16 +467,16 @@
 
         <div class="options-list">
           ${q.options.map(opt => {
-            const letter = opt.trim().charAt(0);
-            const isSelected = selectedOpt === letter;
-            const optionText = cleanOptionText(opt);
-            return `
+        const letter = opt.trim().charAt(0);
+        const isSelected = selectedOpt === letter;
+        const optionText = cleanOptionText(opt);
+        return `
               <div class="option-btn ${isSelected ? 'selected' : ''}" onclick="selectFocusOption('${q.id}', '${letter}')">
                 <div class="opt-letter-tag">${letter}</div>
                 <div class="opt-text">${escapeHtml(optionText)}</div>
               </div>
             `;
-          }).join('')}
+      }).join('')}
         </div>
       `;
 
@@ -504,15 +521,15 @@
             <p style="font-weight:600; margin-bottom:14px;">${escapeHtml(q.instruction)}</p>
             <div class="options-list">
               ${q.options.map(opt => {
-                const letter = opt.trim().charAt(0);
-                const optionText = cleanOptionText(opt);
-                return `
+          const letter = opt.trim().charAt(0);
+          const optionText = cleanOptionText(opt);
+          return `
                   <div class="option-btn" id="opt_all_${q.id}_${letter}" onclick="selectFocusOption('${q.id}', '${letter}')">
                     <div class="opt-letter-tag">${letter}</div>
                     <div class="opt-text">${escapeHtml(optionText)}</div>
                   </div>
                 `;
-              }).join('')}
+        }).join('')}
             </div>
           </div>
         `;
@@ -623,6 +640,8 @@
         alert("Please enter your Full Name!");
         nameInput.focus();
         return null;
+      }
+
       return { nip: nip, name: name };
     }
 
