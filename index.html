@@ -129,15 +129,6 @@
           <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
             ← Previous Question
           </button>
-          
-          <div style="display:flex; align-items:center; gap:10px;">
-            <button class="btn btn-secondary btn-sm" onclick="resetCurrentQuestion()" id="btnResetCurrent" title="Reset this question so another friend can guess">
-              🔄 Try Again / Reset
-            </button>
-            <button class="btn btn-secondary btn-sm" onclick="revealDirectKey()" id="btnDirectReveal" title="Reveal the correct answer directly">
-              💡 Reveal Answer Directly
-            </button>
-          </div>
 
           <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
             Next Question →
@@ -504,27 +495,11 @@
 
         <!-- Live Respondent Input Bar (NIP & Full Name Required) -->
         <div class="respondent-bar" style="display:flex; flex-direction:column; gap:10px; align-items:stretch;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span style="font-size:1.25rem;">🙋‍♂️</span>
-              <label style="font-size:0.9rem; font-weight:700; color:#e2e8f0; white-space:nowrap;">
-                Respondent Identity (NIP & Nama Wajib Sebelum Menjawab):
-              </label>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-              <select id="quickStudentSelect" class="form-control" onchange="onSelectQuickStudent(this.value)" ${isAnswered ? 'disabled' : ''}
-                style="padding:4px 10px; font-size:0.82rem; height:34px; width:auto; border-radius:var(--radius-sm); background:rgba(15,23,42,0.9); border:1px solid rgba(99,102,241,0.35);">
-                <option value="">⚡ Select Student from List (19)...</option>
-                ${CLASS_STUDENTS.map(s => `
-                  <option value="${s.nip}" ${currentRespondentNip === s.nip ? 'selected' : ''}>
-                    ${s.name} (${s.nip})
-                  </option>
-                `).join('')}
-              </select>
-              <button class="btn btn-secondary btn-sm" onclick="pickRandomStudent()" ${isAnswered ? 'disabled' : ''} title="Pick random student from class" style="height:34px; padding:0 12px;">
-                🎲 Random Pick
-              </button>
-            </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.25rem;">🙋‍♂️</span>
+            <label style="font-size:0.9rem; font-weight:700; color:#e2e8f0; white-space:nowrap;">
+              Respondent Identity (NIP & Nama Wajib Diisi Sebelum Menjawab):
+            </label>
           </div>
 
           <div style="display:grid; grid-template-columns: 1fr 1.4fr; gap:12px;">
