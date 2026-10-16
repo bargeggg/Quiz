@@ -598,6 +598,130 @@ body {
 }
 
 /* ==========================================================================
+   LIVE ZOOM GAME SHOW STYLES (INSTANT REVEAL & CLASSROOM INTERACTION)
+   ========================================================================== */
+
+.option-btn.correct {
+  background: rgba(16, 185, 129, 0.22) !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.45) !important;
+  transform: scale(1.015);
+}
+
+.option-btn.correct .opt-letter-tag {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8) !important;
+}
+
+.option-btn.wrong {
+  background: rgba(239, 68, 68, 0.22) !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.45) !important;
+  animation: shakeOpt 0.4s ease-in-out;
+}
+
+.option-btn.wrong .opt-letter-tag {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.8) !important;
+}
+
+.option-btn.dimmed {
+  opacity: 0.38;
+  filter: grayscale(0.5);
+  pointer-events: none;
+}
+
+@keyframes shakeOpt {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.opt-badge-tag {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.opt-badge-tag.correct {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.opt-badge-tag.wrong {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* Explanation Box for Live Classroom Learning */
+.explanation-card {
+  margin-top: 18px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+  border: 1.5px solid rgba(99, 102, 241, 0.4);
+  border-left: 5px solid #6366f1;
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.explanation-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a5b4fc;
+  margin-bottom: 8px;
+}
+
+.explanation-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+/* Live Hand-Raiser Respondent Input Bar */
+.respondent-bar {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.respondent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: #c7d2fe;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
    FLOATING BOTTOM PROGRESS DOCK (CLEAN, CENTERED, UNOBSTRUCTED)
    ========================================================================== */
 

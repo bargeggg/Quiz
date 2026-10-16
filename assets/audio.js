@@ -186,6 +186,17 @@ const AudioManager = (function() {
       playTone(350, 'sawtooth', 0.15, 0.08, 0);
       playTone(300, 'sawtooth', 0.25, 0.08, 0.12);
     },
+    buzzer() {
+      // Classic Game Show Wrong Buzzer
+      playTone(180, 'sawtooth', 0.35, 0.15, 0);
+      playTone(170, 'sawtooth', 0.35, 0.15, 0.02);
+    },
+    wrong() {
+      this.buzzer();
+    },
+    correct() {
+      this.success();
+    },
 
     // BGM Chill Engine Methods
     startBGM() {

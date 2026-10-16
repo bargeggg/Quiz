@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive Quiz: Transition Words & Connectors</title>
+  <title>Interactive Quiz Show: Transition Words & Connectors</title>
 
   <!-- Modern Fonts & Styles -->
   <link rel="stylesheet" href="assets/style.css" />
@@ -35,7 +35,7 @@
           </svg>
         </div>
         <div>
-          <h1 class="brand-title">Transition Words Quiz</h1>
+          <h1 class="brand-title">Transition Words Quiz Show</h1>
           <div class="brand-subtitle">Presenters: Elsa • Sofia • Irfan • Ahmad</div>
         </div>
       </div>
@@ -69,37 +69,32 @@
 
       <!-- Room & Connection Badges -->
       <div style="display:flex; align-items:center; gap:8px;">
-        <span class="badge badge-room" id="roomBadge">Room: ...</span>
+        <span class="badge badge-room" id="roomBadge">Live Session</span>
         <span class="badge badge-live" id="statusBadge">
           <span class="pulse-dot" id="statusDot"></span>
-          <span id="statusText">Connecting</span>
+          <span id="statusText">Ready</span>
         </span>
       </div>
     </header>
 
-    <!-- Participant Identity Card (NIP & Full Name) -->
-    <div class="glass-card" id="studentProfileCard">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
-        <h2 style="font-family: var(--font-heading); font-size: 1.15rem; display:flex; align-items:center; gap:8px;">
-          <svg style="width:20px; height:20px; fill:none; stroke:#6366f1; stroke-width:2;" viewBox="0 0 24 24">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          Participant Credentials
-        </h2>
-        <span class="badge badge-irfan">Class Attendance</span>
+    <!-- Zoom Presentation Game Show Header Banner -->
+    <div class="glass-card"
+      style="padding: 14px 20px; margin-bottom: 20px; border-left: 4px solid var(--primary); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size: 1.6rem;">🎮</span>
+        <div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.15rem; margin: 0; color: #f8fafc;">
+            Live Classroom Game Show & Discussion Mode
+          </h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top:2px;">
+            Share screen on Zoom • Read question aloud • Audiens angkat tangan • Klik jawaban & langsung reveal benar/salah!
+          </div>
+        </div>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">NIP (Employee / Student ID)</label>
-          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001"
-            autocomplete="off" value="" required />
-        </div>
-        <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">Full Name</label>
-          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" autocomplete="off"
-            value="" required />
-        </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="btn btn-secondary btn-sm" onclick="switchTab('score')" id="quickScoreBtn" style="font-weight:600;">
+          🏆 Class Scoreboard (<span id="scoreActiveCount">0</span> active)
+        </button>
       </div>
     </div>
 
@@ -111,7 +106,7 @@
           <circle cx="12" cy="12" r="6"></circle>
           <circle cx="12" cy="12" r="2"></circle>
         </svg>
-        <span>Quiz #2: Multiple Choice (10)</span>
+        <span>🎯 Multiple Choice (10 Questions)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
         <svg viewBox="0 0 24 24">
@@ -121,56 +116,65 @@
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        <span>Quiz #1: Essay Case Analysis (4)</span>
+        <span>📝 Essay Case Analysis (4 Cases)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
         <svg viewBox="0 0 24 24">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
-        <span>Q&A Discussion (5)</span>
+        <span>💬 Q&A Discussion Prompts (5)</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('score')" id="tabNavBtnScore">
+        <svg viewBox="0 0 24 24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>🏆 Class Scoreboard</span>
       </button>
     </div>
 
-    <!-- TAB 1: Multiple Choice (10 Questions) -->
+    <!-- TAB 1: Multiple Choice (10 Questions) - Live Game Show -->
     <div id="tabContentPg" class="tab-pane">
 
-      <!-- View Mode & Jump Navigator Strip -->
+      <!-- Question Jump Strip -->
       <div class="question-strip-wrapper">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
           <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Question Jump:</span>
           <div class="question-pills-grid" id="questionPillsContainer">
             <!-- Pills 1 to 10 generated via JS -->
           </div>
         </div>
-        <div>
-          <button class="btn btn-secondary btn-sm" onclick="toggleViewMode()" id="viewModeToggleBtn">
-            📑 View All Questions
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn btn-secondary btn-sm" onclick="resetAllQuestions()" title="Reset all answers for a fresh run">
+            🔄 Reset All
           </button>
         </div>
       </div>
 
-      <!-- Mode 1: Focus Carousel Mode (Step-by-step) -->
+      <!-- Focus Game Show Card -->
       <div id="focusModeContainer">
         <div class="focus-question-box" id="currentFocusCard">
-          <div style="text-align:center; padding: 40px; color: var(--text-dim);">Loading question bank...</div>
+          <div style="text-align:center; padding: 40px; color: var(--text-dim);">Loading interactive question bank...</div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+        <!-- Presenter Bottom Navigation Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 20px; flex-wrap:wrap; gap:12px;">
           <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
             ← Previous Question
           </button>
-          <span style="font-size:0.92rem; font-weight:700; color:var(--text-muted);" id="focusQuestionCounter">
-            Question 1 of 10
-          </span>
+          
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="resetCurrentQuestion()" id="btnResetCurrent" title="Reset this question to try again">
+              🔄 Try Again / Reset
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="revealDirectKey()" id="btnDirectReveal" title="Reveal the correct answer directly">
+              💡 Reveal Answer Directly
+            </button>
+          </div>
+
           <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
             Next Question →
           </button>
         </div>
-      </div>
-
-      <!-- Mode 2: All Questions Grid Mode -->
-      <div id="allQuestionsContainer" style="display: none;">
-        <!-- Rendered via JS -->
       </div>
 
     </div>
@@ -179,24 +183,16 @@
     <div id="tabContentEssay" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--elsa);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4
-            Cases)</h3>
-          <span class="badge badge-elsa">Assigned Representatives</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
+          <span class="badge badge-elsa">Group Discussion & Breakdown</span>
         </div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Allocated for the assigned participant representatives. Analyze the passage sentences carefully, identify
-          transition words, classify their categories, and explain their functional purpose.
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6;">
+          Presenter reads each paragraph aloud on Zoom. Ask participant representatives to identify the 2 transition words, classify their categories, and explain their functional usage. Click <strong>"Reveal Analysis Key"</strong> to highlight transitions in the passage and show the rubric breakdown!
         </p>
       </div>
 
       <div id="essayContainer">
         <!-- Rendered via JS -->
-      </div>
-
-      <div class="glass-card" style="text-align: center; margin-top: 20px;">
-        <button class="btn btn-success btn-lg btn-block" onclick="submitEssayQuiz()" id="btnSubmitEssay">
-          📤 Submit Essay Case Analysis
-        </button>
       </div>
     </div>
 
@@ -204,61 +200,62 @@
     <div id="tabContentTanya" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Guide (5 Inquirers)
-          </h3>
-          <span class="badge badge-ahmad">Participants 15 - 19</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Prompts (5 Inquirers)</h3>
+          <span class="badge badge-ahmad">Interactive Class Floor</span>
         </div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Use these curated discussion starter prompts if chosen during the Q&A session, or formulate your own critical
-          question directly to Elsa, Sofia, Irfan, or Ahmad!
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6;">
+          Use these curated discussion starter prompts if chosen during the Q&A session. Presenters can click <strong>"Show Recommended Discussion Key"</strong> to display background context and talking points.
         </p>
       </div>
 
       <div id="tanyaContainer">
         <!-- Rendered via JS -->
       </div>
-
-      <!-- Custom Question Form -->
-      <div class="glass-card">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Submit Your Own Question to Presenters:
-        </h4>
-        <div class="form-group">
-          <label class="form-label">Direct Question To:</label>
-          <select id="targetPresenterSelect" class="form-control">
-            <option value="All Presenters">All Presenters (Elsa, Sofia, Irfan, Ahmad)</option>
-            <option value="Elsa (#1 - Addition & Clarification)">Elsa (#1 - Addition & Clarification)</option>
-            <option value="Sofia (#2 - Location, Time, Conclusion)">Sofia (#2 - Location, Time, Conclusion)</option>
-            <option value="Irfan (#3 - Comparison, Contrast, Concession, Condition)">Irfan (#3 - Comparison, Contrast,
-              Concession, Condition)</option>
-            <option value="Ahmad (#4 - Cause, Reason, Purpose, Result)">Ahmad (#4 - Cause, Reason, Purpose, Result)
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Your Question:</label>
-          <textarea id="customQuestionText" class="form-control" rows="3"
-            placeholder="Type your academic inquiry here..."></textarea>
-        </div>
-        <button class="btn btn-primary btn-block" onclick="submitCustomQuestion()">
-          📨 Transmit Question to Presenter Screen
-        </button>
-      </div>
     </div>
 
-    <!-- Floating Bottom Progress Dock (Clean, Centered, Unobstructed) -->
-    <div class="bottom-progress-dock" id="bottomDock">
-      <div class="dock-inner-container">
-        <div style="font-size:0.9rem; font-weight:700; color:#f8fafc; white-space:nowrap;" id="dockProgressText">
-          Answered: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Questions
-        </div>
-        <div class="progress-track-wrapper">
-          <div class="progress-track">
-            <div class="progress-fill" id="dockProgressFill"></div>
+    <!-- TAB 4: Class Scoreboard (Papan Keaktifan Mahasiswa) -->
+    <div id="tabContentScore" class="tab-pane" style="display: none;">
+      <div class="glass-card" style="border-left: 4px solid #f59e0b;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.2rem; color:#f8fafc;">
+              🏆 Live Class Participation Scoreboard
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+              Realtime log of class participants who raised hands and answered questions during the Zoom meeting.
+            </p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="copyScoreboardSummary()">
+              📋 Copy Summary for Lecturer / Zoom Chat
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="clearScoreboard()">
+              🗑️ Clear
+            </button>
           </div>
         </div>
-        <button class="btn btn-primary btn-md" onclick="submitPgQuiz()" id="dockSubmitBtn" style="min-width:180px;">
-          🚀 Submit Answers
-        </button>
+      </div>
+
+      <div class="glass-card" style="padding:0; overflow:hidden;">
+        <table class="table-custom" style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="width: 70px; text-align:center;">Rank</th>
+              <th>Student Name</th>
+              <th style="text-align:center;">Questions Answered</th>
+              <th style="text-align:center;">Correct Answers</th>
+              <th style="text-align:center;">Total Points</th>
+              <th style="text-align:center;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="scoreboardTableBody">
+            <tr>
+              <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
+                No answers recorded yet. Start calling students on Zoom and clicking options!
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -266,14 +263,14 @@
     <div class="modal-overlay" id="resultModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="modalTitle">🎉 Quiz Submission Received</h3>
+          <h3 class="modal-title" id="modalTitle">🎉 Notification</h3>
           <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         <div id="modalBody" style="font-size: 0.95rem; line-height: 1.6;">
           <!-- Injected via JS -->
         </div>
         <div style="margin-top: 20px; text-align: right;">
-          <button class="btn btn-primary" onclick="closeModal()">Close & Complete</button>
+          <button class="btn btn-primary" onclick="closeModal()">Close</button>
         </div>
       </div>
     </div>
@@ -282,47 +279,48 @@
 
   <script>
     let questionsData = null;
-    let studentAnswers = { pg: {}, essay: {} };
     let currentQuestionIndex = 0;
-    let isAllViewMode = false;
+    
+    // Live question state: { [qId]: { answered: boolean, chosen: string, correct: string, respondent: string, isCorrect: boolean } }
+    let liveQuestionsState = {};
+    
+    // Class Scoreboard: { [name]: { answered: number, correct: number, points: number } }
+    let classScores = {};
+
+    // Essay reveal state
+    let essayRevealed = {};
+
+    // Discussion talking points reveal state
+    let tanyaRevealed = {};
+
+    // 19 Class participant name suggestions for quick random picker
+    const CLASS_STUDENT_NAMES = [
+      "Sofi", "Budi Santoso", "Rina Marlina", "Aditya Pratama", "Dewi Lestari", 
+      "Fajar Hidayat", "Gita Gutawa", "Hendra Wijaya", "Indah Permata", "Joko Anwar", 
+      "Kiki Amalia", "Lukman Hakim", "Maya Sari", "Naufal Zaki", "Putri Utami", 
+      "Rian Saputra", "Siti Rahma", "Taufik Hidayat", "Wahyu Nugroho"
+    ];
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Initialize Realtime Engine
-      RealtimeSync.init({
-        role: 'player',
-        onStatusChange: (connected, msg) => {
-          const statusText = document.getElementById('statusText');
-          const statusDot = document.getElementById('statusDot');
-          if (statusText) statusText.innerText = connected ? "Connected" : "Fallback";
-          if (statusDot) {
-            statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
-          }
-        }
-      });
-
-      document.getElementById('roomBadge').innerText = `Room: ${RealtimeSync.getRoomId()}`;
-
-      // 2. Load questions.json
+      // 1. Load questions.json
       fetch('questions.json')
         .then(res => res.json())
         .then(data => {
           questionsData = data;
           buildQuestionPills();
           renderFocusQuestion();
-          renderAllPgQuestions();
           renderEssayQuestions();
           renderTanyaBebas();
-          updateProgressUI();
+          renderScoreboard();
         })
         .catch(err => {
           console.error("Failed to load questions.json", err);
         });
 
-      // 3. Audio BGM Listeners
+      // 2. Audio BGM Listeners
       AudioManager.onBgmStateChange((state) => {
         const btn = document.getElementById('musicPlayBtn');
         const wave = document.getElementById('soundwaveAnim');
-
         if (state.isPlaying && !state.isMuted) {
           btn.innerHTML = "⏸";
           wave.classList.add('playing');
@@ -331,76 +329,86 @@
           wave.classList.remove('playing');
         }
       });
-
-      // Keep credential inputs clean and empty on initial load
-      try {
-        localStorage.removeItem('student_name');
-        localStorage.removeItem('student_nip');
-      } catch (e) { }
-      const nipEl = document.getElementById('studentNip');
-      const nameEl = document.getElementById('studentName');
-      if (nipEl) nipEl.value = '';
-      if (nameEl) nameEl.value = '';
     });
 
-    // BGM Controls
-    function toggleBgm() { AudioManager.toggleBGM(); }
-    function changeVolume(val) { AudioManager.setBGMVolume(val); }
-    function changeTrack() {
-      const mode = document.getElementById('trackSelect').value;
-      AudioManager.setBGMTrack(mode);
-      document.getElementById('musicTrackName').innerText = mode === 'lofi' ? "☕ Chill Lo-Fi" : "🌌 Ambient Chill";
-    }
+    // Toggle Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.style.display = 'none');
 
-    // Tabs
-    function switchTab(tab) {
-      AudioManager.click();
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
-
-      const dock = document.getElementById('bottomDock');
-
-      if (tab === 'pg') {
+      if (tabId === 'pg') {
         document.getElementById('tabBtnPg').classList.add('active');
         document.getElementById('tabContentPg').style.display = 'block';
-        dock.style.display = 'flex';
-      } else if (tab === 'essay') {
+      } else if (tabId === 'essay') {
         document.getElementById('tabBtnEssay').classList.add('active');
         document.getElementById('tabContentEssay').style.display = 'block';
-        dock.style.display = 'none';
-      } else if (tab === 'tanya') {
+      } else if (tabId === 'tanya') {
         document.getElementById('tabBtnTanya').classList.add('active');
         document.getElementById('tabContentTanya').style.display = 'block';
-        dock.style.display = 'none';
+      } else if (tabId === 'score') {
+        const navBtn = document.getElementById('tabNavBtnScore');
+        if (navBtn) navBtn.classList.add('active');
+        document.getElementById('tabContentScore').style.display = 'block';
+        renderScoreboard();
       }
+
+      AudioManager.click();
     }
 
-    // Navigator Pills
+    // Music Player Controls
+    function toggleBgm() {
+      AudioManager.toggleBGM();
+    }
+
+    function changeVolume(val) {
+      AudioManager.setBgmVolume(parseFloat(val));
+    }
+
+    function changeTrack() {
+      const mode = document.getElementById('trackSelect').value;
+      AudioManager.setBgmMode(mode);
+      const label = document.getElementById('musicTrackName');
+      if (mode === 'lofi') label.innerText = "☕ Chill Lo-Fi";
+      else if (mode === 'ambient') label.innerText = "🌌 Ambient";
+    }
+
+    // Build Question Jump Pills (1 - 10)
     function buildQuestionPills() {
       const container = document.getElementById('questionPillsContainer');
-      if (!container || !questionsData || !questionsData.pg) return;
+      if (!container || !questionsData) return;
 
       container.innerHTML = "";
-      questionsData.pg.forEach((_, idx) => {
+      questionsData.pg.forEach((q, idx) => {
         const pill = document.createElement('div');
-        pill.className = `q-pill ${idx === currentQuestionIndex ? 'active' : ''}`;
-        pill.id = `pill_${idx}`;
-        pill.innerText = idx + 1;
+        pill.className = `question-pill ${idx === currentQuestionIndex ? 'active' : ''}`;
+        
+        const state = liveQuestionsState[q.id];
+        let statusBadge = "";
+        if (state) {
+          if (state.isCorrect) {
+            pill.style.borderColor = "#10b981";
+            pill.style.background = "rgba(16, 185, 129, 0.18)";
+            statusBadge = " ✅";
+          } else {
+            pill.style.borderColor = "#ef4444";
+            pill.style.background = "rgba(239, 68, 68, 0.18)";
+            statusBadge = " ❌";
+          }
+        }
+
+        pill.innerHTML = `<strong>${idx + 1}</strong>${statusBadge}`;
+        pill.title = `Question ${idx + 1}: ${q.category} (${q.presenter})`;
         pill.onclick = () => jumpToQuestion(idx);
         container.appendChild(pill);
       });
     }
 
     function jumpToQuestion(idx) {
-      AudioManager.click();
+      if (!questionsData || idx < 0 || idx >= questionsData.pg.length) return;
       currentQuestionIndex = idx;
-      if (isAllViewMode) {
-        const target = document.getElementById(`card_all_${questionsData.pg[idx].id}`);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        renderFocusQuestion();
-      }
-      updatePillsUI();
+      renderFocusQuestion();
+      buildQuestionPills();
+      AudioManager.click();
     }
 
     function prevQuestion() {
@@ -410,396 +418,449 @@
     }
 
     function nextQuestion() {
-      if (currentQuestionIndex < questionsData.pg.length - 1) {
+      if (questionsData && currentQuestionIndex < questionsData.pg.length - 1) {
         jumpToQuestion(currentQuestionIndex + 1);
       }
     }
 
-    function toggleViewMode() {
-      AudioManager.click();
-      isAllViewMode = !isAllViewMode;
-      const focusEl = document.getElementById('focusModeContainer');
-      const allEl = document.getElementById('allQuestionsContainer');
-      const btn = document.getElementById('viewModeToggleBtn');
-
-      if (isAllViewMode) {
-        focusEl.style.display = 'none';
-        allEl.style.display = 'block';
-        btn.innerText = "🎯 Switch to Focus Mode (1 by 1)";
-      } else {
-        focusEl.style.display = 'block';
-        allEl.style.display = 'none';
-        btn.innerText = "📑 View All Questions";
-        renderFocusQuestion();
-      }
-    }
-
-    // Helper: Clean redundant leading letter (e.g. "A. Comparison" -> "Comparison")
-    function cleanOptionText(opt) {
-      return opt.replace(/^[A-D]\.\s*/i, '');
-    }
-
-    // Render 1 Focus Question
+    // Render Current Question Card in Focus Mode
     function renderFocusQuestion() {
       const card = document.getElementById('currentFocusCard');
-      if (!questionsData || !questionsData.pg) return;
+      if (!card || !questionsData) return;
 
       const q = questionsData.pg[currentQuestionIndex];
-      let badgeClass = 'badge-irfan';
-      if (q.presenter.includes('Elsa')) badgeClass = 'badge-elsa';
-      if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
-      if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+      const state = liveQuestionsState[q.id];
+      const isAnswered = !!state;
 
-      const selectedOpt = studentAnswers.pg[q.id] || null;
+      // Retain or get current respondent name from input if present
+      let currentRespondent = "";
+      const existingInput = document.getElementById('respondentNameInput');
+      if (existingInput) {
+        currentRespondent = existingInput.value.trim();
+      } else if (state && state.respondent) {
+        currentRespondent = state.respondent;
+      }
+
+      let presenterColor = "var(--irfan)";
+      if (q.presenter.includes("Elsa")) presenterColor = "var(--elsa)";
+      else if (q.presenter.includes("Sofia")) presenterColor = "var(--sofia)";
+      else if (q.presenter.includes("Ahmad")) presenterColor = "var(--ahmad)";
+
+      let optionsHtml = q.options.map(opt => {
+        const letter = opt.trim().charAt(0);
+        const optionText = cleanOptionText(opt);
+
+        let itemClass = "option-btn";
+        let badgeHtml = "";
+
+        if (isAnswered) {
+          if (letter.toUpperCase() === q.correct.toUpperCase()) {
+            itemClass += " correct";
+            badgeHtml = `<span class="opt-badge-tag correct">✅ Correct Answer</span>`;
+          } else if (letter.toUpperCase() === state.chosen.toUpperCase() && !state.isCorrect) {
+            itemClass += " wrong";
+            badgeHtml = `<span class="opt-badge-tag wrong">❌ ${escapeHtml(state.respondent)}'s Choice</span>`;
+          } else {
+            itemClass += " dimmed";
+          }
+        }
+
+        return `
+          <div class="${itemClass}" onclick="handleOptionSelect('${q.id}', '${letter}')">
+            <div class="opt-letter-tag">${letter}</div>
+            <div class="opt-text">${escapeHtml(optionText)}</div>
+            ${badgeHtml}
+          </div>
+        `;
+      }).join('');
+
+      let explanationHtml = "";
+      if (isAnswered) {
+        const outcomeTitle = state.isCorrect 
+          ? `🎉 Correct! Great job, <strong>${escapeHtml(state.respondent)}</strong>!` 
+          : `❌ Not quite! <strong>${escapeHtml(state.respondent)}</strong> chose (${state.chosen}), but the correct key is (${q.correct}).`;
+        
+        const outcomeBg = state.isCorrect 
+          ? "border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.4);" 
+          : "border-left: 5px solid #ef4444; border-color: rgba(239, 68, 68, 0.4);";
+
+        explanationHtml = `
+          <div class="explanation-card" style="${outcomeBg}">
+            <div class="explanation-title">
+              <span>${outcomeTitle}</span>
+            </div>
+            <div style="font-size:0.88rem; color:#a5b4fc; font-weight:700; margin-bottom:6px;">
+              📘 Category: ${escapeHtml(q.category)} • Presented by ${escapeHtml(q.presenter)}
+            </div>
+            <div class="explanation-text">
+              ${escapeHtml(q.explanation)}
+            </div>
+          </div>
+        `;
+      }
 
       card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; flex-wrap:wrap; gap:8px;">
-          <span style="font-family:var(--font-heading); font-size:1.15rem; font-weight:800; color:var(--primary);">
-            Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
-          </span>
-          <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="badge badge-room" style="font-size:0.9rem; padding:6px 12px;">Question ${currentQuestionIndex + 1} of 10</span>
+            <span class="badge" style="background:rgba(99,102,241,0.15); border:1px solid ${presenterColor}; color:#f8fafc;">
+              ${escapeHtml(q.presenter)}
+            </span>
+          </div>
+          <span class="badge badge-live">Category: ${escapeHtml(q.category)}</span>
         </div>
 
-        <div class="passage-box">"${escapeHtml(q.q)}"</div>
-        <p style="font-size:1.05rem; font-weight:700; margin-bottom: 18px; color:#f8fafc;">
+        <!-- Question Passage Box with Large Font for Zoom Screen Share -->
+        <div class="passage-box" style="font-size: 1.28rem; line-height: 1.6; margin-bottom: 16px; color: #f8fafc; font-style: normal;">
+          "${escapeHtml(q.q)}"
+        </div>
+
+        <p style="font-size: 1.05rem; font-weight: 700; color: #cbd5e1; margin-bottom: 16px;">
           ${escapeHtml(q.instruction)}
         </p>
 
-        <div class="options-list">
-          ${q.options.map(opt => {
-        const letter = opt.trim().charAt(0);
-        const isSelected = selectedOpt === letter;
-        const optionText = cleanOptionText(opt);
-        return `
-              <div class="option-btn ${isSelected ? 'selected' : ''}" onclick="selectFocusOption('${q.id}', '${letter}')">
-                <div class="opt-letter-tag">${letter}</div>
-                <div class="opt-text">${escapeHtml(optionText)}</div>
-              </div>
-            `;
-      }).join('')}
+        <!-- Live Respondent Input Bar (Who is answering on Zoom?) -->
+        <div class="respondent-bar">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:240px;">
+            <span style="font-size:1.1rem;">🙋‍♂️</span>
+            <label style="font-size:0.88rem; font-weight:700; color:#e2e8f0; white-space:nowrap;">
+              Who is answering?
+            </label>
+            <input type="text" id="respondentNameInput" class="form-control" 
+              placeholder="e.g. Sofi (participant who raised hand)" 
+              value="${escapeHtml(currentRespondent)}"
+              style="padding:6px 12px; font-size:0.88rem; height:36px; border-radius:var(--radius-sm);"
+              ${isAnswered ? 'disabled' : ''} />
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="btn btn-secondary btn-sm" onclick="pickRandomStudent()" ${isAnswered ? 'disabled' : ''} title="Pick a random class student">
+              🎲 Random Pick
+            </button>
+          </div>
         </div>
+
+        <!-- 4 Options List -->
+        <div class="options-list">
+          ${optionsHtml}
+        </div>
+
+        <!-- Explanation & Outcome Box -->
+        ${explanationHtml}
       `;
 
-      document.getElementById('focusQuestionCounter').innerText = `Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}`;
-      document.getElementById('btnPrevQ').disabled = currentQuestionIndex === 0;
-      document.getElementById('btnNextQ').innerText = currentQuestionIndex === questionsData.pg.length - 1 ? "Review & Finish" : "Next Question →";
-      updatePillsUI();
+      // Update Navigation button states
+      const prevBtn = document.getElementById('btnPrevQ');
+      const nextBtn = document.getElementById('btnNextQ');
+      if (prevBtn) prevBtn.disabled = (currentQuestionIndex === 0);
+      if (nextBtn) nextBtn.disabled = (currentQuestionIndex === questionsData.pg.length - 1);
     }
 
-    function selectFocusOption(qid, letter) {
-      AudioManager.click();
-      studentAnswers.pg[qid] = letter;
-      renderFocusQuestion();
-      updateProgressUI();
-      syncAllViewOption(qid, letter);
+    // Handle Option Selection & Instant Game-Show Reveal
+    function handleOptionSelect(qId, letter) {
+      if (!questionsData) return;
+      const q = questionsData.pg.find(item => item.id === qId);
+      if (!q) return;
 
-      if (currentQuestionIndex < questionsData.pg.length - 1) {
-        setTimeout(() => {
-          nextQuestion();
-        }, 320);
+      // If already answered, don't re-trigger unless reset
+      if (liveQuestionsState[qId]) return;
+
+      const input = document.getElementById('respondentNameInput');
+      let respondentName = (input && input.value.trim()) || "Participant";
+
+      const isCorrect = (letter.toUpperCase() === q.correct.toUpperCase());
+
+      // Save state
+      liveQuestionsState[qId] = {
+        answered: true,
+        chosen: letter,
+        correct: q.correct,
+        respondent: respondentName,
+        isCorrect: isCorrect
+      };
+
+      // Play Sound Effect & Confetti
+      if (isCorrect) {
+        AudioManager.correct();
+        triggerConfetti();
+      } else {
+        AudioManager.wrong();
+      }
+
+      // Record to Scoreboard
+      recordScore(respondentName, isCorrect);
+
+      // Re-render UI
+      renderFocusQuestion();
+      buildQuestionPills();
+      updateScoreboardBadge();
+    }
+
+    // Reset Current Question (Try Again)
+    function resetCurrentQuestion() {
+      if (!questionsData) return;
+      const q = questionsData.pg[currentQuestionIndex];
+      if (liveQuestionsState[q.id]) {
+        delete liveQuestionsState[q.id];
+      }
+      renderFocusQuestion();
+      buildQuestionPills();
+      AudioManager.click();
+    }
+
+    // Direct Reveal Key (if no student answers)
+    function revealDirectKey() {
+      if (!questionsData) return;
+      const q = questionsData.pg[currentQuestionIndex];
+      liveQuestionsState[q.id] = {
+        answered: true,
+        chosen: q.correct,
+        correct: q.correct,
+        respondent: "Presenter Direct Reveal",
+        isCorrect: true
+      };
+      AudioManager.chime();
+      renderFocusQuestion();
+      buildQuestionPills();
+    }
+
+    // Reset All Questions
+    function resetAllQuestions() {
+      if (confirm("Reset all 10 questions for a new live quiz run?")) {
+        liveQuestionsState = {};
+        currentQuestionIndex = 0;
+        renderFocusQuestion();
+        buildQuestionPills();
+        AudioManager.click();
       }
     }
 
-    // Render All Questions (Grid View)
-    function renderAllPgQuestions() {
-      const container = document.getElementById('allQuestionsContainer');
-      if (!questionsData || !questionsData.pg) return;
+    // Quick Random Student Picker
+    function pickRandomStudent() {
+      const randomIndex = Math.floor(Math.random() * CLASS_STUDENT_NAMES.length);
+      const name = CLASS_STUDENT_NAMES[randomIndex];
+      const input = document.getElementById('respondentNameInput');
+      if (input) {
+        input.value = name;
+        input.focus();
+      }
+      AudioManager.spinTick();
+    }
 
-      container.innerHTML = questionsData.pg.map((q, idx) => {
-        let badgeClass = 'badge-irfan';
-        if (q.presenter.includes('Elsa')) badgeClass = 'badge-elsa';
-        if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
-        if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+    // Record Score to Live Scoreboard
+    function recordScore(studentName, isCorrect) {
+      if (!studentName || studentName === "Presenter Direct Reveal") return;
+      
+      const cleanName = studentName.trim();
+      if (!classScores[cleanName]) {
+        classScores[cleanName] = { answered: 0, correct: 0, points: 0 };
+      }
+
+      classScores[cleanName].answered += 1;
+      if (isCorrect) {
+        classScores[cleanName].correct += 1;
+        classScores[cleanName].points += 10;
+      } else {
+        classScores[cleanName].points += 2; // Apresiasi keaktifan mencoba menjawab
+      }
+
+      updateScoreboardBadge();
+    }
+
+    function updateScoreboardBadge() {
+      const count = Object.keys(classScores).length;
+      const el = document.getElementById('scoreActiveCount');
+      if (el) el.innerText = count;
+    }
+
+    // Render Class Scoreboard
+    function renderScoreboard() {
+      const tbody = document.getElementById('scoreboardTableBody');
+      if (!tbody) return;
+
+      const names = Object.keys(classScores);
+      if (names.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
+              No answers recorded yet. Call on students in Zoom and click options!
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // Sort by points descending, then by correct count
+      const sorted = names.map(name => ({
+        name: name,
+        ...classScores[name]
+      })).sort((a, b) => b.points - a.points || b.correct - a.correct);
+
+      tbody.innerHTML = sorted.map((student, idx) => {
+        let rankBadge = `${idx + 1}`;
+        if (idx === 0) rankBadge = "🥇 1";
+        else if (idx === 1) rankBadge = "🥈 2";
+        else if (idx === 2) rankBadge = "🥉 3";
+
+        const accuracy = Math.round((student.correct / student.answered) * 100);
+        const statusClass = student.correct > 0 ? "score-perfect" : "score-avg";
 
         return `
-          <div class="glass-card" id="card_all_${q.id}" style="margin-bottom:18px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-family:var(--font-heading); font-weight:700; color:var(--primary);">Question ${idx + 1}</span>
-              <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
-            </div>
-            <div class="passage-box">"${escapeHtml(q.q)}"</div>
-            <p style="font-weight:600; margin-bottom:14px;">${escapeHtml(q.instruction)}</p>
-            <div class="options-list">
-              ${q.options.map(opt => {
-          const letter = opt.trim().charAt(0);
-          const optionText = cleanOptionText(opt);
-          return `
-                  <div class="option-btn" id="opt_all_${q.id}_${letter}" onclick="selectFocusOption('${q.id}', '${letter}')">
-                    <div class="opt-letter-tag">${letter}</div>
-                    <div class="opt-text">${escapeHtml(optionText)}</div>
-                  </div>
-                `;
-        }).join('')}
-            </div>
-          </div>
+          <tr>
+            <td style="text-align:center; font-weight:700; font-size:1.05rem;">${rankBadge}</td>
+            <td><strong>${escapeHtml(student.name)}</strong></td>
+            <td style="text-align:center;">${student.answered}</td>
+            <td style="text-align:center; color:#10b981; font-weight:700;">${student.correct} (${accuracy}%)</td>
+            <td style="text-align:center;"><span class="score-badge ${statusClass}">${student.points} pts</span></td>
+            <td style="text-align:center;"><span class="badge badge-live">Active</span></td>
+          </tr>
         `;
       }).join('');
     }
 
-    function syncAllViewOption(qid, letter) {
-      const parent = document.getElementById(`card_all_${qid}`);
-      if (parent) {
-        parent.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
-        const target = document.getElementById(`opt_all_${qid}_${letter}`);
-        if (target) target.classList.add('selected');
+    function copyScoreboardSummary() {
+      const names = Object.keys(classScores);
+      if (names.length === 0) {
+        alert("Scoreboard is empty. Record some answers first!");
+        return;
       }
-    }
 
-    function updatePillsUI() {
-      if (!questionsData || !questionsData.pg) return;
-      questionsData.pg.forEach((q, idx) => {
-        const pill = document.getElementById(`pill_${idx}`);
-        if (!pill) return;
-        pill.className = 'q-pill';
-        if (idx === currentQuestionIndex) pill.classList.add('active');
-        if (studentAnswers.pg[q.id]) pill.classList.add('answered');
+      const sorted = names.map(name => ({
+        name: name,
+        ...classScores[name]
+      })).sort((a, b) => b.points - a.points);
+
+      let text = "🏆 *TRANSITION WORDS QUIZ - ZOOM CLASSROOM SCOREBOARD*\n";
+      text += `📅 Date: ${new Date().toLocaleDateString()}\n\n`;
+      sorted.forEach((s, i) => {
+        text += `${i + 1}. ${s.name}: ${s.correct}/${s.answered} Correct (${s.points} Pts)\n`;
+      });
+      text += "\nThank you everyone for participating actively in Elsa, Sofia, Irfan & Ahmad's presentation!";
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Scoreboard summary copied to clipboard! You can paste it into Zoom chat or report.");
+      }).catch(() => {
+        prompt("Copy this scoreboard summary:", text);
       });
     }
 
-    function updateProgressUI() {
-      if (!questionsData || !questionsData.pg) return;
-      const total = questionsData.pg.length;
-      const count = Object.keys(studentAnswers.pg).length;
-      const pct = Math.round((count / total) * 100);
-
-      document.getElementById('answeredCountSpan').innerText = count;
-      document.getElementById('dockProgressFill').style.width = `${pct}%`;
-      updatePillsUI();
+    function clearScoreboard() {
+      if (confirm("Clear all recorded participation scores?")) {
+        classScores = {};
+        renderScoreboard();
+        updateScoreboardBadge();
+      }
     }
 
-    // Render 4 Essay Questions
+    // Clean Option Text helper
+    function cleanOptionText(opt) {
+      return opt.replace(/^[A-D]\.\s*/i, '').trim();
+    }
+
+    // TAB 2: Render Essay / Case Analysis
     function renderEssayQuestions() {
       const container = document.getElementById('essayContainer');
-      if (!questionsData || !questionsData.essay) return;
+      if (!container || !questionsData) return;
 
-      container.innerHTML = questionsData.essay.map((q, idx) => {
-        let badgeClass = 'badge-elsa';
-        if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
-        if (q.presenter.includes('Irfan')) badgeClass = 'badge-irfan';
-        if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+      container.innerHTML = questionsData.essay.map((item, idx) => {
+        const isRevealed = !!essayRevealed[item.id];
+        let presenterBadge = "badge-elsa";
+        if (item.presenter.includes("Sofia")) presenterBadge = "badge-sofia";
+        else if (item.presenter.includes("Irfan")) presenterBadge = "badge-irfan";
+        else if (item.presenter.includes("Ahmad")) presenterBadge = "badge-ahmad";
+
+        let keyContentHtml = "";
+        if (isRevealed) {
+          keyContentHtml = `
+            <div class="explanation-card" style="margin-top:14px; border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.4);">
+              <div class="explanation-title" style="color:#34d399;">
+                🔍 Analysis Rubric & Identified Transitions:
+              </div>
+              <ul style="padding-left:20px; margin: 8px 0; color:#f1f5f9; line-height:1.7;">
+                ${item.key_points.map(kp => `<li>${escapeHtml(kp)}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }
 
         return `
-          <div class="glass-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-family:var(--font-heading); font-size:1.1rem; font-weight:700; color:var(--primary);">
-                Case Analysis #${idx + 1}
-              </span>
-              <span class="badge ${badgeClass}">${q.presenter} • ${q.topic}</span>
+          <div class="glass-card" style="margin-bottom: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="question-number">CASE #${idx + 1}</span>
+              <span class="badge ${presenterBadge}">${item.presenter} • ${item.topic}</span>
             </div>
 
-            <div class="passage-box">"${escapeHtml(q.source_text)}"</div>
-            <p style="white-space:pre-line; font-weight:600; margin-bottom:14px;">${escapeHtml(q.question)}</p>
-
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">Your Analysis & Explanation:</label>
-              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Identify transition words, classify their categories, and explain their logical functions..."></textarea>
+            <div class="passage-box" style="font-size:1.12rem; line-height:1.65; margin-bottom:14px;">
+              "${escapeHtml(item.source_text)}"
             </div>
+
+            <p style="font-weight:700; font-size:1.02rem; color:#cbd5e1; margin-bottom:14px;">
+              ${escapeHtml(item.question)}
+            </p>
+
+            <div style="display:flex; justify-content:flex-end;">
+              <button class="btn btn-secondary btn-sm" onclick="toggleEssayKey('${item.id}')">
+                ${isRevealed ? '🙈 Hide Analysis Key' : '🔍 Reveal Analysis Key & Highlights'}
+              </button>
+            </div>
+
+            ${keyContentHtml}
           </div>
         `;
       }).join('');
     }
 
-    // Render Discussion Prompts
+    function toggleEssayKey(id) {
+      essayRevealed[id] = !essayRevealed[id];
+      renderEssayQuestions();
+      AudioManager.click();
+    }
+
+    // TAB 3: Render Q&A Discussion Prompts
     function renderTanyaBebas() {
       const container = document.getElementById('tanyaContainer');
-      if (!questionsData || !questionsData.tanya_bebas) return;
+      if (!container || !questionsData) return;
 
-      container.innerHTML = questionsData.tanya_bebas.map((t) => {
+      container.innerHTML = questionsData.tanya_bebas.map((t, idx) => {
+        const isRevealed = !!tanyaRevealed[t.id];
+
+        let talkingPointsHtml = "";
+        if (isRevealed) {
+          talkingPointsHtml = `
+            <div class="explanation-card" style="margin-top:12px; border-left: 5px solid #6366f1;">
+              <div class="explanation-title" style="color:#a5b4fc;">
+                💡 Recommended Presenter Talking Points:
+              </div>
+              <div class="explanation-text" style="color:#f1f5f9;">
+                ${escapeHtml(t.talking_points)}
+              </div>
+            </div>
+          `;
+        }
+
         return `
-          <div class="prompt-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div class="glass-card" style="margin-bottom: 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
               <span class="badge badge-live">${t.student_label}</span>
               <span class="badge badge-room">Target: ${t.target_presenter}</span>
             </div>
-            <p style="font-size:1.02rem; font-weight:700; color:#f8fafc; margin-bottom:8px;">
+            <p style="font-size:1.15rem; font-weight:700; color:#f8fafc; margin-bottom:12px; line-height:1.5;">
               "${escapeHtml(t.prompt_question)}"
             </p>
-            <div style="font-size:0.86rem; color:var(--text-muted); background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px;">
-              <strong style="color:#a5b4fc;">Discussion Context:</strong> ${escapeHtml(t.talking_points)}
+            <div style="display:flex; justify-content:flex-end;">
+              <button class="btn btn-secondary btn-sm" onclick="toggleTanyaKey('${t.id}')">
+                ${isRevealed ? '🙈 Hide Talking Points' : '💡 Show Presenter Talking Points'}
+              </button>
             </div>
+            ${talkingPointsHtml}
           </div>
         `;
       }).join('');
     }
 
-    // Validate Credentials (NIP & Full Name)
-    function getValidatedCredentials() {
-      const nipInput = document.getElementById('studentNip');
-      const nameInput = document.getElementById('studentName');
-
-      const nip = (nipInput.value || "").trim();
-      const name = (nameInput.value || "").trim();
-
-      if (!nip) {
-        alert("Please enter your NIP (Employee / Student ID)!");
-        nipInput.focus();
-        return null;
-      }
-
-      if (!name) {
-        alert("Please enter your Full Name!");
-        nameInput.focus();
-        return null;
-      }
-
-      return { nip: nip, name: name };
-    }
-
-    // Submit Multiple Choice
-    function submitPgQuiz() {
-      const creds = getValidatedCredentials();
-      if (!creds) return;
-
-      const totalPg = questionsData.pg.length;
-      const answeredCount = Object.keys(studentAnswers.pg).length;
-      if (answeredCount < totalPg) {
-        if (!confirm(`You have answered ${answeredCount} of ${totalPg} questions. Submit anyway?`)) {
-          return;
-        }
-      }
-
-      let correctCount = 0;
-      const reviewDetails = [];
-
-      questionsData.pg.forEach(item => {
-        const studentChoice = studentAnswers.pg[item.id] || "-";
-        const isCorrect = studentChoice.toUpperCase() === item.correct.toUpperCase();
-        if (isCorrect) correctCount++;
-        reviewDetails.push({
-          id: item.id,
-          category: item.category,
-          studentChoice: studentChoice,
-          correct: item.correct,
-          isCorrect: isCorrect,
-          explanation: item.explanation
-        });
-      });
-
-      const score = Math.round((correctCount / totalPg) * 100);
-
-      const payload = {
-        name: creds.name,
-        nip: creds.nip,
-        studentNumber: creds.nip,
-        type: 'pilihan_ganda',
-        score: score,
-        correctCount: correctCount,
-        totalQuestions: totalPg,
-        answers: studentAnswers.pg,
-        reviewDetails: reviewDetails
-      };
-
-      RealtimeSync.submitAnswer(payload);
-
-      AudioManager.success();
-      triggerConfetti();
-
-      showModal(
-        `🎉 Your Score: ${score} / 100`,
-        `
-          <p>Congratulations, <strong>${escapeHtml(creds.name)}</strong> (NIP: ${escapeHtml(creds.nip)})!</p>
-          <p>Your multiple choice responses have been securely transmitted to the presenters' live monitoring dashboard.</p>
-          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 16px; border-radius: 12px; margin: 18px 0; text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: 800; color: #34d399;">${score}</div>
-            <div style="font-size: 0.9rem; color: #a7f3d0;">Correct: ${correctCount} of ${totalPg} questions</div>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Thank you for participating actively in the Transition Words & Connectors quiz!
-          </p>
-        `
-      );
-
-      document.getElementById('dockSubmitBtn').innerText = "✅ Submitted!";
-    }
-
-    // Submit Essay
-    function submitEssayQuiz() {
-      const creds = getValidatedCredentials();
-      if (!creds) return;
-
-      const essayResponses = {};
-      let hasAnyAnswer = false;
-
-      questionsData.essay.forEach(item => {
-        const text = (document.getElementById(`essay_${item.id}`).value || "").trim();
-        essayResponses[item.id] = {
-          topic: item.topic,
-          presenter: item.presenter,
-          answer: text
-        };
-        if (text) hasAnyAnswer = true;
-      });
-
-      if (!hasAnyAnswer) {
-        alert("Please provide at least one case response before submitting!");
-        return;
-      }
-
-      const payload = {
-        name: creds.name,
-        nip: creds.nip,
-        studentNumber: creds.nip,
-        type: 'essay',
-        essayResponses: essayResponses
-      };
-
-      RealtimeSync.submitAnswer(payload);
-      AudioManager.success();
-      triggerConfetti();
-
-      showModal(
-        "📝 Essay Case Analysis Submitted!",
-        `
-          <p>Thank you, <strong>${escapeHtml(creds.name)}</strong> (NIP: ${escapeHtml(creds.nip)})!</p>
-          <p>Your analytical responses have been dispatched to Elsa, Sofia, Irfan, and Ahmad for rubric-based grading.</p>
-        `
-      );
-    }
-
-    // Submit Custom Question (Discussion)
-    function submitCustomQuestion() {
-      const creds = getValidatedCredentials();
-      if (!creds) return;
-      const target = document.getElementById('targetPresenterSelect').value;
-      const text = document.getElementById('customQuestionText').value.trim();
-
-      if (!text) {
-        alert("Please write your question before transmitting!");
-        return;
-      }
-
-      const payload = {
-        name: creds.name,
-        nip: creds.nip,
-        studentNumber: creds.nip,
-        type: 'tanya_bebas',
-        targetPresenter: target,
-        questionText: text
-      };
-
-      RealtimeSync.submitAnswer(payload);
-      AudioManager.chime();
-
-      showModal(
-        "💬 Question Transmitted!",
-        `
-          <p>Inquiry from <strong>${escapeHtml(creds.name)}</strong> directed to <strong>${escapeHtml(target)}</strong>:</p>
-          <div class="passage-box" style="margin: 14px 0;">"${escapeHtml(text)}"</div>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Your question is now visible on the presenter's monitoring screen!</p>
-        `
-      );
-
-      document.getElementById('customQuestionText').value = "";
-    }
-
-    function showModal(title, bodyHtml) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalBody').innerHTML = bodyHtml;
-      document.getElementById('resultModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('resultModal').classList.remove('active');
+    function toggleTanyaKey(id) {
+      tanyaRevealed[id] = !tanyaRevealed[id];
+      renderTanyaBebas();
+      AudioManager.click();
     }
 
     function triggerConfetti() {
@@ -810,6 +871,10 @@
           origin: { y: 0.6 }
         });
       }
+    }
+
+    function closeModal() {
+      document.getElementById('resultModal').classList.remove('active');
     }
 
     function escapeHtml(str) {
@@ -823,4 +888,5 @@
     }
   </script>
 </body>
+
 </html>
