@@ -22,35 +22,67 @@
 <body>
   <div class="container">
     
-    <!-- Top Navigation -->
+    <!-- Top Navigation with Integrated Music Player Bar -->
     <header class="top-navbar">
       <div class="brand-wrapper">
-        <div class="brand-icon">✨</div>
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
         <div>
           <h1 class="brand-title">Transition Words Quiz</h1>
           <div class="brand-subtitle">Presenters: Elsa • Sofia • Irfan • Ahmad | 19 Participants</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+
+      <!-- Integrated Header Chill Music Player -->
+      <div class="header-music-player">
+        <button class="music-toggle-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Play/Pause Chill Music">
+          ▶
+        </button>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="music-track-label" id="musicTrackName">☕ Chill Lo-Fi</span>
+            <div class="soundwave" id="soundwaveAnim">
+              <div class="soundwave-bar"></div>
+              <div class="soundwave-bar"></div>
+              <div class="soundwave-bar"></div>
+              <div class="soundwave-bar"></div>
+            </div>
+          </div>
+        </div>
+        <select class="form-control" id="trackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08); border-radius:var(--radius-sm);">
+          <option value="lofi">☕ Lo-Fi</option>
+          <option value="ambient">🌌 Ambient</option>
+        </select>
+        <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Music Volume" />
+        <button class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:0.8rem;" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
+      </div>
+
+      <!-- Room & Connection Badges -->
+      <div style="display:flex; align-items:center; gap:8px;">
         <span class="badge badge-room" id="roomBadge">Room: ...</span>
         <span class="badge badge-live" id="statusBadge">
           <span class="pulse-dot" id="statusDot"></span>
           <span id="statusText">Connecting</span>
         </span>
-        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Chill Background Music">
-          🎵 Music: <span id="topMusicStatus">OFF</span>
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
       </div>
     </header>
 
     <!-- Participant Identity Card (NIP & Full Name) -->
     <div class="glass-card" id="studentProfileCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
-        <h2 style="font-family: var(--font-heading); font-size: 1.15rem;">👤 Participant Credentials</h2>
+        <h2 style="font-family: var(--font-heading); font-size: 1.15rem; display:flex; align-items:center; gap:8px;">
+          <svg style="width:20px; height:20px; fill:none; stroke:#6366f1; stroke-width:2;" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Participant Credentials
+        </h2>
         <span class="badge badge-irfan">Class Attendance</span>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">NIP (Employee / Student ID)</label>
           <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001" required />
@@ -62,16 +94,31 @@
       </div>
     </div>
 
-    <!-- Mode Selector Tabs -->
+    <!-- Mode Selector Tabs with Bulletproof SVG Icons -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('pg')" id="tabBtnPg">
-        <span>🎯</span> Quiz #2: Multiple Choice (10)
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+        <span>Quiz #2: Multiple Choice (10)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
-        <span>📝</span> Quiz #1: Essay Case Analysis (4)
+        <svg viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>Quiz #1: Essay Case Analysis (4)</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
-        <span>💬</span> Q&A Discussion (5)
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Q&A Discussion (5)</span>
       </button>
     </div>
 
@@ -80,13 +127,13 @@
       
       <!-- View Mode & Jump Navigator Strip -->
       <div class="question-strip-wrapper">
-        <div style="display:flex; align-items:center; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
           <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Question Jump:</span>
           <div class="question-pills-grid" id="questionPillsContainer">
             <!-- Pills 1 to 10 generated via JS -->
           </div>
         </div>
-        <div style="display:flex; gap:8px;">
+        <div>
           <button class="btn btn-secondary btn-sm" onclick="toggleViewMode()" id="viewModeToggleBtn">
             📑 View All Questions
           </button>
@@ -103,7 +150,7 @@
           <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
             ← Previous Question
           </button>
-          <span style="font-size:0.9rem; font-weight:600; color:var(--text-muted);" id="focusQuestionCounter">
+          <span style="font-size:0.92rem; font-weight:700; color:var(--text-muted);" id="focusQuestionCounter">
             Question 1 of 10
           </span>
           <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
@@ -181,43 +228,21 @@
       </div>
     </div>
 
-    <!-- Floating Chill Music Player Widget -->
-    <div class="chill-music-widget" id="musicWidget">
-      <button class="music-play-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Play/Pause Chill Music">
-        ▶
-      </button>
-      <div class="music-info">
-        <div class="music-title">
-          <span id="musicTrackName">☕ Chill Lo-Fi Chords</span>
-          <div class="soundwave" id="soundwaveAnim">
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
+    <!-- Floating Bottom Progress Dock (Clean, Centered, Unobstructed) -->
+    <div class="bottom-progress-dock" id="bottomDock">
+      <div class="dock-inner-container">
+        <div style="font-size:0.9rem; font-weight:700; color:#f8fafc; white-space:nowrap;" id="dockProgressText">
+          Answered: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Questions
+        </div>
+        <div class="progress-track-wrapper">
+          <div class="progress-track">
+            <div class="progress-fill" id="dockProgressFill"></div>
           </div>
         </div>
-        <div class="music-status" id="musicStatusSubtitle">Click to play chill study chords</div>
+        <button class="btn btn-primary btn-md" onclick="submitPgQuiz()" id="dockSubmitBtn" style="min-width:180px;">
+          🚀 Submit Answers
+        </button>
       </div>
-      <select class="form-control" id="trackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08);">
-        <option value="lofi">☕ Cozy Lo-Fi</option>
-        <option value="ambient">🌌 Ambient Chill</option>
-      </select>
-      <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Music Volume" />
-    </div>
-
-    <!-- Bottom Progress Dock -->
-    <div class="bottom-progress-dock" id="bottomDock">
-      <div style="font-size:0.88rem; font-weight:700; color:#f8fafc;" id="dockProgressText">
-        Answered: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Questions
-      </div>
-      <div class="progress-track-wrapper">
-        <div class="progress-track">
-          <div class="progress-fill" id="dockProgressFill"></div>
-        </div>
-      </div>
-      <button class="btn btn-primary btn-sm" onclick="submitPgQuiz()" id="dockSubmitBtn">
-        🚀 Submit Answers
-      </button>
     </div>
 
     <!-- Result / Confirmation Modal -->
@@ -280,21 +305,13 @@
       AudioManager.onBgmStateChange((state) => {
         const btn = document.getElementById('musicPlayBtn');
         const wave = document.getElementById('soundwaveAnim');
-        const sub = document.getElementById('musicStatusSubtitle');
-        const topStatus = document.getElementById('topMusicStatus');
 
         if (state.isPlaying && !state.isMuted) {
           btn.innerHTML = "⏸";
           wave.classList.add('playing');
-          sub.innerText = "Playing relaxing lo-fi chords...";
-          topStatus.innerText = "ON 🎶";
-          topStatus.style.color = "#34d399";
         } else {
           btn.innerHTML = "▶";
           wave.classList.remove('playing');
-          sub.innerText = "Click to play chill study chords";
-          topStatus.innerText = "OFF";
-          topStatus.style.color = "inherit";
         }
       });
 
@@ -307,12 +324,11 @@
 
     // BGM Controls
     function toggleBgm() { AudioManager.toggleBGM(); }
-    function toggleBgmQuick() { AudioManager.toggleBGM(); }
     function changeVolume(val) { AudioManager.setBGMVolume(val); }
     function changeTrack() {
       const mode = document.getElementById('trackSelect').value;
       AudioManager.setBGMTrack(mode);
-      document.getElementById('musicTrackName').innerText = mode === 'lofi' ? "☕ Cozy Lo-Fi Chords" : "🌌 Ambient Chill Pad";
+      document.getElementById('musicTrackName').innerText = mode === 'lofi' ? "☕ Chill Lo-Fi" : "🌌 Ambient Chill";
     }
 
     // Tabs
@@ -397,6 +413,11 @@
       }
     }
 
+    // Helper: Clean redundant leading letter (e.g. "A. Comparison" -> "Comparison")
+    function cleanOptionText(opt) {
+      return opt.replace(/^[A-D]\.\s*/i, '');
+    }
+
     // Render 1 Focus Question
     function renderFocusQuestion() {
       const card = document.getElementById('currentFocusCard');
@@ -427,10 +448,11 @@
           ${q.options.map(opt => {
             const letter = opt.trim().charAt(0);
             const isSelected = selectedOpt === letter;
+            const optionText = cleanOptionText(opt);
             return `
               <div class="option-btn ${isSelected ? 'selected' : ''}" onclick="selectFocusOption('${q.id}', '${letter}')">
                 <div class="opt-letter-tag">${letter}</div>
-                <div class="opt-text">${escapeHtml(opt)}</div>
+                <div class="opt-text">${escapeHtml(optionText)}</div>
               </div>
             `;
           }).join('')}
@@ -479,10 +501,11 @@
             <div class="options-list">
               ${q.options.map(opt => {
                 const letter = opt.trim().charAt(0);
+                const optionText = cleanOptionText(opt);
                 return `
                   <div class="option-btn" id="opt_all_${q.id}_${letter}" onclick="selectFocusOption('${q.id}', '${letter}')">
                     <div class="opt-letter-tag">${letter}</div>
-                    <div class="opt-text">${escapeHtml(opt)}</div>
+                    <div class="opt-text">${escapeHtml(optionText)}</div>
                   </div>
                 `;
               }).join('')}
@@ -638,7 +661,7 @@
       const payload = {
         name: creds.name,
         nip: creds.nip,
-        studentNumber: creds.nip, // backward compatibility
+        studentNumber: creds.nip,
         type: 'pilihan_ganda',
         score: score,
         correctCount: correctCount,

@@ -10,13 +10,13 @@
   --font-heading: 'Outfit', sans-serif;
 
   /* Sophisticated Dark Palette */
-  --bg-dark: #070a12;
-  --bg-card: rgba(15, 23, 42, 0.72);
-  --bg-card-hover: rgba(22, 33, 58, 0.85);
-  --bg-elevated: rgba(30, 41, 59, 0.7);
+  --bg-dark: #070a14;
+  --bg-card: rgba(13, 20, 38, 0.78);
+  --bg-card-hover: rgba(20, 30, 56, 0.88);
+  --bg-elevated: rgba(24, 34, 62, 0.8);
   --bg-glass: rgba(255, 255, 255, 0.04);
   --border-color: rgba(255, 255, 255, 0.09);
-  --border-glow: rgba(99, 102, 241, 0.4);
+  --border-glow: rgba(99, 102, 241, 0.45);
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -40,12 +40,12 @@
   --warning: #f59e0b;
   --danger: #ef4444;
 
-  --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.08);
-  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.28);
+  --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.55), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 }
 
@@ -62,21 +62,21 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   background-image: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.25), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 90% 90%, rgba(236, 72, 153, 0.15), transparent 60%),
-    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(14, 165, 233, 0.12), transparent 60%);
+    radial-gradient(ellipse 90% 60% at 50% -20%, rgba(99, 102, 241, 0.25), transparent 75%),
+    radial-gradient(ellipse 60% 45% at 95% 90%, rgba(236, 72, 153, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 5% 80%, rgba(14, 165, 233, 0.14), transparent 60%);
   background-attachment: fixed;
   background-size: cover;
-  padding-bottom: 90px;
+  padding-bottom: 160px; /* Ample padding so bottom dock NEVER cuts off content */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 /* Containers */
 .container {
-  max-width: 860px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 24px 18px;
+  padding: 24px 20px;
 }
 
 .container-wide {
@@ -109,11 +109,13 @@ body {
   justify-content: space-between;
   padding: 16px 24px;
   margin-bottom: 24px;
-  background: rgba(11, 17, 33, 0.85);
+  background: rgba(11, 17, 33, 0.88);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .brand-wrapper {
@@ -130,8 +132,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.45);
+  flex-shrink: 0;
+}
+
+.brand-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .brand-title {
@@ -149,6 +161,79 @@ body {
   color: var(--text-muted);
 }
 
+/* Integrated Header Music Player Bar */
+.header-music-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 6px 14px 6px 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.music-toggle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.music-toggle-btn:hover {
+  transform: scale(1.08);
+}
+
+.music-track-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+}
+
+/* Soundwave Equalizer Bars */
+.soundwave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 12px;
+}
+
+.soundwave-bar {
+  width: 2.5px;
+  height: 3px;
+  background: #a5b4fc;
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+.soundwave.playing .soundwave-bar:nth-child(1) { animation: wave 1.1s infinite ease-in-out; }
+.soundwave.playing .soundwave-bar:nth-child(2) { animation: wave 0.9s infinite ease-in-out 0.2s; }
+.soundwave.playing .soundwave-bar:nth-child(3) { animation: wave 1.3s infinite ease-in-out 0.4s; }
+.soundwave.playing .soundwave-bar:nth-child(4) { animation: wave 1.0s infinite ease-in-out 0.1s; }
+
+@keyframes wave {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; background: #34d399; }
+}
+
+.music-vol-slider {
+  width: 55px;
+  height: 4px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
 /* Badges & Chips */
 .badge {
   display: inline-flex;
@@ -160,6 +245,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .badge-room {
@@ -215,6 +301,7 @@ body {
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -325,6 +412,18 @@ body {
   justify-content: center;
   gap: 8px;
   transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.tab-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -339,20 +438,19 @@ body {
 }
 
 /* ==========================================================================
-   INTERACTIVE QUESTION FOCUS MODE & CAROUSEL
+   QUESTION STRIP & FOCUS CAROUSEL
    ========================================================================== */
 
-/* Question Number Jump Strip (Pills 1 - 10) */
 .question-strip-wrapper {
   background: rgba(11, 17, 33, 0.75);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 12px 16px;
+  padding: 12px 18px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -360,12 +458,13 @@ body {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .q-pill {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-md);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: rgba(255, 255, 255, 0.03);
   color: var(--text-muted);
@@ -394,8 +493,8 @@ body {
 }
 
 .q-pill.answered {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.55);
   color: #34d399;
 }
 
@@ -423,7 +522,7 @@ body {
 }
 
 .passage-box {
-  background: rgba(21, 31, 55, 0.8);
+  background: rgba(21, 31, 55, 0.85);
   border-left: 4px solid var(--primary);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: 16px 20px;
@@ -435,7 +534,7 @@ body {
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.25);
 }
 
-/* Option Cards with Keyboard Shortcut Pill */
+/* Option Cards */
 .options-list {
   display: flex;
   flex-direction: column;
@@ -499,105 +598,7 @@ body {
 }
 
 /* ==========================================================================
-   RELAXING CHILL MUSIC PLAYER (FLOATING WIDGET)
-   ========================================================================== */
-
-.chill-music-widget {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 999;
-  background: rgba(11, 17, 33, 0.88);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-full);
-  padding: 8px 16px 8px 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.chill-music-widget:hover {
-  border-color: var(--primary);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.35);
-}
-
-.music-play-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  border: none;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
-  transition: transform 0.2s ease;
-}
-
-.music-play-btn:hover {
-  transform: scale(1.08);
-}
-
-.music-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.music-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #f8fafc;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.music-status {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-/* Soundwave Equalizer Bars */
-.soundwave {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 14px;
-}
-
-.soundwave-bar {
-  width: 3px;
-  height: 4px;
-  background: #a5b4fc;
-  border-radius: 2px;
-  transition: height 0.2s ease;
-}
-
-.soundwave.playing .soundwave-bar:nth-child(1) { animation: wave 1.1s infinite ease-in-out; }
-.soundwave.playing .soundwave-bar:nth-child(2) { animation: wave 0.9s infinite ease-in-out 0.2s; }
-.soundwave.playing .soundwave-bar:nth-child(3) { animation: wave 1.3s infinite ease-in-out 0.4s; }
-.soundwave.playing .soundwave-bar:nth-child(4) { animation: wave 1.0s infinite ease-in-out 0.1s; }
-
-@keyframes wave {
-  0%, 100% { height: 4px; }
-  50% { height: 14px; background: #6ee7b7; }
-}
-
-.music-vol-slider {
-  width: 60px;
-  height: 4px;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-/* ==========================================================================
-   FLOATING PROGRESS DOCK (BOTTOM)
+   FLOATING BOTTOM PROGRESS DOCK (CLEAN, CENTERED, UNOBSTRUCTED)
    ========================================================================== */
 
 .bottom-progress-dock {
@@ -605,21 +606,31 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(9, 13, 24, 0.92);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border-color);
-  padding: 12px 24px;
+  background: rgba(9, 13, 24, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 14px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 900;
-  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dock-inner-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .progress-track-wrapper {
   flex: 1;
   max-width: 480px;
-  margin: 0 20px;
 }
 
 .progress-track {
@@ -638,20 +649,20 @@ body {
   transition: width 0.3s ease;
 }
 
-/* Modal */
+/* Modals */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1200;
+  z-index: 1300;
   opacity: 0;
   pointer-events: none;
   transition: all 0.25s ease;
-  padding: 18px;
+  padding: 20px;
 }
 
 .modal-overlay.active {
@@ -702,10 +713,10 @@ body {
 
 .modal-close:hover { color: white; }
 
-/* Admin Grid & Table */
+/* Admin Dashboard Specifics */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -836,22 +847,34 @@ body {
   background: linear-gradient(to bottom, #6366f1, #ec4899);
 }
 
-@media (max-width: 640px) {
+/* Score display badges */
+.score-badge {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.score-perfect { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.score-good { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.score-avg { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .top-navbar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
   }
-  .chill-music-widget {
-    bottom: 74px;
-    right: 14px;
-    padding: 6px 12px;
+  .dock-inner-container {
+    flex-direction: column;
+    gap: 10px;
   }
-  .music-vol-slider {
-    display: none;
+  .progress-track-wrapper {
+    max-width: 100%;
   }
-  .bottom-progress-dock {
-    padding: 10px 14px;
+  .nav-tabs {
+    flex-direction: column;
   }
   .q-pill {
     width: 32px;
