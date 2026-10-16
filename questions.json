@@ -1,0 +1,294 @@
+{
+  "presentation": {
+    "title": "Transition Words & Connectors",
+    "canva_url": "https://canva.link/otop855dny25lu6",
+    "deadline": "22 Oktober 2026",
+    "rehearsal_dates": "23-24 Oktober 2026",
+    "total_students": 19,
+    "distribution": {
+      "essay": 4,
+      "pilihan_ganda": 10,
+      "tanya_bebas": 5
+    },
+    "presenters": [
+      {
+        "slot": 1,
+        "name": "Elsa",
+        "topics": ["Addition", "Clarification", "Definition", "Example"],
+        "schema": "Overview > Penjelasan per-poin > contoh kalimat",
+        "color": "#ec4899"
+      },
+      {
+        "slot": 2,
+        "name": "Sofia",
+        "topics": ["Location", "Time", "Conclusion"],
+        "schema": "Overview > Penjelasan & Contoh Kalimat",
+        "color": "#8b5cf6"
+      },
+      {
+        "slot": 3,
+        "name": "Irfan",
+        "topics": ["Comparison", "Contrast", "Concession", "Condition"],
+        "schema": "Overview > contoh kalimat",
+        "color": "#3b82f6"
+      },
+      {
+        "slot": 4,
+        "name": "Ahmad",
+        "topics": ["Cause", "Reason", "Purpose", "Result / Effect"],
+        "schema": "Overview > Penjelasan & Analisis Kasus",
+        "color": "#10b981"
+      }
+    ]
+  },
+  "essay": [
+    {
+      "id": "e1",
+      "slot": 1,
+      "presenter": "Elsa (#1)",
+      "topic": "Addition & Clarification",
+      "source_text": "The university updated its laboratory facilities; furthermore, it provided high-speed internet access to all research rooms. In other words, students now have modern resources to complete their thesis efficiently.",
+      "question": "Identifikasi 2 (dua) kata/frasa transisi pada paragraf di atas, tentukan kategorinya masing-masing, dan jelaskan fungsi penggunaannya dalam kalimat tersebut!",
+      "key_points": [
+        "Transisi 1: 'furthermore' -> Kategori: Addition. Menambahkan informasi fasilitas internet setelah fasilitas laboratorium.",
+        "Transisi 2: 'in other words' -> Kategori: Clarification. Memperjelas dan menyederhanakan makna dari sudut pandang efisiensi mahasiswa."
+      ]
+    },
+    {
+      "id": "e2",
+      "slot": 2,
+      "presenter": "Sofia (#2)",
+      "topic": "Location & Time",
+      "source_text": "Whenever heavy rainfall occurs in the upstream region, water levels surge rapidly. Downstream, along the riverbank settlements, residents must immediately evacuate to safer ground.",
+      "question": "Temukan kata atau frasa yang menunjukkan penanda Time dan penanda Location dari kalimat di atas!",
+      "key_points": [
+        "Penanda Time: 'Whenever heavy rainfall occurs' (atau kata 'whenever'). Menunjukkan waktu kejadian naiknya air.",
+        "Penanda Location: 'Downstream, along the riverbank settlements' (atau kata 'downstream'). Menunjukkan letak geografis warga terdampak."
+      ]
+    },
+    {
+      "id": "e3",
+      "slot": 3,
+      "presenter": "Irfan (#3)",
+      "topic": "Contrast & Condition",
+      "source_text": "Provided that all team members submit their project components before Friday, we can conduct the final rehearsal smoothly. On the contrary, if anyone fails to meet the deadline, the entire schedule will collapse.",
+      "question": "Tentukan transisi yang menandakan Condition serta transisi yang menyatakan Contrast pada teks di atas!",
+      "key_points": [
+        "Transisi Condition: 'Provided that' (menunjukkan syarat/kondisi agar latihan lancar).",
+        "Transisi Contrast: 'On the contrary' (menunjukkan pertentangan tegas bila ada yang terlambat)."
+      ]
+    },
+    {
+      "id": "e4",
+      "slot": 4,
+      "presenter": "Ahmad (#4)",
+      "topic": "Cause, Reason, Purpose, Result/Effect",
+      "source_text": "Land burning in Kalimantan is an environmental problem that produces thick smoke and pollutes the air. Some landowners burn land because they want to clear areas for oil palm plantations. The purpose of clearing land is to establish plantations and increase agricultural production. However, this practice can have serious consequences for local communities. As a result, air pollution can increase the risk of respiratory illnesses, disrupt daily activities, and cause economic losses.",
+      "question": "Berdasarkan paragraf di atas:\n1. Apa kata/frasa yang mengindikasikan Reason (alasan) dan jelaskan alasannya?\n2. Frasa/klausa manakah yang menunjukkan Purpose (tujuan)?\n3. Apa penanda Result/Effect serta dampaknya bagi masyarakat?",
+      "key_points": [
+        "1. Penanda Reason: 'because' -> Alasannya pemilik lahan ingin membuka lahan sawit (they want to clear areas for oil palm plantations).",
+        "2. Penanda Purpose: 'The purpose of clearing land is...' -> Tujuannya mendirikan perkebunan dan meningkatkan hasil pertanian.",
+        "3. Penanda Result: 'As a result' -> Efeknya peningkatan risiko penyakit pernapasan, gangguan aktivitas, dan kerugian ekonomi."
+      ]
+    }
+  ],
+  "pg": [
+    {
+      "id": "pg1",
+      "presenter": "Irfan (#3)",
+      "category": "Contrast",
+      "q": "At first, I thought Doree would be upset when she heard the news. Quite the opposite, she just smiled and did not let it bother her.",
+      "instruction": "What type of transition is used in the sentence?",
+      "options": [
+        "A. Comparison",
+        "B. Concession",
+        "C. Contrast",
+        "D. Condition"
+      ],
+      "correct": "C",
+      "explanation": "'Quite the opposite' menunjukkan pertentangan langsung (Contrast) terhadap dugaan awal bahwa Doree akan marah."
+    },
+    {
+      "id": "pg2",
+      "presenter": "Sofia (#2)",
+      "category": "Time & Sentence Type",
+      "q": "When the time comes, you must accompany me to go to the stores.",
+      "instruction": "Which word/clause indicates the type of sentence, and what type is it?",
+      "options": [
+        "A. 'When the time comes' - Time",
+        "B. 'Accompany me' - Location",
+        "C. 'Go to the stores' - Conclusion",
+        "D. 'Must accompany' - Condition"
+      ],
+      "correct": "A",
+      "explanation": "Klausa 'When the time comes' adalah adverbial clause of time yang menunjukkan keterangan waktu (Time)."
+    },
+    {
+      "id": "pg3",
+      "presenter": "Elsa (#1)",
+      "category": "Clarification",
+      "q": "Many people were shocked with the result of the election. Evidently, they never expected that Donald Trump could win the election and became the President of the United States of America.",
+      "instruction": "The word 'Evidently' in this context expresses:",
+      "options": [
+        "A. Addition",
+        "B. Clarification",
+        "C. Example",
+        "D. Comparison"
+      ],
+      "correct": "B",
+      "explanation": "'Evidently' digunakan untuk memperjelas (Clarification) alasan mengapa masyarakat terkejut atas hasil pemilu tersebut."
+    },
+    {
+      "id": "pg4",
+      "presenter": "Ahmad (#4)",
+      "category": "Result / Effect",
+      "q": "The factory failed to maintain its safety valve properly. Consequently, toxic steam escaped into the surrounding residential area.",
+      "instruction": "The word 'Consequently' serves to indicate:",
+      "options": [
+        "A. Purpose",
+        "B. Cause",
+        "C. Reason",
+        "D. Result / Effect"
+      ],
+      "correct": "D",
+      "explanation": "'Consequently' menyatakan akibat atau dampak langsung (Result/Effect) dari kegagalan merawat katup keselamatan pabrik."
+    },
+    {
+      "id": "pg5",
+      "presenter": "Irfan (#3)",
+      "category": "Condition",
+      "q": "In case if I ran out of money, may I borrow your cards.",
+      "instruction": "The phrase 'In case' expresses:",
+      "options": [
+        "A. Comparison",
+        "B. Concession",
+        "C. Contrast",
+        "D. Condition"
+      ],
+      "correct": "D",
+      "explanation": "'In case' menyatakan kemungkinan kondisi atau syarat antisipasi (Condition) jika uang habis."
+    },
+    {
+      "id": "pg6",
+      "presenter": "Elsa (#1)",
+      "category": "Example",
+      "q": "The newly established startup offers numerous perks to its employees; for instance, free catered lunch and gym memberships.",
+      "instruction": "The phrase 'for instance' belongs to which category?",
+      "options": [
+        "A. Example",
+        "B. Clarification",
+        "C. Definition",
+        "D. Addition"
+      ],
+      "correct": "A",
+      "explanation": "'for instance' merupakan sinonim dari 'for example' yang digunakan untuk memberikan contoh (Example)."
+    },
+    {
+      "id": "pg7",
+      "presenter": "Sofia (#2)",
+      "category": "Conclusion",
+      "q": "To wrap up our group presentation, regular physical exercise combined with a balanced diet is essential for cardiovascular health.",
+      "instruction": "The phrase 'To wrap up' indicates:",
+      "options": [
+        "A. Location",
+        "B. Time",
+        "C. Conclusion",
+        "D. Clarification"
+      ],
+      "correct": "C",
+      "explanation": "'To wrap up' adalah penanda kesimpulan atau rangkuman akhir (Conclusion)."
+    },
+    {
+      "id": "pg8",
+      "presenter": "Irfan (#3)",
+      "category": "Concession",
+      "q": "Even though the research team faced continuous budget cuts, they successfully completed the vaccine trial ahead of schedule.",
+      "instruction": "The connector 'Even though' expresses:",
+      "options": [
+        "A. Concession",
+        "B. Comparison",
+        "C. Condition",
+        "D. Addition"
+      ],
+      "correct": "A",
+      "explanation": "'Even though' menyatakan konsesi (Concession / pengakuan situasi tak terduga yang tidak menghalangi tercapainya hasil)."
+    },
+    {
+      "id": "pg9",
+      "presenter": "Ahmad (#4)",
+      "category": "Purpose",
+      "q": "Engineers installed high-performance cooling fans so that the data servers would not overheat during peak operational hours.",
+      "instruction": "The phrase 'so that' functions to show:",
+      "options": [
+        "A. Purpose",
+        "B. Cause",
+        "C. Contrast",
+        "D. Definition"
+      ],
+      "correct": "A",
+      "explanation": "'so that' digunakan untuk menyatakan maksud atau tujuan (Purpose) dari pemasangan kipas pendingin."
+    },
+    {
+      "id": "pg10",
+      "presenter": "Elsa (#1)",
+      "category": "Definition",
+      "q": "Digital literacy refers to an individual's ability to locate, evaluate, and compose clear information through various digital platforms.",
+      "instruction": "The predicate phrase 'refers to' explicitly signals:",
+      "options": [
+        "A. Addition",
+        "B. Definition",
+        "C. Clarification",
+        "D. Concession"
+      ],
+      "correct": "B",
+      "explanation": "Frasa 'refers to' adalah penanda gramatikal untuk mendefinisikan istilah/konsep (Definition)."
+    }
+  ],
+  "tanya_bebas": [
+    {
+      "id": "tb1",
+      "student_slot": 15,
+      "student_label": "Siswa 15",
+      "target_presenter": "Elsa (#1 - Addition & Clarification)",
+      "topic": "Addition vs Clarification",
+      "prompt_question": "Kapan kita sebaiknya memilih 'furthermore' dibandingkan 'in addition', dan apa perbedaan nuansa formalitasnya?",
+      "talking_points": "Furthermore memiliki nuansa lebih formal dan menguatkan argumen yang lebih berat, sedangkan in addition lebih netral untuk sekadar penambahan daftar."
+    },
+    {
+      "id": "tb2",
+      "student_slot": 16,
+      "student_label": "Siswa 16",
+      "target_presenter": "Sofia (#2 - Time & Conclusion)",
+      "topic": "Conclusion in Academic Writing",
+      "prompt_question": "Apakah ada frasa transisi penutup (conclusion) yang sebaiknya dihindari saat menulis esai akademik resmi?",
+      "talking_points": "Frasa seperti 'all in all' atau 'to wrap up' sering dinilai informal untuk jurnal ilmiah. Direkomendasikan memakai 'In conclusion', 'Thus', atau 'To summarize'."
+    },
+    {
+      "id": "tb3",
+      "student_slot": 17,
+      "student_label": "Siswa 17",
+      "target_presenter": "Irfan (#3 - Contrast vs Concession)",
+      "topic": "Contrast vs Concession",
+      "prompt_question": "Apa perbedaan mendasar antara 'Contrast' (misal: however/on the other hand) dengan 'Concession' (misal: although/even though) dalam susunan klausa?",
+      "talking_points": "Contrast menghubungkan dua gagasan mandiri yang bertentangan, sedangkan Concession mengakui suatu fakta yang berpotensi menggagalkan klausa utama namun kenyataannya tidak."
+    },
+    {
+      "id": "tb4",
+      "student_slot": 18,
+      "student_label": "Siswa 18",
+      "target_presenter": "Ahmad (#4 - Cause, Reason, Purpose)",
+      "topic": "Reason vs Purpose",
+      "prompt_question": "Bagaimana cara mudah membedakan kata sambung 'because' (Reason) dengan frasa 'in order to' / 'so that' (Purpose) agar tidak tertukar?",
+      "talking_points": "Reason (because) menjawab 'mengapa hal itu sudah/sedang terjadi' (melihat ke masa lalu/penyebab), sedangkan Purpose (so that/in order to) melihat ke depan (apa target atau hasil yang diinginkan)."
+    },
+    {
+      "id": "tb5",
+      "student_slot": 19,
+      "student_label": "Siswa 19",
+      "target_presenter": "Semua Presenter (Elsa, Sofia, Irfan, Ahmad)",
+      "topic": "Overusing Transitions",
+      "prompt_question": "Jika dalam satu paragraf kita memakai terlalu banyak kata transisi, apakah kalimatnya masih tergolong baik atau justru berlebihan (overused)?",
+      "talking_points": "Penggunaan berlebihan membuat tulisan kaku dan melelahkan (clunky). Transisi harus terasa mengalir secara natural dan hanya dipakai saat jembatan ide memang dibutuhkan."
+    }
+  ]
+}

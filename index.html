@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Interaktif: Transition Words & Connectors</title>
+  
+  <!-- Modern Fonts & Styles -->
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- External Libraries (MQTT, Confetti, Firebase) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Local App Modules -->
+  <script src="firebase-config.js"></script>
+  <script src="assets/audio.js"></script>
+  <script src="assets/realtime.js"></script>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Top Navigation -->
+    <header class="top-navbar">
+      <div class="brand-wrapper">
+        <div class="brand-icon">✨</div>
+        <div>
+          <h1 class="brand-title">Transition Words Quiz</h1>
+          <div class="brand-subtitle">Kelompok: Elsa • Sofia • Irfan • Ahmad</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge badge-room" id="roomBadge">Room: ...</span>
+        <span class="badge badge-live" id="statusBadge">
+          <span class="pulse-dot" id="statusDot"></span>
+          <span id="statusText">Menghubungkan</span>
+        </span>
+        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Suara">🔊</button>
+      </div>
+    </header>
+
+    <!-- Student Identity Card -->
+    <div class="glass-card" id="studentProfileCard">
+      <h2 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 14px;">👤 Identitas Peserta</h2>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Nama Lengkap Siswa</label>
+          <input type="text" id="studentName" class="form-control" placeholder="Contoh: Budi Santoso" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">No. Siswa (1 - 19)</label>
+          <input type="number" id="studentNumber" class="form-control" min="1" max="19" placeholder="1 - 19" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('pg')" id="tabBtnPg">
+        <span>🎯</span> Quiz #2: Pilihan Ganda (10)
+      </button>
+      <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
+        <span>📝</span> Quiz #1: Essay / Kasus (4)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
+        <span>💬</span> Sesi Tanya Bebas (5)
+      </button>
+    </div>
+
+    <!-- TAB 1: Pilihan Ganda (10 Soal) -->
+    <div id="tabContentPg" class="tab-pane">
+      <div class="glass-card" style="border-left: 4px solid var(--primary);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">🎯 Quiz #2: Pilihan Ganda (10 Soal)</h3>
+          <span class="badge badge-irfan">Materi Gabungan 4 Presenter</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Pilihlah satu jawaban yang paling tepat untuk setiap soal. Jawaban dan skor Anda akan langsung terkirim secara realtime ke laptop presenter!
+        </p>
+      </div>
+
+      <div id="pgContainer">
+        <!-- Rendered dynamically via JS -->
+        <div style="text-align:center; padding: 40px; color: var(--text-dim);">Memuat bank soal...</div>
+      </div>
+
+      <div class="glass-card" style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-primary btn-lg btn-block" onclick="submitPgQuiz()" id="btnSubmitPg">
+          🚀 Kirim Semua Jawaban Pilihan Ganda
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: Essay / Analisis (4 Soal) -->
+    <div id="tabContentEssay" class="tab-pane" style="display: none;">
+      <div class="glass-card" style="border-left: 4px solid var(--elsa);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">📝 Quiz #1: Analisis Kasus & Esai (4 Soal)</h3>
+          <span class="badge badge-elsa">4 Perwakilan / Penampil</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Diberikan kepada 4 siswa penampil atau perwakilan kelompok. Analisislah teks kalimat dengan cermat dan tuliskan jawabanmu di kolom yang disediakan.
+        </p>
+      </div>
+
+      <div id="essayContainer">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <div class="glass-card" style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-success btn-lg btn-block" onclick="submitEssayQuiz()" id="btnSubmitEssay">
+          📤 Kirim Jawaban Analisis Kasus (Essay)
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 3: Tanya Bebas (5 Siswa) -->
+    <div id="tabContentTanya" class="tab-pane" style="display: none;">
+      <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">💬 Panduan Sesi Tanya Bebas (5 Penanya)</h3>
+          <span class="badge badge-ahmad">Siswa 15 - 19</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Gunakan kartu pemantik diskusi berikut bila Anda ditunjuk pada sesi tanya jawab bebas, atau ajukan pertanyaan kritis langsung kepada Elsa, Sofia, Irfan, atau Ahmad!
+        </p>
+      </div>
+
+      <div id="tanyaContainer">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Kotak Custom Pertanyaan untuk Siswa -->
+      <div class="glass-card">
+        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Punya Pertanyaan Sendiri untuk Presenter?</h4>
+        <div class="form-group">
+          <label class="form-label">Tujukan Pertanyaan Kepada:</label>
+          <select id="targetPresenterSelect" class="form-control">
+            <option value="Semua Presenter">Semua Presenter (Elsa, Sofia, Irfan, Ahmad)</option>
+            <option value="Elsa (#1 - Addition & Clarification)">Elsa (#1 - Addition & Clarification)</option>
+            <option value="Sofia (#2 - Location, Time, Conclusion)">Sofia (#2 - Location, Time, Conclusion)</option>
+            <option value="Irfan (#3 - Comparison, Contrast, Concession, Condition)">Irfan (#3 - Comparison, Contrast, Concession, Condition)</option>
+            <option value="Ahmad (#4 - Cause, Reason, Purpose, Result)">Ahmad (#4 - Cause, Reason, Purpose, Result)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tuliskan Pertanyaan Anda:</label>
+          <textarea id="customQuestionText" class="form-control" rows="3" placeholder="Tuliskan pertanyaan diskusi Anda di sini..."></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitCustomQuestion()">
+          📨 Kirim Pertanyaan ke Layar Presenter
+        </button>
+      </div>
+    </div>
+
+    <!-- Submission Result Modal -->
+    <div class="modal-overlay" id="resultModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">🎉 Jawaban Terkirim!</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="modalBody" style="font-size: 0.95rem; line-height: 1.6;">
+          <!-- Result text injected here -->
+        </div>
+        <div style="margin-top: 20px; text-align: right;">
+          <button class="btn btn-primary" onclick="closeModal()">Tutup & Kembali</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer info -->
+    <footer style="text-align: center; margin-top: 32px; color: var(--text-dim); font-size: 0.8rem;">
+      <p>Kuis Presentasi "Transition Words & Connectors" • Semester 5</p>
+      <p style="margin-top: 4px;">Terhubung secara realtime dengan dashboard monitoring presenter.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    let questionsData = null;
+    let studentAnswers = { pg: {}, essay: {} };
+
+    // Inisialisasi Aplikasi
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Inisialisasi Realtime Engine
+      const syncInfo = RealtimeSync.init({
+        role: 'player',
+        onStatusChange: (connected, msg) => {
+          const statusText = document.getElementById('statusText');
+          const statusDot = document.getElementById('statusDot');
+          if (statusText) statusText.innerText = connected ? "Terhubung" : "Fallback";
+          if (statusDot) {
+            statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
+          }
+        }
+      });
+
+      document.getElementById('roomBadge').innerText = `Room: ${RealtimeSync.getRoomId()}`;
+
+      // 2. Load Bank Soal dari questions.json
+      fetch('questions.json')
+        .then(res => res.json())
+        .then(data => {
+          questionsData = data;
+          renderPgQuestions();
+          renderEssayQuestions();
+          renderTanyaBebas();
+        })
+        .catch(err => {
+          console.error("Gagal memuat questions.json", err);
+          document.getElementById('pgContainer').innerHTML = `
+            <div class="glass-card" style="color: #ef4444;">
+              Gagal memuat bank soal questions.json. Pastikan file berada di folder yang sama.
+            </div>
+          `;
+        });
+
+      // Restore nama dari localStorage jika ada
+      const savedName = localStorage.getItem('student_name');
+      const savedNumber = localStorage.getItem('student_number');
+      if (savedName) document.getElementById('studentName').value = savedName;
+      if (savedNumber) document.getElementById('studentNumber').value = savedNumber;
+    });
+
+    // Tab Switching
+    function switchTab(tab) {
+      AudioManager.click();
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+
+      if (tab === 'pg') {
+        document.getElementById('tabBtnPg').classList.add('active');
+        document.getElementById('tabContentPg').style.display = 'block';
+      } else if (tab === 'essay') {
+        document.getElementById('tabBtnEssay').classList.add('active');
+        document.getElementById('tabContentEssay').style.display = 'block';
+      } else if (tab === 'tanya') {
+        document.getElementById('tabBtnTanya').classList.add('active');
+        document.getElementById('tabContentTanya').style.display = 'block';
+      }
+    }
+
+    // Render 10 Soal Pilihan Ganda
+    function renderPgQuestions() {
+      const container = document.getElementById('pgContainer');
+      if (!questionsData || !questionsData.pg) return;
+
+      container.innerHTML = questionsData.pg.map((q, idx) => {
+        let badgeClass = 'badge-irfan';
+        if (q.presenter.includes('Elsa')) badgeClass = 'badge-elsa';
+        if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
+        if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+
+        return `
+          <div class="question-item" id="card_${q.id}">
+            <div class="question-header">
+              <span class="question-number">Soal ${idx + 1} of 10</span>
+              <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
+            </div>
+            
+            <div class="passage-box">"${escapeHtml(q.q)}"</div>
+            <p class="question-text"><strong>${escapeHtml(q.instruction)}</strong></p>
+
+            <div class="options-grid">
+              ${q.options.map(opt => {
+                const optLetter = opt.trim().charAt(0);
+                return `
+                  <label class="option-card" onclick="selectOption('${q.id}', '${optLetter}', this)">
+                    <input type="radio" name="${q.id}" value="${optLetter}" />
+                    <span class="option-indicator"></span>
+                    <span class="option-label">${escapeHtml(opt)}</span>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectOption(questionId, letter, el) {
+      AudioManager.click();
+      studentAnswers.pg[questionId] = letter;
+      
+      const parent = el.closest('.question-item');
+      if (parent) {
+        parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+    }
+
+    // Render 4 Soal Essay
+    function renderEssayQuestions() {
+      const container = document.getElementById('essayContainer');
+      if (!questionsData || !questionsData.essay) return;
+
+      container.innerHTML = questionsData.essay.map((q, idx) => {
+        let badgeClass = 'badge-elsa';
+        if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
+        if (q.presenter.includes('Irfan')) badgeClass = 'badge-irfan';
+        if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+
+        return `
+          <div class="question-item">
+            <div class="question-header">
+              <span class="question-number">Kasus Analisis #${idx + 1}</span>
+              <span class="badge ${badgeClass}">${q.presenter} • ${q.topic}</span>
+            </div>
+
+            <div class="passage-box">"${escapeHtml(q.source_text)}"</div>
+            <p class="question-text" style="white-space: pre-line;"><strong>${escapeHtml(q.question)}</strong></p>
+
+            <div class="form-group" style="margin-top: 14px;">
+              <label class="form-label">Jawaban Analisis Anda:</label>
+              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Tuliskan kata transisi, kategori, serta analisis fungsinya secara jelas..."></textarea>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render 5 Panduan Sesi Tanya Bebas
+    function renderTanyaBebas() {
+      const container = document.getElementById('tanyaContainer');
+      if (!questionsData || !questionsData.tanya_bebas) return;
+
+      container.innerHTML = questionsData.tanya_bebas.map((t, idx) => {
+        return `
+          <div class="prompt-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="badge badge-live">${t.student_label}</span>
+              <span class="badge badge-room">Target: ${t.target_presenter}</span>
+            </div>
+            <p style="font-size: 1rem; font-weight: 600; color: #f8fafc; margin-bottom: 8px;">
+              "${escapeHtml(t.prompt_question)}"
+            </p>
+            <div style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 6px;">
+              <strong style="color: #a5b4fc;">Poin Diskusi:</strong> ${escapeHtml(t.talking_points)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Submit Pilihan Ganda
+    function submitPgQuiz() {
+      const name = getValidatedName();
+      if (!name) return;
+      const num = document.getElementById('studentNumber').value.trim() || "-";
+
+      // Cek kelengkapan
+      const totalPg = questionsData.pg.length;
+      const answeredCount = Object.keys(studentAnswers.pg).length;
+      if (answeredCount < totalPg) {
+        if (!confirm(`Anda baru menjawab ${answeredCount} dari ${totalPg} soal. Yakin ingin mengirim sekarang?`)) {
+          return;
+        }
+      }
+
+      // Hitung skor otomatis
+      let correctCount = 0;
+      const reviewDetails = [];
+
+      questionsData.pg.forEach(item => {
+        const studentChoice = studentAnswers.pg[item.id] || "-";
+        const isCorrect = studentChoice.toUpperCase() === item.correct.toUpperCase();
+        if (isCorrect) correctCount++;
+        reviewDetails.push({
+          id: item.id,
+          category: item.category,
+          studentChoice: studentChoice,
+          correct: item.correct,
+          isCorrect: isCorrect,
+          explanation: item.explanation
+        });
+      });
+
+      const score = Math.round((correctCount / totalPg) * 100);
+
+      // Payload Realtime
+      const payload = {
+        name: name,
+        studentNumber: num,
+        type: 'pilihan_ganda',
+        score: score,
+        correctCount: correctCount,
+        totalQuestions: totalPg,
+        answers: studentAnswers.pg,
+        reviewDetails: reviewDetails
+      };
+
+      RealtimeSync.submitAnswer(payload);
+
+      // Feedback Suara & Visual
+      AudioManager.success();
+      triggerConfetti();
+
+      // Show Modal
+      showModal(
+        `🎉 Nilai Anda: ${score} / 100`,
+        `
+          <p>Halo <strong>${escapeHtml(name)}</strong>! Jawaban Anda telah berhasil terkirim ke layar monitoring presenter Elsa, Sofia, Irfan, dan Ahmad.</p>
+          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px; border-radius: 10px; margin: 16px 0; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: #34d399;">${score}</div>
+            <div style="font-size: 0.85rem; color: #a7f3d0;">Benar ${correctCount} dari ${totalPg} soal</div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Terima kasih atas partisipasi aktif Anda dalam kuis materi Transition Words & Connectors!
+          </p>
+        `
+      );
+
+      document.getElementById('btnSubmitPg').innerText = "✅ Jawaban Sudah Terkirim (Bisa Kirim Ulang Jika Mau)";
+    }
+
+    // Submit Essay
+    function submitEssayQuiz() {
+      const name = getValidatedName();
+      if (!name) return;
+      const num = document.getElementById('studentNumber').value.trim() || "-";
+
+      const essayResponses = {};
+      let hasAnyAnswer = false;
+
+      questionsData.essay.forEach(item => {
+        const text = (document.getElementById(`essay_${item.id}`).value || "").trim();
+        essayResponses[item.id] = {
+          topic: item.topic,
+          presenter: item.presenter,
+          answer: text
+        };
+        if (text) hasAnyAnswer = true;
+      });
+
+      if (!hasAnyAnswer) {
+        alert("Silakan isi setidaknya satu jawaban analisis sebelum mengirim!");
+        return;
+      }
+
+      const payload = {
+        name: name,
+        studentNumber: num,
+        type: 'essay',
+        essayResponses: essayResponses
+      };
+
+      RealtimeSync.submitAnswer(payload);
+      AudioManager.success();
+      triggerConfetti();
+
+      showModal(
+        "📝 Analisis Esai Berhasil Dikirim!",
+        `
+          <p>Terima kasih, <strong>${escapeHtml(name)}</strong>!</p>
+          <p>Jawaban analisis kasus Anda telah dikirim secara realtime ke dashboard monitoring presenter untuk dinilai sesuai rubrik materi Elsa, Sofia, Irfan, dan Ahmad.</p>
+        `
+      );
+    }
+
+    // Submit Custom Question (Sesi Tanya Bebas)
+    function submitCustomQuestion() {
+      const name = getValidatedName();
+      if (!name) return;
+      const num = document.getElementById('studentNumber').value.trim() || "-";
+      const target = document.getElementById('targetPresenterSelect').value;
+      const text = document.getElementById('customQuestionText').value.trim();
+
+      if (!text) {
+        alert("Harap tuliskan pertanyaan Anda terlebih dahulu!");
+        return;
+      }
+
+      const payload = {
+        name: name,
+        studentNumber: num,
+        type: 'tanya_bebas',
+        targetPresenter: target,
+        questionText: text
+      };
+
+      RealtimeSync.submitAnswer(payload);
+      AudioManager.chime();
+
+      showModal(
+        "💬 Pertanyaan Diterima!",
+        `
+          <p>Pertanyaan dari <strong>${escapeHtml(name)}</strong> ditujukan kepada <strong>${escapeHtml(target)}</strong>:</p>
+          <div class="passage-box" style="margin: 14px 0;">"${escapeHtml(text)}"</div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Pertanyaan Anda telah muncul di layar presenter untuk dibahas!</p>
+        `
+      );
+
+      document.getElementById('customQuestionText').value = "";
+    }
+
+    function getValidatedName() {
+      const nameInput = document.getElementById('studentName');
+      const name = (nameInput.value || "").trim();
+      if (!name) {
+        alert("Silakan masukkan Nama Lengkap Anda terlebih dahulu!");
+        nameInput.focus();
+        return null;
+      }
+      localStorage.setItem('student_name', name);
+      localStorage.setItem('student_number', document.getElementById('studentNumber').value.trim());
+      return name;
+    }
+
+    function showModal(title, bodyHtml) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerHTML = bodyHtml;
+      document.getElementById('resultModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('resultModal').classList.remove('active');
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
