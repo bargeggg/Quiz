@@ -484,7 +484,7 @@
       }
     }
 
-    // Render Current Question Card in Focus Mode (NO PRESENTER NAMES!)
+    // Render Current Question Card in Focus Mode
     function renderFocusQuestion() {
       const card = document.getElementById('currentFocusCard');
       if (!card || !questionsData) return;
@@ -492,18 +492,6 @@
       const q = questionsData.pg[currentQuestionIndex];
       const state = liveQuestionsState[q.id];
       const isAnswered = !!state;
-
-      // Retain or get current respondent NIP and name from input if present
-      let currentRespondentNip = "";
-      let currentRespondentName = "";
-      const existingNipInput = document.getElementById('respondentNipInput');
-      const existingNameInput = document.getElementById('respondentNameInput');
-      if (existingNipInput) currentRespondentNip = existingNipInput.value.trim();
-      if (existingNameInput) currentRespondentName = existingNameInput.value.trim();
-      if (state) {
-        if (state.respondentNip) currentRespondentNip = state.respondentNip;
-        if (state.respondentName) currentRespondentName = state.respondentName;
-      }
 
       let optionsHtml = q.options.map(opt => {
         const letter = opt.trim().charAt(0);
@@ -518,7 +506,7 @@
             badgeHtml = `<span class="opt-badge-tag correct">✅ Correct Answer</span>`;
           } else if (letter.toUpperCase() === state.chosen.toUpperCase() && !state.isCorrect) {
             itemClass += " wrong";
-            badgeHtml = `<span class="opt-badge-tag wrong">❌ ${escapeHtml(state.respondentName)}'s Choice</span>`;
+            badgeHtml = `<span class="opt-badge-tag wrong">❌ Chosen Option</span>`;
           } else {
             itemClass += " dimmed";
           }
@@ -536,8 +524,8 @@
       let explanationHtml = "";
       if (isAnswered) {
         const outcomeTitle = state.isCorrect 
-          ? `🎉 Correct! Outstanding answer, <strong>${escapeHtml(state.respondentName)}</strong> (NIP: ${escapeHtml(state.respondentNip)})!` 
-          : `❌ Not quite! <strong>${escapeHtml(state.respondentName)}</strong> (NIP: ${escapeHtml(state.respondentNip)}) chose (${state.chosen}), but the correct key is (${q.correct}).`;
+          ? `🎉 Correct! Jawaban Tepat!` 
+          : `❌ Kurang Tepat! Pilihan (${state.chosen}) dipilih, namun kunci jawaban yang benar adalah (${q.correct}).`;
         
         const outcomeBg = state.isCorrect 
           ? "border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.45);" 
@@ -558,7 +546,7 @@
         `;
       }
 
-      // NOTE: Presenter badges (Irfan, etc.) have been completely removed!
+      // Render Question Card without category spoiler and without respondent input box
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; align-items:center; gap:8px;">
@@ -566,9 +554,6 @@
               Question ${currentQuestionIndex + 1} of 10
             </span>
           </div>
-          <span class="badge badge-live" style="font-size:0.86rem; padding:6px 14px; font-weight:700;">
-            Category: ${escapeHtml(q.category)}
-          </span>
         </div>
 
         <!-- Question Passage Box with Large Font for Zoom Screen Share -->
@@ -579,56 +564,6 @@
         <p style="font-size: 1.05rem; font-weight: 700; color: #cbd5e1; margin-bottom: 18px;">
           ${escapeHtml(q.instruction)}
         </p>
-
-        <!-- Live Respondent Input Bar (NIP & Full Name Required) -->
-        <div class="respondent-id-card">
-          <div class="respondent-id-header">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span class="respondent-icon-badge">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </span>
-              <div>
-                <span class="respondent-card-title">Identitas Penjawab (Peserta Zoom)</span>
-                <span class="respondent-card-subtitle">Wajib diisi sebelum mengeklik opsi pilihan jawaban</span>
-              </div>
-            </div>
-            <span class="badge-required-pill">Wajib Diisi</span>
-          </div>
-
-          <div class="respondent-grid">
-            <div class="pro-field-group">
-              <label class="pro-label" for="respondentNipInput">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                  <line x1="7" y1="8" x2="17" y2="8"></line>
-                  <line x1="7" y1="12" x2="13" y2="12"></line>
-                </svg>
-                <span>NIP / NIM Mahasiswa</span>
-              </label>
-              <input type="text" id="respondentNipInput" class="pro-field-input" 
-                placeholder="Contoh: 199801122022031001 atau NIM" 
-                value="${escapeHtml(currentRespondentNip)}"
-                ${isAnswered ? 'disabled' : ''} />
-            </div>
-
-            <div class="pro-field-group">
-              <label class="pro-label" for="respondentNameInput">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span>Nama Lengkap Mahasiswa</span>
-              </label>
-              <input type="text" id="respondentNameInput" class="pro-field-input" 
-                placeholder="Contoh: Muhammad Kahfi" 
-                value="${escapeHtml(currentRespondentName)}"
-                ${isAnswered ? 'disabled' : ''} />
-            </div>
-          </div>
-        </div>
 
         <!-- 4 Options List -->
         <div class="options-list">
@@ -646,17 +581,6 @@
       if (nextBtn) nextBtn.disabled = (currentQuestionIndex === questionsData.pg.length - 1);
     }
 
-    // Handle Quick Student Selection
-    function onSelectQuickStudent(nip) {
-      const student = CLASS_STUDENTS.find(s => s.nip === nip);
-      if (!student) return;
-      const nipEl = document.getElementById('respondentNipInput');
-      const nameEl = document.getElementById('respondentNameInput');
-      if (nipEl) nipEl.value = student.nip;
-      if (nameEl) nameEl.value = student.name;
-      playSfx('click');
-    }
-
     // Handle Option Selection & Instant Game-Show Reveal
     function handleOptionSelect(qId, letter) {
       if (!questionsData) return;
@@ -666,24 +590,6 @@
       // If already answered, don't re-trigger unless reset
       if (liveQuestionsState[qId]) return;
 
-      const nipInput = document.getElementById('respondentNipInput');
-      const nameInput = document.getElementById('respondentNameInput');
-      const rawNip = (nipInput && nipInput.value.trim()) || "";
-      const rawName = (nameInput && nameInput.value.trim()) || "";
-
-      // Mandatory validation: NIP & Name must be provided before answering!
-      if (!rawNip || !rawName) {
-        alert("⚠️ Harap masukkan NIP dan Nama peserta terlebih dahulu sebelum memilih jawaban!");
-        if (!rawNip && nipInput) nipInput.focus();
-        else if (!rawName && nameInput) nameInput.focus();
-        return;
-      }
-
-      // Auto-normalize if NIP and Name were inverted by user
-      const { nip, name } = normalizeParticipant(rawNip, rawName);
-      if (nipInput && nipInput.value !== nip) nipInput.value = nip;
-      if (nameInput && nameInput.value !== name) nameInput.value = name;
-
       const isCorrect = (letter.toUpperCase() === q.correct.toUpperCase());
 
       // Save state
@@ -691,8 +597,6 @@
         answered: true,
         chosen: letter,
         correct: q.correct,
-        respondentNip: nip,
-        respondentName: name,
         isCorrect: isCorrect
       };
 
@@ -704,13 +608,9 @@
         playSfx('wrong');
       }
 
-      // Record to Scoreboard
-      recordScore(nip, name, isCorrect);
-
       // Re-render UI
       renderFocusQuestion();
       buildQuestionPills();
-      updateScoreboardBadge();
     }
 
     // Reset Current Question (Try Again)
@@ -751,17 +651,6 @@
         buildQuestionPills();
         playSfx('click');
       }
-    }
-
-    // Quick Random Student Picker
-    function pickRandomStudent() {
-      const randomIndex = Math.floor(Math.random() * CLASS_STUDENTS.length);
-      const student = CLASS_STUDENTS[randomIndex];
-      const nipEl = document.getElementById('respondentNipInput');
-      const nameEl = document.getElementById('respondentNameInput');
-      if (nipEl) nipEl.value = student.nip;
-      if (nameEl) nameEl.value = student.name;
-      playSfx('spinTick');
     }
 
     // Record Score to Live Scoreboard by NIP & Name
