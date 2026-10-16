@@ -55,6 +55,10 @@
           👥 <span id="onlineCount">0</span> Online
         </span>
 
+        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Musik Santai">
+          🎵 Musik: <span id="topMusicStatus">OFF</span>
+        </button>
+
         <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Suara">🔊</button>
       </div>
     </header>
@@ -1001,6 +1005,60 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+
+    // Chill BGM Event Listeners for Presenter
+    AudioManager.onBgmStateChange((state) => {
+      const btn = document.getElementById('adminMusicPlayBtn');
+      const wave = document.getElementById('adminSoundwaveAnim');
+      const sub = document.getElementById('adminMusicStatusSubtitle');
+      const topStatus = document.getElementById('topMusicStatus');
+
+      if (state.isPlaying && !state.isMuted) {
+        if (btn) btn.innerHTML = "⏸";
+        if (wave) wave.classList.add('playing');
+        if (sub) sub.innerText = "Musik santai sedang diputar...";
+        if (topStatus) { topStatus.innerText = "ON 🎶"; topStatus.style.color = "#34d399"; }
+      } else {
+        if (btn) btn.innerHTML = "▶";
+        if (wave) wave.classList.remove('playing');
+        if (sub) sub.innerText = "Klik untuk memutar musik santai";
+        if (topStatus) { topStatus.innerText = "OFF"; topStatus.style.color = "inherit"; }
+      }
+    });
+
+    function toggleBgm() { AudioManager.toggleBGM(); }
+    function toggleBgmQuick() { AudioManager.toggleBGM(); }
+    function changeVolume(val) { AudioManager.setBGMVolume(val); }
+    function changeTrack() {
+      const mode = document.getElementById('adminTrackSelect').value;
+      AudioManager.setBGMTrack(mode);
+      document.getElementById('adminMusicTrackName').innerText = mode === 'lofi' ? "☕ Cozy Lo-Fi Chords" : "🌌 Ambient Chill Pad";
+    }
   </script>
+
+  <!-- Floating Chill Music Player for Host -->
+  <div class="chill-music-widget" id="adminMusicWidget">
+    <button class="music-play-btn" onclick="toggleBgm()" id="adminMusicPlayBtn" title="Putar/Jeda Musik Santai">
+      ▶
+    </button>
+    <div class="music-info">
+      <div class="music-title">
+        <span id="adminMusicTrackName">☕ Chill Lo-Fi Chords</span>
+        <div class="soundwave" id="adminSoundwaveAnim">
+          <div class="soundwave-bar"></div>
+          <div class="soundwave-bar"></div>
+          <div class="soundwave-bar"></div>
+          <div class="soundwave-bar"></div>
+        </div>
+      </div>
+      <div class="music-status" id="adminMusicStatusSubtitle">Klik untuk memutar musik santai kelas</div>
+    </div>
+    <select class="form-control" id="adminTrackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08);">
+      <option value="lofi">☕ Cozy Lo-Fi</option>
+      <option value="ambient">🌌 Ambient Chill</option>
+    </select>
+    <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Volume Musik" />
+  </div>
+
 </body>
 </html>

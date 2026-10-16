@@ -8,7 +8,7 @@
   <!-- Modern Fonts & Styles -->
   <link rel="stylesheet" href="assets/style.css" />
 
-  <!-- External Libraries (MQTT, Confetti, Firebase) -->
+  <!-- External Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -28,29 +28,35 @@
         <div class="brand-icon">✨</div>
         <div>
           <h1 class="brand-title">Transition Words Quiz</h1>
-          <div class="brand-subtitle">Kelompok: Elsa • Sofia • Irfan • Ahmad</div>
+          <div class="brand-subtitle">Tim: Elsa • Sofia • Irfan • Ahmad | Sesi 19 Siswa</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span class="badge badge-room" id="roomBadge">Room: ...</span>
         <span class="badge badge-live" id="statusBadge">
           <span class="pulse-dot" id="statusDot"></span>
           <span id="statusText">Menghubungkan</span>
         </span>
+        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Musik Santai">
+          🎵 Musik: <span id="topMusicStatus">OFF</span>
+        </button>
         <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Suara">🔊</button>
       </div>
     </header>
 
     <!-- Student Identity Card -->
     <div class="glass-card" id="studentProfileCard">
-      <h2 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 14px;">👤 Identitas Peserta</h2>
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.15rem;">👤 Identitas Peserta Kuis</h2>
+        <span class="badge badge-irfan">Alokasi Kelas</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px;">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Nama Lengkap Siswa</label>
           <input type="text" id="studentName" class="form-control" placeholder="Contoh: Budi Santoso" required />
         </div>
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">No. Siswa (1 - 19)</label>
+          <label class="form-label">Nomor Siswa (1 - 19)</label>
           <input type="number" id="studentNumber" class="form-control" min="1" max="19" placeholder="1 - 19" />
         </div>
       </div>
@@ -62,7 +68,7 @@
         <span>🎯</span> Quiz #2: Pilihan Ganda (10)
       </button>
       <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
-        <span>📝</span> Quiz #1: Essay / Kasus (4)
+        <span>📝</span> Quiz #1: Kasus Esai (4)
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
         <span>💬</span> Sesi Tanya Bebas (5)
@@ -71,42 +77,63 @@
 
     <!-- TAB 1: Pilihan Ganda (10 Soal) -->
     <div id="tabContentPg" class="tab-pane">
-      <div class="glass-card" style="border-left: 4px solid var(--primary);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">🎯 Quiz #2: Pilihan Ganda (10 Soal)</h3>
-          <span class="badge badge-irfan">Materi Gabungan 4 Presenter</span>
+      
+      <!-- View Mode & Jump Navigator Strip -->
+      <div class="question-strip-wrapper">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Pilih Nomor Soal:</span>
+          <div class="question-pills-grid" id="questionPillsContainer">
+            <!-- Pills 1 to 10 generated via JS -->
+          </div>
         </div>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          Pilihlah satu jawaban yang paling tepat untuk setiap soal. Jawaban dan skor Anda akan langsung terkirim secara realtime ke laptop presenter!
-        </p>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-secondary btn-sm" onclick="toggleViewMode()" id="viewModeToggleBtn">
+            📑 Tampilkan Semua Soal
+          </button>
+        </div>
       </div>
 
-      <div id="pgContainer">
-        <!-- Rendered dynamically via JS -->
-        <div style="text-align:center; padding: 40px; color: var(--text-dim);">Memuat bank soal...</div>
+      <!-- Mode 1: Focus Carousel Mode (Satu per satu) -->
+      <div id="focusModeContainer">
+        <div class="focus-question-box" id="currentFocusCard">
+          <!-- Rendered via JS -->
+          <div style="text-align:center; padding: 40px; color: var(--text-dim);">Memuat bank soal...</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+          <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
+            ← Soal Sebelumnya
+          </button>
+          <span style="font-size:0.9rem; font-weight:600; color:var(--text-muted);" id="focusQuestionCounter">
+            Soal 1 dari 10
+          </span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
+            Soal Berikutnya →
+          </button>
+        </div>
       </div>
 
-      <div class="glass-card" style="text-align: center; margin-top: 20px;">
-        <button class="btn btn-primary btn-lg btn-block" onclick="submitPgQuiz()" id="btnSubmitPg">
-          🚀 Kirim Semua Jawaban Pilihan Ganda
-        </button>
+      <!-- Mode 2: All Questions Grid Mode -->
+      <div id="allQuestionsContainer" style="display: none;">
+        <!-- Rendered via JS -->
       </div>
+
     </div>
 
     <!-- TAB 2: Essay / Analisis (4 Soal) -->
     <div id="tabContentEssay" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--elsa);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">📝 Quiz #1: Analisis Kasus & Esai (4 Soal)</h3>
-          <span class="badge badge-elsa">4 Perwakilan / Penampil</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Analisis Kasus Esai (4 Soal)</h3>
+          <span class="badge badge-elsa">4 Siswa Penampil</span>
         </div>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          Diberikan kepada 4 siswa penampil atau perwakilan kelompok. Analisislah teks kalimat dengan cermat dan tuliskan jawabanmu di kolom yang disediakan.
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Diberikan kepada 4 siswa penampil atau perwakilan kelompok. Bacalah kasus dengan cermat dan tuliskan analisismu secara lengkap.
         </p>
       </div>
 
       <div id="essayContainer">
-        <!-- Rendered dynamically via JS -->
+        <!-- Rendered via JS -->
       </div>
 
       <div class="glass-card" style="text-align: center; margin-top: 20px;">
@@ -120,21 +147,21 @@
     <div id="tabContentTanya" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">💬 Panduan Sesi Tanya Bebas (5 Penanya)</h3>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Panduan Sesi Tanya Bebas (5 Penanya)</h3>
           <span class="badge badge-ahmad">Siswa 15 - 19</span>
         </div>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          Gunakan kartu pemantik diskusi berikut bila Anda ditunjuk pada sesi tanya jawab bebas, atau ajukan pertanyaan kritis langsung kepada Elsa, Sofia, Irfan, atau Ahmad!
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Gunakan kartu pemantik diskusi berikut bila Anda ditunjuk pada sesi tanya jawab bebas, atau kirimkan pertanyaan kritis langsung ke layar presenter!
         </p>
       </div>
 
       <div id="tanyaContainer">
-        <!-- Rendered dynamically via JS -->
+        <!-- Rendered via JS -->
       </div>
 
-      <!-- Kotak Custom Pertanyaan untuk Siswa -->
+      <!-- Custom Question Form -->
       <div class="glass-card">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Punya Pertanyaan Sendiri untuk Presenter?</h4>
+        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Ajukan Pertanyaan Sendiri ke Presenter:</h4>
         <div class="form-group">
           <label class="form-label">Tujukan Pertanyaan Kepada:</label>
           <select id="targetPresenterSelect" class="form-control">
@@ -146,7 +173,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Tuliskan Pertanyaan Anda:</label>
+          <label class="form-label">Tuliskan Pertanyaan Diskusi:</label>
           <textarea id="customQuestionText" class="form-control" rows="3" placeholder="Tuliskan pertanyaan diskusi Anda di sini..."></textarea>
         </div>
         <button class="btn btn-primary btn-block" onclick="submitCustomQuestion()">
@@ -155,97 +182,294 @@
       </div>
     </div>
 
-    <!-- Submission Result Modal -->
+    <!-- Floating Chill Music Player Widget -->
+    <div class="chill-music-widget" id="musicWidget">
+      <button class="music-play-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Putar/Jeda Musik Santai">
+        ▶
+      </button>
+      <div class="music-info">
+        <div class="music-title">
+          <span id="musicTrackName">☕ Chill Lo-Fi Chords</span>
+          <div class="soundwave" id="soundwaveAnim">
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+          </div>
+        </div>
+        <div class="music-status" id="musicStatusSubtitle">Klik untuk memutar musik santai</div>
+      </div>
+      <select class="form-control" id="trackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08);">
+        <option value="lofi">☕ Cozy Lo-Fi</option>
+        <option value="ambient">🌌 Ambient Chill</option>
+      </select>
+      <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Volume Musik" />
+    </div>
+
+    <!-- Bottom Progress Dock (Always Visible during Quiz) -->
+    <div class="bottom-progress-dock" id="bottomDock">
+      <div style="font-size:0.88rem; font-weight:700; color:#f8fafc;" id="dockProgressText">
+        Terjawab: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Soal
+      </div>
+      <div class="progress-track-wrapper">
+        <div class="progress-track">
+          <div class="progress-fill" id="dockProgressFill"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="submitPgQuiz()" id="dockSubmitBtn">
+        🚀 Kirim Jawaban
+      </button>
+    </div>
+
+    <!-- Result / Confirmation Modal -->
     <div class="modal-overlay" id="resultModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="modalTitle">🎉 Jawaban Terkirim!</h3>
+          <h3 class="modal-title" id="modalTitle">🎉 Hasil Kuis Anda</h3>
           <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         <div id="modalBody" style="font-size: 0.95rem; line-height: 1.6;">
-          <!-- Result text injected here -->
+          <!-- Injected via JS -->
         </div>
         <div style="margin-top: 20px; text-align: right;">
-          <button class="btn btn-primary" onclick="closeModal()">Tutup & Kembali</button>
+          <button class="btn btn-primary" onclick="closeModal()">Tutup & Selesai</button>
         </div>
       </div>
     </div>
-
-    <!-- Footer info -->
-    <footer style="text-align: center; margin-top: 32px; color: var(--text-dim); font-size: 0.8rem;">
-      <p>Kuis Presentasi "Transition Words & Connectors" • Semester 5</p>
-      <p style="margin-top: 4px;">Terhubung secara realtime dengan dashboard monitoring presenter.</p>
-    </footer>
 
   </div>
 
   <script>
     let questionsData = null;
     let studentAnswers = { pg: {}, essay: {} };
+    let currentQuestionIndex = 0; // 0 to 9
+    let isAllViewMode = false; // toggle focus vs all
 
-    // Inisialisasi Aplikasi
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Inisialisasi Realtime Engine
-      const syncInfo = RealtimeSync.init({
+      // 1. Inisialisasi Realtime
+      RealtimeSync.init({
         role: 'player',
         onStatusChange: (connected, msg) => {
           const statusText = document.getElementById('statusText');
           const statusDot = document.getElementById('statusDot');
           if (statusText) statusText.innerText = connected ? "Terhubung" : "Fallback";
-          if (statusDot) {
-            statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
-          }
+          if (statusDot) statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
         }
       });
 
       document.getElementById('roomBadge').innerText = `Room: ${RealtimeSync.getRoomId()}`;
 
-      // 2. Load Bank Soal dari questions.json
+      // 2. Load questions.json
       fetch('questions.json')
         .then(res => res.json())
         .then(data => {
           questionsData = data;
-          renderPgQuestions();
+          buildQuestionPills();
+          renderFocusQuestion();
+          renderAllPgQuestions();
           renderEssayQuestions();
           renderTanyaBebas();
+          updateProgressUI();
         })
         .catch(err => {
-          console.error("Gagal memuat questions.json", err);
-          document.getElementById('pgContainer').innerHTML = `
-            <div class="glass-card" style="color: #ef4444;">
-              Gagal memuat bank soal questions.json. Pastikan file berada di folder yang sama.
-            </div>
-          `;
+          console.error("Gagal load questions.json", err);
         });
 
-      // Restore nama dari localStorage jika ada
+      // 3. Audio BGM Listeners
+      AudioManager.onBgmStateChange((state) => {
+        const btn = document.getElementById('musicPlayBtn');
+        const wave = document.getElementById('soundwaveAnim');
+        const sub = document.getElementById('musicStatusSubtitle');
+        const topStatus = document.getElementById('topMusicStatus');
+
+        if (state.isPlaying && !state.isMuted) {
+          btn.innerHTML = "⏸";
+          wave.classList.add('playing');
+          sub.innerText = "Sedang memutar musik santai...";
+          topStatus.innerText = "ON 🎶";
+          topStatus.style.color = "#34d399";
+        } else {
+          btn.innerHTML = "▶";
+          wave.classList.remove('playing');
+          sub.innerText = "Klik untuk memutar musik santai";
+          topStatus.innerText = "OFF";
+          topStatus.style.color = "inherit";
+        }
+      });
+
+      // Restore data siswa jika ada
       const savedName = localStorage.getItem('student_name');
       const savedNumber = localStorage.getItem('student_number');
       if (savedName) document.getElementById('studentName').value = savedName;
       if (savedNumber) document.getElementById('studentNumber').value = savedNumber;
     });
 
-    // Tab Switching
+    // BGM Controls
+    function toggleBgm() {
+      AudioManager.toggleBGM();
+    }
+
+    function toggleBgmQuick() {
+      AudioManager.toggleBGM();
+    }
+
+    function changeVolume(val) {
+      AudioManager.setBGMVolume(val);
+    }
+
+    function changeTrack() {
+      const mode = document.getElementById('trackSelect').value;
+      AudioManager.setBGMTrack(mode);
+      document.getElementById('musicTrackName').innerText = mode === 'lofi' ? "☕ Cozy Lo-Fi Chords" : "🌌 Ambient Chill Pad";
+    }
+
+    // Tabs
     function switchTab(tab) {
       AudioManager.click();
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
 
+      const dock = document.getElementById('bottomDock');
+
       if (tab === 'pg') {
         document.getElementById('tabBtnPg').classList.add('active');
         document.getElementById('tabContentPg').style.display = 'block';
+        dock.style.display = 'flex';
       } else if (tab === 'essay') {
         document.getElementById('tabBtnEssay').classList.add('active');
         document.getElementById('tabContentEssay').style.display = 'block';
+        dock.style.display = 'none';
       } else if (tab === 'tanya') {
         document.getElementById('tabBtnTanya').classList.add('active');
         document.getElementById('tabContentTanya').style.display = 'block';
+        dock.style.display = 'none';
       }
     }
 
-    // Render 10 Soal Pilihan Ganda
-    function renderPgQuestions() {
-      const container = document.getElementById('pgContainer');
+    // Navigator Pills
+    function buildQuestionPills() {
+      const container = document.getElementById('questionPillsContainer');
+      if (!container || !questionsData || !questionsData.pg) return;
+
+      container.innerHTML = "";
+      questionsData.pg.forEach((_, idx) => {
+        const pill = document.createElement('div');
+        pill.className = `q-pill ${idx === currentQuestionIndex ? 'active' : ''}`;
+        pill.id = `pill_${idx}`;
+        pill.innerText = idx + 1;
+        pill.onclick = () => jumpToQuestion(idx);
+        container.appendChild(pill);
+      });
+    }
+
+    function jumpToQuestion(idx) {
+      AudioManager.click();
+      currentQuestionIndex = idx;
+      if (isAllViewMode) {
+        // Scroll ke card terkait di all view
+        const target = document.getElementById(`card_all_${questionsData.pg[idx].id}`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        renderFocusQuestion();
+      }
+      updatePillsUI();
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        jumpToQuestion(currentQuestionIndex - 1);
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < questionsData.pg.length - 1) {
+        jumpToQuestion(currentQuestionIndex + 1);
+      }
+    }
+
+    function toggleViewMode() {
+      AudioManager.click();
+      isAllViewMode = !isAllViewMode;
+      const focusEl = document.getElementById('focusModeContainer');
+      const allEl = document.getElementById('allQuestionsContainer');
+      const btn = document.getElementById('viewModeToggleBtn');
+
+      if (isAllViewMode) {
+        focusEl.style.display = 'none';
+        allEl.style.display = 'block';
+        btn.innerText = "🎯 Tampilkan Mode Fokus (1 per 1)";
+      } else {
+        focusEl.style.display = 'block';
+        allEl.style.display = 'none';
+        btn.innerText = "📑 Tampilkan Semua Soal";
+        renderFocusQuestion();
+      }
+    }
+
+    // Render 1 Soal Fokus
+    function renderFocusQuestion() {
+      const card = document.getElementById('currentFocusCard');
+      if (!questionsData || !questionsData.pg) return;
+
+      const q = questionsData.pg[currentQuestionIndex];
+      let badgeClass = 'badge-irfan';
+      if (q.presenter.includes('Elsa')) badgeClass = 'badge-elsa';
+      if (q.presenter.includes('Sofia')) badgeClass = 'badge-sofia';
+      if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
+
+      const selectedOpt = studentAnswers.pg[q.id] || null;
+
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; flex-wrap:wrap; gap:8px;">
+          <span style="font-family:var(--font-heading); font-size:1.15rem; font-weight:800; color:var(--primary);">
+            Soal ${currentQuestionIndex + 1} dari ${questionsData.pg.length}
+          </span>
+          <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
+        </div>
+
+        <div class="passage-box">"${escapeHtml(q.q)}"</div>
+        <p style="font-size:1.05rem; font-weight:700; margin-bottom: 18px; color:#f8fafc;">
+          ${escapeHtml(q.instruction)}
+        </p>
+
+        <div class="options-list">
+          ${q.options.map(opt => {
+            const letter = opt.trim().charAt(0);
+            const isSelected = selectedOpt === letter;
+            return `
+              <div class="option-btn ${isSelected ? 'selected' : ''}" onclick="selectFocusOption('${q.id}', '${letter}')">
+                <div class="opt-letter-tag">${letter}</div>
+                <div class="opt-text">${escapeHtml(opt)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      document.getElementById('focusQuestionCounter').innerText = `Soal ${currentQuestionIndex + 1} dari ${questionsData.pg.length}`;
+      document.getElementById('btnPrevQ').disabled = currentQuestionIndex === 0;
+      document.getElementById('btnNextQ').innerText = currentQuestionIndex === questionsData.pg.length - 1 ? "Selesai (Periksa)" : "Soal Berikutnya →";
+      updatePillsUI();
+    }
+
+    function selectFocusOption(qid, letter) {
+      AudioManager.click();
+      studentAnswers.pg[qid] = letter;
+      renderFocusQuestion();
+      updateProgressUI();
+      syncAllViewOption(qid, letter);
+
+      // Otomatis pindah ke soal berikutnya setelah delay halus jika belum di nomor terakhir
+      if (currentQuestionIndex < questionsData.pg.length - 1) {
+        setTimeout(() => {
+          nextQuestion();
+        }, 350);
+      }
+    }
+
+    // Render All Questions (Grid View)
+    function renderAllPgQuestions() {
+      const container = document.getElementById('allQuestionsContainer');
       if (!questionsData || !questionsData.pg) return;
 
       container.innerHTML = questionsData.pg.map((q, idx) => {
@@ -255,24 +479,21 @@
         if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
 
         return `
-          <div class="question-item" id="card_${q.id}">
-            <div class="question-header">
-              <span class="question-number">Soal ${idx + 1} of 10</span>
+          <div class="glass-card" id="card_all_${q.id}" style="margin-bottom:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span style="font-family:var(--font-heading); font-weight:700; color:var(--primary);">Nomor ${idx + 1}</span>
               <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
             </div>
-            
             <div class="passage-box">"${escapeHtml(q.q)}"</div>
-            <p class="question-text"><strong>${escapeHtml(q.instruction)}</strong></p>
-
-            <div class="options-grid">
+            <p style="font-weight:600; margin-bottom:14px;">${escapeHtml(q.instruction)}</p>
+            <div class="options-list">
               ${q.options.map(opt => {
-                const optLetter = opt.trim().charAt(0);
+                const letter = opt.trim().charAt(0);
                 return `
-                  <label class="option-card" onclick="selectOption('${q.id}', '${optLetter}', this)">
-                    <input type="radio" name="${q.id}" value="${optLetter}" />
-                    <span class="option-indicator"></span>
-                    <span class="option-label">${escapeHtml(opt)}</span>
-                  </label>
+                  <div class="option-btn" id="opt_all_${q.id}_${letter}" onclick="selectFocusOption('${q.id}', '${letter}')">
+                    <div class="opt-letter-tag">${letter}</div>
+                    <div class="opt-text">${escapeHtml(opt)}</div>
+                  </div>
                 `;
               }).join('')}
             </div>
@@ -281,15 +502,35 @@
       }).join('');
     }
 
-    function selectOption(questionId, letter, el) {
-      AudioManager.click();
-      studentAnswers.pg[questionId] = letter;
-      
-      const parent = el.closest('.question-item');
+    function syncAllViewOption(qid, letter) {
+      const parent = document.getElementById(`card_all_${qid}`);
       if (parent) {
-        parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-        el.classList.add('selected');
+        parent.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+        const target = document.getElementById(`opt_all_${qid}_${letter}`);
+        if (target) target.classList.add('selected');
       }
+    }
+
+    function updatePillsUI() {
+      if (!questionsData || !questionsData.pg) return;
+      questionsData.pg.forEach((q, idx) => {
+        const pill = document.getElementById(`pill_${idx}`);
+        if (!pill) return;
+        pill.className = 'q-pill';
+        if (idx === currentQuestionIndex) pill.classList.add('active');
+        if (studentAnswers.pg[q.id]) pill.classList.add('answered');
+      });
+    }
+
+    function updateProgressUI() {
+      if (!questionsData || !questionsData.pg) return;
+      const total = questionsData.pg.length;
+      const count = Object.keys(studentAnswers.pg).length;
+      const pct = Math.round((count / total) * 100);
+
+      document.getElementById('answeredCountSpan').innerText = count;
+      document.getElementById('dockProgressFill').style.width = `${pct}%`;
+      updatePillsUI();
     }
 
     // Render 4 Soal Essay
@@ -304,41 +545,43 @@
         if (q.presenter.includes('Ahmad')) badgeClass = 'badge-ahmad';
 
         return `
-          <div class="question-item">
-            <div class="question-header">
-              <span class="question-number">Kasus Analisis #${idx + 1}</span>
+          <div class="glass-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span style="font-family:var(--font-heading); font-size:1.1rem; font-weight:700; color:var(--primary);">
+                Kasus Analisis #${idx + 1}
+              </span>
               <span class="badge ${badgeClass}">${q.presenter} • ${q.topic}</span>
             </div>
 
             <div class="passage-box">"${escapeHtml(q.source_text)}"</div>
-            <p class="question-text" style="white-space: pre-line;"><strong>${escapeHtml(q.question)}</strong></p>
+            <p style="white-space:pre-line; font-weight:600; margin-bottom:14px;">${escapeHtml(q.question)}</p>
 
-            <div class="form-group" style="margin-top: 14px;">
+            <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">Jawaban Analisis Anda:</label>
-              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Tuliskan kata transisi, kategori, serta analisis fungsinya secara jelas..."></textarea>
+              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Tuliskan kata transisi, kategori, serta analisis fungsinya..."></textarea>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Render 5 Panduan Sesi Tanya Bebas
+    // Render Tanya Bebas
     function renderTanyaBebas() {
       const container = document.getElementById('tanyaContainer');
       if (!questionsData || !questionsData.tanya_bebas) return;
 
-      container.innerHTML = questionsData.tanya_bebas.map((t, idx) => {
+      container.innerHTML = questionsData.tanya_bebas.map((t) => {
         return `
           <div class="prompt-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
               <span class="badge badge-live">${t.student_label}</span>
               <span class="badge badge-room">Target: ${t.target_presenter}</span>
             </div>
-            <p style="font-size: 1rem; font-weight: 600; color: #f8fafc; margin-bottom: 8px;">
+            <p style="font-size:1.02rem; font-weight:700; color:#f8fafc; margin-bottom:8px;">
               "${escapeHtml(t.prompt_question)}"
             </p>
-            <div style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 6px;">
-              <strong style="color: #a5b4fc;">Poin Diskusi:</strong> ${escapeHtml(t.talking_points)}
+            <div style="font-size:0.86rem; color:var(--text-muted); background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px;">
+              <strong style="color:#a5b4fc;">Poin Diskusi:</strong> ${escapeHtml(t.talking_points)}
             </div>
           </div>
         `;
@@ -351,7 +594,6 @@
       if (!name) return;
       const num = document.getElementById('studentNumber').value.trim() || "-";
 
-      // Cek kelengkapan
       const totalPg = questionsData.pg.length;
       const answeredCount = Object.keys(studentAnswers.pg).length;
       if (answeredCount < totalPg) {
@@ -360,7 +602,6 @@
         }
       }
 
-      // Hitung skor otomatis
       let correctCount = 0;
       const reviewDetails = [];
 
@@ -380,7 +621,6 @@
 
       const score = Math.round((correctCount / totalPg) * 100);
 
-      // Payload Realtime
       const payload = {
         name: name,
         studentNumber: num,
@@ -394,18 +634,16 @@
 
       RealtimeSync.submitAnswer(payload);
 
-      // Feedback Suara & Visual
       AudioManager.success();
       triggerConfetti();
 
-      // Show Modal
       showModal(
         `🎉 Nilai Anda: ${score} / 100`,
         `
-          <p>Halo <strong>${escapeHtml(name)}</strong>! Jawaban Anda telah berhasil terkirim ke layar monitoring presenter Elsa, Sofia, Irfan, dan Ahmad.</p>
-          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px; border-radius: 10px; margin: 16px 0; text-align: center;">
-            <div style="font-size: 2rem; font-weight: 800; color: #34d399;">${score}</div>
-            <div style="font-size: 0.85rem; color: #a7f3d0;">Benar ${correctCount} dari ${totalPg} soal</div>
+          <p>Halo <strong>${escapeHtml(name)}</strong>! Jawaban Anda telah terkirim ke layar monitoring presenter Elsa, Sofia, Irfan, dan Ahmad.</p>
+          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 16px; border-radius: 12px; margin: 18px 0; text-align: center;">
+            <div style="font-size: 2.5rem; font-weight: 800; color: #34d399;">${score}</div>
+            <div style="font-size: 0.9rem; color: #a7f3d0;">Benar ${correctCount} dari ${totalPg} soal</div>
           </div>
           <p style="font-size: 0.85rem; color: var(--text-muted);">
             Terima kasih atas partisipasi aktif Anda dalam kuis materi Transition Words & Connectors!
@@ -413,7 +651,7 @@
         `
       );
 
-      document.getElementById('btnSubmitPg').innerText = "✅ Jawaban Sudah Terkirim (Bisa Kirim Ulang Jika Mau)";
+      document.getElementById('dockSubmitBtn').innerText = "✅ Terkirim!";
     }
 
     // Submit Essay
@@ -455,12 +693,12 @@
         "📝 Analisis Esai Berhasil Dikirim!",
         `
           <p>Terima kasih, <strong>${escapeHtml(name)}</strong>!</p>
-          <p>Jawaban analisis kasus Anda telah dikirim secara realtime ke dashboard monitoring presenter untuk dinilai sesuai rubrik materi Elsa, Sofia, Irfan, dan Ahmad.</p>
+          <p>Jawaban esai Anda telah terkirim secara live ke layar presenter Elsa, Sofia, Irfan, dan Ahmad untuk dinilai.</p>
         `
       );
     }
 
-    // Submit Custom Question (Sesi Tanya Bebas)
+    // Submit Tanya Bebas
     function submitCustomQuestion() {
       const name = getValidatedName();
       if (!name) return;
@@ -489,7 +727,7 @@
         `
           <p>Pertanyaan dari <strong>${escapeHtml(name)}</strong> ditujukan kepada <strong>${escapeHtml(target)}</strong>:</p>
           <div class="passage-box" style="margin: 14px 0;">"${escapeHtml(text)}"</div>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Pertanyaan Anda telah muncul di layar presenter untuk dibahas!</p>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Pertanyaan Anda telah muncul di layar presenter!</p>
         `
       );
 
@@ -522,8 +760,8 @@
     function triggerConfetti() {
       if (typeof confetti === 'function') {
         confetti({
-          particleCount: 80,
-          spread: 70,
+          particleCount: 90,
+          spread: 75,
           origin: { y: 0.6 }
         });
       }
