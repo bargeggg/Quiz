@@ -1,94 +1,93 @@
-# 🎓 Kuis Interaktif: Transition Words & Connectors
-> **Kelompok Presenter:** Elsa (#1) • Sofia (#2) • Irfan (#3) • Ahmad (#4)  
-> **Link Slide Presentasi Canva:** [https://canva.link/otop855dny25lu6](https://canva.link/otop855dny25lu6)  
-> **Target Kelas:** 19 Siswa (4 Essay, 10 Pilihan Ganda, 5 Sesi Tanya Bebas)  
-> **Jadwal:** Deadline 22 Oktober 2026 | Latihan 23-24 Oktober 2026
+# 🎓 Interactive Quiz: Transition Words & Connectors
+> **Presenter Team:** Elsa (#1) • Sofia (#2) • Irfan (#3) • Ahmad (#4)  
+> **Canva Presentation Link:** [https://canva.link/otop855dny25lu6](https://canva.link/otop855dny25lu6)  
+> **Target Audience:** 19 Participants (4 Essay Cases, 10 Multiple Choice Questions, 5 Q&A Discussion Prompts)  
+> **Timeline:** Submission Deadline: October 22, 2026 | Rehearsal Sessions: October 23-24, 2026
 
 ---
 
-## 🌟 Fitur Unggulan Sistem
+## 🌟 Key Application Features
 
-1. **Akses Langsung Siswa (`index.html`)**:
-   - Teman sekelas cukup membuka link web lewat browser HP / laptop (atau scan QR code di layar proyektor).
-   - Dilengkapi 3 mode:
-     - 🎯 **Quiz #2: Pilihan Ganda (10 Soal)**: Auto-grading otomatis, skor langsung dihitung, highlight kata transisi.
-     - 📝 **Quiz #1: Analisis Kasus Esai (4 Soal)**: Pembagian kasus komprehensif untuk perwakilan kelompok.
-     - 💬 **Sesi Tanya Bebas (5 Pertanyaan)**: Kartu pemantik diskusi & kolom kirim pertanyaan live ke presenter.
-   - Efek suara sintetis (Web Audio API) & animasi selebrasi Confetti tanpa perlu download file MP3 eksternal.
+1. **Student / Participant Portal (`index.html`)**:
+   - Participants enter their **NIP** (Employee/Student ID) and **Full Name**.
+   - Accessible from any smartphone or laptop browser (or by scanning the projector QR code).
+   - Features 3 specialized assessment modes:
+     - 🎯 **Quiz #2: Multiple Choice (10 Questions)**: Focus carousel mode (one question at a time), instant number jump strip, real-time auto-grading, and progress dock.
+     - 📝 **Quiz #1: Essay Case Analysis (4 Cases)**: Comprehensive passages for assigned group representatives.
+     - 💬 **Q&A Discussion Session (5 Prompts)**: Structured inquiry cards & custom question transmission to presenters.
+   - **Procedural Lo-Fi Chill Music Player**: Built-in algorithmic synthesizer generating soothing chords (Web Audio API) with volume control and track styles (Cozy Lo-Fi / Ambient Chill). Zero external MP3 downloads required.
 
-2. **Dashboard Monitoring Realtime Presenter (`admin.html`)**:
-   - **Live Submissions Feed**: Jawaban teman yang masuk langsung tampil secara instan tanpa perlu reload halaman.
-   - **Auto-Grading & Review Detail**: Rekap nilai pilihan ganda dan rubrik esai untuk penilaian langsung.
-   - **🎡 Roda Keberuntungan (Wheel of Names)**: Putar roda untuk mengundi giliran 19 siswa secara interaktif saat presentasi.
-   - **📋 Matriks 19 Siswa & Kunci Jawaban**: Panduan cepat bagi Elsa, Sofia, Irfan, dan Ahmad saat menguji audiens.
-   - **📽️ Mode Layar Proyektor**: Tampilan fullscreen lengkap dengan QR Code besar untuk ditembakkan ke layar proyektor kelas.
-   - **Export CSV & Cetak Rekap**: Unduh rekap nilai seluruh siswa ke Excel/CSV untuk diserahkan ke dosen.
+2. **Presenter Live Monitoring Dashboard (`admin.html`)**:
+   - **Realtime Submissions Feed**: Incoming participant answers appear with millisecond latency without refreshing the browser.
+   - **Auto-Grading & Review**: Instant score breakdown for Multiple Choice and rubric guidance for Essays.
+   - **🎡 Wheel of Names (Randomizer)**: Interactive wheel to randomly pick students for Essays, Multiple Choice, or Q&A roles.
+   - **📋 19 Students Matrix & Answer Keys**: Side-by-side answer keys for Elsa, Sofia, Irfan, and Ahmad.
+   - **📽️ Projector Screen Mode**: Clean fullscreen display with large QR code and live participant counter.
+   - **CSV Export & Report Printing**: Download attendance & grade records directly into Excel / CSV format.
 
-3. **Koneksi Realtime Tanpa Ribet (Zero-Config Cloud Sync)**:
-   - Terhubung otomatis antar-perangkat via **MQTT over WebSocket TLS**.
-   - Mendukung **Firebase Realtime Database** bila ingin menyimpan arsip di Firebase pribadi.
-   - Dilengkapi fallback lokal untuk simulasi presentasi offline.
+3. **Seamless Realtime Cloud Sync**:
+   - Out-of-the-box cross-device communication via **MQTT over WebSocket TLS**.
+   - Optional support for **Firebase Realtime Database**.
+   - Local fallback for offline presentations.
 
 ---
 
-## 🚀 Cara Upload & Mengaktifkan GitHub Pages
+## 🚀 How to Push & Deploy to GitHub Pages
 
-Repositori ini sudah dihubungkan ke `https://github.com/bargeggg/Quiz.git`.
+This workspace is connected to `https://github.com/bargeggg/Quiz.git`.
 
-### Langkah 1: Push ke GitHub
-Jalankan perintah berikut di terminal (PowerShell):
+### Step 1: Push Updates to GitHub
+Run the following command in PowerShell:
 ```powershell
 git add .
-git commit -m "feat: complete interactive quiz and presenter monitoring dashboard"
-git push -u origin main
+git commit -m "feat: full English localization with NIP credentials and chill lo-fi music"
+git push origin main
 ```
-*(Bila diminta login, masukkan akun GitHub Anda atau Personal Access Token)*
 
-### Langkah 2: Aktifkan GitHub Pages (Agar Bisa Diakses Teman)
-1. Buka repo Anda: [https://github.com/bargeggg/Quiz](https://github.com/bargeggg/Quiz)
-2. Klik tab **Settings** (ikon gerigi di atas).
-3. Di sidebar sebelah kiri, klik menu **Pages**.
-4. Pada bagian **Build and deployment**:
-   - Di bawah **Source**, pilih **Deploy from a branch**.
-   - Branch: pilih **`main`** dan folder **`/ (root)`**.
-   - Klik **Save**.
-5. Tunggu sekitar 1–2 menit, Anda akan mendapatkan URL publik:
-   - 📱 **Link Kuis untuk Teman:**  
+### Step 2: Enable GitHub Pages
+1. Navigate to: [https://github.com/bargeggg/Quiz](https://github.com/bargeggg/Quiz)
+2. Click **Settings** (gear icon) > click **Pages** in the left sidebar.
+3. Under **Build and deployment**:
+   - Source: **Deploy from a branch**.
+   - Branch: **`main`** and folder **`/ (root)`**.
+   - Click **Save**.
+4. In 1–2 minutes, your live URLs will be active:
+   - 📱 **Participant Quiz URL:**  
      `https://bargeggg.github.io/Quiz/`
-   - 💻 **Link Monitoring untuk Presenter:**  
+   - 💻 **Presenter Admin Dashboard:**  
      `https://bargeggg.github.io/Quiz/admin.html`
 
 ---
 
-## 👥 Pembagian Materi & Kuis 19 Siswa
+## 👥 Topic Distribution (19 Students)
 
-| No. Siswa | Aktivitas / Sesi | Topik & Presenter Penguji | Keterangan |
+| Slot | Activity | Presenter & Focus Area | Description |
 |:---:|:---|:---|:---|
-| **1** | Quiz #1 - Essay 1 | Elsa (#1 - Addition & Clarification) | Analisis 'furthermore' & 'in other words' |
-| **2** | Quiz #1 - Essay 2 | Sofia (#2 - Location & Time) | Analisis 'whenever' & 'downstream' |
-| **3** | Quiz #1 - Essay 3 | Irfan (#3 - Contrast & Condition) | Analisis 'provided that' & 'on the contrary' |
-| **4** | Quiz #1 - Essay 4 | Ahmad (#4 - Cause, Reason, Purpose, Result) | Analisis 'because', 'purpose of', 'as a result' |
-| **5 - 14** | Quiz #2 - PG (1 - 10) | Elsa, Sofia, Irfan, Ahmad | 10 soal pilihan ganda acak auto-graded |
-| **15** | Tanya Bebas #1 | Elsa (#1) | Kapan 'furthermore' vs 'in addition' |
-| **16** | Tanya Bebas #2 | Sofia (#2) | Frasa kesimpulan yang dihindari di akademik |
-| **17** | Tanya Bebas #3 | Irfan (#3) | Contrast vs Concession dalam klausa |
-| **18** | Tanya Bebas #4 | Ahmad (#4) | Reason (because) vs Purpose (so that) |
-| **19** | Tanya Bebas #5 | Semua Presenter | Dampak overuse kata transisi |
+| **1** | Quiz #1 - Essay 1 | Elsa (#1 - Addition & Clarification) | Passage analysis of 'furthermore' & 'in other words' |
+| **2** | Quiz #1 - Essay 2 | Sofia (#2 - Location & Time) | Passage analysis of 'whenever' & 'downstream' |
+| **3** | Quiz #1 - Essay 3 | Irfan (#3 - Contrast & Condition) | Passage analysis of 'provided that' & 'on the contrary' |
+| **4** | Quiz #1 - Essay 4 | Ahmad (#4 - Cause, Reason, Purpose, Result) | Case study of 'because', 'purpose of', 'as a result' |
+| **5 - 14** | Quiz #2 - MC (1 - 10) | Elsa, Sofia, Irfan, Ahmad | 10 multiple choice questions auto-graded |
+| **15** | Q&A Inquiry #1 | Elsa (#1) | Nuance between 'furthermore' and 'in addition' |
+| **16** | Q&A Inquiry #2 | Sofia (#2) | Informal concluding phrases to avoid in academic writing |
+| **17** | Q&A Inquiry #3 | Irfan (#3) | Contrast vs Concession clauses |
+| **18** | Q&A Inquiry #4 | Ahmad (#4) | Reason ('because') vs Purpose ('so that') |
+| **19** | Q&A Inquiry #5 | All Presenters | Negative effects of overusing transition words |
 
 ---
 
-## 🛠️ Struktur Berkas
+## 📁 Project Structure
 
 ```
 Quiz/
-├── index.html          # Halaman Kuis Interaktif untuk Teman (Siswa)
-├── admin.html          # Dashboard Live Monitoring & Roda Pengacak (Presenter)
-├── questions.json      # Bank data 4 Essay, 10 PG, 5 Tanya Bebas, dan Rubrik
-├── firebase-config.js  # Konfigurasi opsional Firebase
+├── index.html          # Participant Quiz Portal (NIP & Name, Chill Music, MC & Essay)
+├── admin.html          # Presenter Live Monitoring Dashboard & Wheel of Names
+├── questions.json      # Complete English Question Bank & Rubrics
+├── firebase-config.js  # Optional Firebase Realtime DB configuration
 ├── assets/
-│   ├── style.css       # Desain Modern Dark Glassmorphism
-│   ├── realtime.js     # Realtime Engine (MQTT Cloud + Firebase + Local)
-│   └── audio.js        # Efek suara sintetis Web Audio API
-├── quiz.txt            # Catatan draft awal materi
-└── README.md           # Panduan lengkap penggunaan
+│   ├── style.css       # Enterprise Dark Glassmorphic Design System
+│   ├── realtime.js     # Realtime Synchronization Engine
+│   └── audio.js        # Web Audio API Synthesizer (Chill Lo-Fi BGM & SFX)
+├── quiz.txt            # Original draft syllabus notes
+└── README.md           # Project documentation
 ```

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Interaktif: Transition Words & Connectors</title>
+  <title>Interactive Quiz: Transition Words & Connectors</title>
   
   <!-- Modern Fonts & Styles -->
   <link rel="stylesheet" href="assets/style.css" />
@@ -28,36 +28,36 @@
         <div class="brand-icon">✨</div>
         <div>
           <h1 class="brand-title">Transition Words Quiz</h1>
-          <div class="brand-subtitle">Tim: Elsa • Sofia • Irfan • Ahmad | Sesi 19 Siswa</div>
+          <div class="brand-subtitle">Presenters: Elsa • Sofia • Irfan • Ahmad | 19 Participants</div>
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span class="badge badge-room" id="roomBadge">Room: ...</span>
         <span class="badge badge-live" id="statusBadge">
           <span class="pulse-dot" id="statusDot"></span>
-          <span id="statusText">Menghubungkan</span>
+          <span id="statusText">Connecting</span>
         </span>
-        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Musik Santai">
-          🎵 Musik: <span id="topMusicStatus">OFF</span>
+        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Chill Background Music">
+          🎵 Music: <span id="topMusicStatus">OFF</span>
         </button>
-        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Suara">🔊</button>
+        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
       </div>
     </header>
 
-    <!-- Student Identity Card -->
+    <!-- Participant Identity Card (NIP & Full Name) -->
     <div class="glass-card" id="studentProfileCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
-        <h2 style="font-family: var(--font-heading); font-size: 1.15rem;">👤 Identitas Peserta Kuis</h2>
-        <span class="badge badge-irfan">Alokasi Kelas</span>
+        <h2 style="font-family: var(--font-heading); font-size: 1.15rem;">👤 Participant Credentials</h2>
+        <span class="badge badge-irfan">Class Attendance</span>
       </div>
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">Nama Lengkap Siswa</label>
-          <input type="text" id="studentName" class="form-control" placeholder="Contoh: Budi Santoso" required />
+          <label class="form-label">NIP (Employee / Student ID)</label>
+          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001" required />
         </div>
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label">Nomor Siswa (1 - 19)</label>
-          <input type="number" id="studentNumber" class="form-control" min="1" max="19" placeholder="1 - 19" />
+          <label class="form-label">Full Name</label>
+          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" required />
         </div>
       </div>
     </div>
@@ -65,50 +65,49 @@
     <!-- Mode Selector Tabs -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('pg')" id="tabBtnPg">
-        <span>🎯</span> Quiz #2: Pilihan Ganda (10)
+        <span>🎯</span> Quiz #2: Multiple Choice (10)
       </button>
       <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
-        <span>📝</span> Quiz #1: Kasus Esai (4)
+        <span>📝</span> Quiz #1: Essay Case Analysis (4)
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
-        <span>💬</span> Sesi Tanya Bebas (5)
+        <span>💬</span> Q&A Discussion (5)
       </button>
     </div>
 
-    <!-- TAB 1: Pilihan Ganda (10 Soal) -->
+    <!-- TAB 1: Multiple Choice (10 Questions) -->
     <div id="tabContentPg" class="tab-pane">
       
       <!-- View Mode & Jump Navigator Strip -->
       <div class="question-strip-wrapper">
         <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Pilih Nomor Soal:</span>
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">Question Jump:</span>
           <div class="question-pills-grid" id="questionPillsContainer">
             <!-- Pills 1 to 10 generated via JS -->
           </div>
         </div>
         <div style="display:flex; gap:8px;">
           <button class="btn btn-secondary btn-sm" onclick="toggleViewMode()" id="viewModeToggleBtn">
-            📑 Tampilkan Semua Soal
+            📑 View All Questions
           </button>
         </div>
       </div>
 
-      <!-- Mode 1: Focus Carousel Mode (Satu per satu) -->
+      <!-- Mode 1: Focus Carousel Mode (Step-by-step) -->
       <div id="focusModeContainer">
         <div class="focus-question-box" id="currentFocusCard">
-          <!-- Rendered via JS -->
-          <div style="text-align:center; padding: 40px; color: var(--text-dim);">Memuat bank soal...</div>
+          <div style="text-align:center; padding: 40px; color: var(--text-dim);">Loading question bank...</div>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
           <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
-            ← Soal Sebelumnya
+            ← Previous Question
           </button>
           <span style="font-size:0.9rem; font-weight:600; color:var(--text-muted);" id="focusQuestionCounter">
-            Soal 1 dari 10
+            Question 1 of 10
           </span>
           <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
-            Soal Berikutnya →
+            Next Question →
           </button>
         </div>
       </div>
@@ -120,15 +119,15 @@
 
     </div>
 
-    <!-- TAB 2: Essay / Analisis (4 Soal) -->
+    <!-- TAB 2: Essay / Case Analysis (4 Questions) -->
     <div id="tabContentEssay" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--elsa);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Analisis Kasus Esai (4 Soal)</h3>
-          <span class="badge badge-elsa">4 Siswa Penampil</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
+          <span class="badge badge-elsa">Assigned Representatives</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Diberikan kepada 4 siswa penampil atau perwakilan kelompok. Bacalah kasus dengan cermat dan tuliskan analisismu secara lengkap.
+          Allocated for the assigned participant representatives. Analyze the passage sentences carefully, identify transition words, classify their categories, and explain their functional purpose.
         </p>
       </div>
 
@@ -138,20 +137,20 @@
 
       <div class="glass-card" style="text-align: center; margin-top: 20px;">
         <button class="btn btn-success btn-lg btn-block" onclick="submitEssayQuiz()" id="btnSubmitEssay">
-          📤 Kirim Jawaban Analisis Kasus (Essay)
+          📤 Submit Essay Case Analysis
         </button>
       </div>
     </div>
 
-    <!-- TAB 3: Tanya Bebas (5 Siswa) -->
+    <!-- TAB 3: Q&A Discussion Session (5 Questions) -->
     <div id="tabContentTanya" class="tab-pane" style="display: none;">
       <div class="glass-card" style="border-left: 4px solid var(--ahmad);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Panduan Sesi Tanya Bebas (5 Penanya)</h3>
-          <span class="badge badge-ahmad">Siswa 15 - 19</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem;">💬 Open Q&A Discussion Guide (5 Inquirers)</h3>
+          <span class="badge badge-ahmad">Participants 15 - 19</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Gunakan kartu pemantik diskusi berikut bila Anda ditunjuk pada sesi tanya jawab bebas, atau kirimkan pertanyaan kritis langsung ke layar presenter!
+          Use these curated discussion starter prompts if chosen during the Q&A session, or formulate your own critical question directly to Elsa, Sofia, Irfan, or Ahmad!
         </p>
       </div>
 
@@ -161,11 +160,11 @@
 
       <!-- Custom Question Form -->
       <div class="glass-card">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Ajukan Pertanyaan Sendiri ke Presenter:</h4>
+        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">💡 Submit Your Own Question to Presenters:</h4>
         <div class="form-group">
-          <label class="form-label">Tujukan Pertanyaan Kepada:</label>
+          <label class="form-label">Direct Question To:</label>
           <select id="targetPresenterSelect" class="form-control">
-            <option value="Semua Presenter">Semua Presenter (Elsa, Sofia, Irfan, Ahmad)</option>
+            <option value="All Presenters">All Presenters (Elsa, Sofia, Irfan, Ahmad)</option>
             <option value="Elsa (#1 - Addition & Clarification)">Elsa (#1 - Addition & Clarification)</option>
             <option value="Sofia (#2 - Location, Time, Conclusion)">Sofia (#2 - Location, Time, Conclusion)</option>
             <option value="Irfan (#3 - Comparison, Contrast, Concession, Condition)">Irfan (#3 - Comparison, Contrast, Concession, Condition)</option>
@@ -173,18 +172,18 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Tuliskan Pertanyaan Diskusi:</label>
-          <textarea id="customQuestionText" class="form-control" rows="3" placeholder="Tuliskan pertanyaan diskusi Anda di sini..."></textarea>
+          <label class="form-label">Your Question:</label>
+          <textarea id="customQuestionText" class="form-control" rows="3" placeholder="Type your academic inquiry here..."></textarea>
         </div>
         <button class="btn btn-primary btn-block" onclick="submitCustomQuestion()">
-          📨 Kirim Pertanyaan ke Layar Presenter
+          📨 Transmit Question to Presenter Screen
         </button>
       </div>
     </div>
 
     <!-- Floating Chill Music Player Widget -->
     <div class="chill-music-widget" id="musicWidget">
-      <button class="music-play-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Putar/Jeda Musik Santai">
+      <button class="music-play-btn" onclick="toggleBgm()" id="musicPlayBtn" title="Play/Pause Chill Music">
         ▶
       </button>
       <div class="music-info">
@@ -197,19 +196,19 @@
             <div class="soundwave-bar"></div>
           </div>
         </div>
-        <div class="music-status" id="musicStatusSubtitle">Klik untuk memutar musik santai</div>
+        <div class="music-status" id="musicStatusSubtitle">Click to play chill study chords</div>
       </div>
       <select class="form-control" id="trackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08);">
         <option value="lofi">☕ Cozy Lo-Fi</option>
         <option value="ambient">🌌 Ambient Chill</option>
       </select>
-      <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Volume Musik" />
+      <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Music Volume" />
     </div>
 
-    <!-- Bottom Progress Dock (Always Visible during Quiz) -->
+    <!-- Bottom Progress Dock -->
     <div class="bottom-progress-dock" id="bottomDock">
       <div style="font-size:0.88rem; font-weight:700; color:#f8fafc;" id="dockProgressText">
-        Terjawab: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Soal
+        Answered: <span style="color:#34d399;" id="answeredCountSpan">0</span> / 10 Questions
       </div>
       <div class="progress-track-wrapper">
         <div class="progress-track">
@@ -217,7 +216,7 @@
         </div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="submitPgQuiz()" id="dockSubmitBtn">
-        🚀 Kirim Jawaban
+        🚀 Submit Answers
       </button>
     </div>
 
@@ -225,14 +224,14 @@
     <div class="modal-overlay" id="resultModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="modalTitle">🎉 Hasil Kuis Anda</h3>
+          <h3 class="modal-title" id="modalTitle">🎉 Quiz Submission Received</h3>
           <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         <div id="modalBody" style="font-size: 0.95rem; line-height: 1.6;">
           <!-- Injected via JS -->
         </div>
         <div style="margin-top: 20px; text-align: right;">
-          <button class="btn btn-primary" onclick="closeModal()">Tutup & Selesai</button>
+          <button class="btn btn-primary" onclick="closeModal()">Close & Complete</button>
         </div>
       </div>
     </div>
@@ -242,18 +241,20 @@
   <script>
     let questionsData = null;
     let studentAnswers = { pg: {}, essay: {} };
-    let currentQuestionIndex = 0; // 0 to 9
-    let isAllViewMode = false; // toggle focus vs all
+    let currentQuestionIndex = 0;
+    let isAllViewMode = false;
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Inisialisasi Realtime
+      // 1. Initialize Realtime Engine
       RealtimeSync.init({
         role: 'player',
         onStatusChange: (connected, msg) => {
           const statusText = document.getElementById('statusText');
           const statusDot = document.getElementById('statusDot');
-          if (statusText) statusText.innerText = connected ? "Terhubung" : "Fallback";
-          if (statusDot) statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
+          if (statusText) statusText.innerText = connected ? "Connected" : "Fallback";
+          if (statusDot) {
+            statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
+          }
         }
       });
 
@@ -272,7 +273,7 @@
           updateProgressUI();
         })
         .catch(err => {
-          console.error("Gagal load questions.json", err);
+          console.error("Failed to load questions.json", err);
         });
 
       // 3. Audio BGM Listeners
@@ -285,38 +286,29 @@
         if (state.isPlaying && !state.isMuted) {
           btn.innerHTML = "⏸";
           wave.classList.add('playing');
-          sub.innerText = "Sedang memutar musik santai...";
+          sub.innerText = "Playing relaxing lo-fi chords...";
           topStatus.innerText = "ON 🎶";
           topStatus.style.color = "#34d399";
         } else {
           btn.innerHTML = "▶";
           wave.classList.remove('playing');
-          sub.innerText = "Klik untuk memutar musik santai";
+          sub.innerText = "Click to play chill study chords";
           topStatus.innerText = "OFF";
           topStatus.style.color = "inherit";
         }
       });
 
-      // Restore data siswa jika ada
+      // Restore credentials from localStorage if present
+      const savedNip = localStorage.getItem('student_nip');
       const savedName = localStorage.getItem('student_name');
-      const savedNumber = localStorage.getItem('student_number');
+      if (savedNip) document.getElementById('studentNip').value = savedNip;
       if (savedName) document.getElementById('studentName').value = savedName;
-      if (savedNumber) document.getElementById('studentNumber').value = savedNumber;
     });
 
     // BGM Controls
-    function toggleBgm() {
-      AudioManager.toggleBGM();
-    }
-
-    function toggleBgmQuick() {
-      AudioManager.toggleBGM();
-    }
-
-    function changeVolume(val) {
-      AudioManager.setBGMVolume(val);
-    }
-
+    function toggleBgm() { AudioManager.toggleBGM(); }
+    function toggleBgmQuick() { AudioManager.toggleBGM(); }
+    function changeVolume(val) { AudioManager.setBGMVolume(val); }
     function changeTrack() {
       const mode = document.getElementById('trackSelect').value;
       AudioManager.setBGMTrack(mode);
@@ -366,7 +358,6 @@
       AudioManager.click();
       currentQuestionIndex = idx;
       if (isAllViewMode) {
-        // Scroll ke card terkait di all view
         const target = document.getElementById(`card_all_${questionsData.pg[idx].id}`);
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
@@ -397,16 +388,16 @@
       if (isAllViewMode) {
         focusEl.style.display = 'none';
         allEl.style.display = 'block';
-        btn.innerText = "🎯 Tampilkan Mode Fokus (1 per 1)";
+        btn.innerText = "🎯 Switch to Focus Mode (1 by 1)";
       } else {
         focusEl.style.display = 'block';
         allEl.style.display = 'none';
-        btn.innerText = "📑 Tampilkan Semua Soal";
+        btn.innerText = "📑 View All Questions";
         renderFocusQuestion();
       }
     }
 
-    // Render 1 Soal Fokus
+    // Render 1 Focus Question
     function renderFocusQuestion() {
       const card = document.getElementById('currentFocusCard');
       if (!questionsData || !questionsData.pg) return;
@@ -422,7 +413,7 @@
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; flex-wrap:wrap; gap:8px;">
           <span style="font-family:var(--font-heading); font-size:1.15rem; font-weight:800; color:var(--primary);">
-            Soal ${currentQuestionIndex + 1} dari ${questionsData.pg.length}
+            Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
           </span>
           <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
         </div>
@@ -446,9 +437,9 @@
         </div>
       `;
 
-      document.getElementById('focusQuestionCounter').innerText = `Soal ${currentQuestionIndex + 1} dari ${questionsData.pg.length}`;
+      document.getElementById('focusQuestionCounter').innerText = `Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}`;
       document.getElementById('btnPrevQ').disabled = currentQuestionIndex === 0;
-      document.getElementById('btnNextQ').innerText = currentQuestionIndex === questionsData.pg.length - 1 ? "Selesai (Periksa)" : "Soal Berikutnya →";
+      document.getElementById('btnNextQ').innerText = currentQuestionIndex === questionsData.pg.length - 1 ? "Review & Finish" : "Next Question →";
       updatePillsUI();
     }
 
@@ -459,11 +450,10 @@
       updateProgressUI();
       syncAllViewOption(qid, letter);
 
-      // Otomatis pindah ke soal berikutnya setelah delay halus jika belum di nomor terakhir
       if (currentQuestionIndex < questionsData.pg.length - 1) {
         setTimeout(() => {
           nextQuestion();
-        }, 350);
+        }, 320);
       }
     }
 
@@ -481,7 +471,7 @@
         return `
           <div class="glass-card" id="card_all_${q.id}" style="margin-bottom:18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-family:var(--font-heading); font-weight:700; color:var(--primary);">Nomor ${idx + 1}</span>
+              <span style="font-family:var(--font-heading); font-weight:700; color:var(--primary);">Question ${idx + 1}</span>
               <span class="badge ${badgeClass}">${q.presenter} • ${q.category}</span>
             </div>
             <div class="passage-box">"${escapeHtml(q.q)}"</div>
@@ -533,7 +523,7 @@
       updatePillsUI();
     }
 
-    // Render 4 Soal Essay
+    // Render 4 Essay Questions
     function renderEssayQuestions() {
       const container = document.getElementById('essayContainer');
       if (!questionsData || !questionsData.essay) return;
@@ -548,7 +538,7 @@
           <div class="glass-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <span style="font-family:var(--font-heading); font-size:1.1rem; font-weight:700; color:var(--primary);">
-                Kasus Analisis #${idx + 1}
+                Case Analysis #${idx + 1}
               </span>
               <span class="badge ${badgeClass}">${q.presenter} • ${q.topic}</span>
             </div>
@@ -557,15 +547,15 @@
             <p style="white-space:pre-line; font-weight:600; margin-bottom:14px;">${escapeHtml(q.question)}</p>
 
             <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">Jawaban Analisis Anda:</label>
-              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Tuliskan kata transisi, kategori, serta analisis fungsinya..."></textarea>
+              <label class="form-label">Your Analysis & Explanation:</label>
+              <textarea class="form-control" id="essay_${q.id}" rows="4" placeholder="Identify transition words, classify their categories, and explain their logical functions..."></textarea>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Render Tanya Bebas
+    // Render Discussion Prompts
     function renderTanyaBebas() {
       const container = document.getElementById('tanyaContainer');
       if (!questionsData || !questionsData.tanya_bebas) return;
@@ -581,23 +571,47 @@
               "${escapeHtml(t.prompt_question)}"
             </p>
             <div style="font-size:0.86rem; color:var(--text-muted); background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px;">
-              <strong style="color:#a5b4fc;">Poin Diskusi:</strong> ${escapeHtml(t.talking_points)}
+              <strong style="color:#a5b4fc;">Discussion Context:</strong> ${escapeHtml(t.talking_points)}
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Submit Pilihan Ganda
+    // Validate Credentials (NIP & Full Name)
+    function getValidatedCredentials() {
+      const nipInput = document.getElementById('studentNip');
+      const nameInput = document.getElementById('studentName');
+
+      const nip = (nipInput.value || "").trim();
+      const name = (nameInput.value || "").trim();
+
+      if (!nip) {
+        alert("Please enter your NIP (Employee / Student ID)!");
+        nipInput.focus();
+        return null;
+      }
+
+      if (!name) {
+        alert("Please enter your Full Name!");
+        nameInput.focus();
+        return null;
+      }
+
+      localStorage.setItem('student_nip', nip);
+      localStorage.setItem('student_name', name);
+      return { nip: nip, name: name };
+    }
+
+    // Submit Multiple Choice
     function submitPgQuiz() {
-      const name = getValidatedName();
-      if (!name) return;
-      const num = document.getElementById('studentNumber').value.trim() || "-";
+      const creds = getValidatedCredentials();
+      if (!creds) return;
 
       const totalPg = questionsData.pg.length;
       const answeredCount = Object.keys(studentAnswers.pg).length;
       if (answeredCount < totalPg) {
-        if (!confirm(`Anda baru menjawab ${answeredCount} dari ${totalPg} soal. Yakin ingin mengirim sekarang?`)) {
+        if (!confirm(`You have answered ${answeredCount} of ${totalPg} questions. Submit anyway?`)) {
           return;
         }
       }
@@ -622,8 +636,9 @@
       const score = Math.round((correctCount / totalPg) * 100);
 
       const payload = {
-        name: name,
-        studentNumber: num,
+        name: creds.name,
+        nip: creds.nip,
+        studentNumber: creds.nip, // backward compatibility
         type: 'pilihan_ganda',
         score: score,
         correctCount: correctCount,
@@ -638,27 +653,27 @@
       triggerConfetti();
 
       showModal(
-        `🎉 Nilai Anda: ${score} / 100`,
+        `🎉 Your Score: ${score} / 100`,
         `
-          <p>Halo <strong>${escapeHtml(name)}</strong>! Jawaban Anda telah terkirim ke layar monitoring presenter Elsa, Sofia, Irfan, dan Ahmad.</p>
+          <p>Congratulations, <strong>${escapeHtml(creds.name)}</strong> (NIP: ${escapeHtml(creds.nip)})!</p>
+          <p>Your multiple choice responses have been securely transmitted to the presenters' live monitoring dashboard.</p>
           <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 16px; border-radius: 12px; margin: 18px 0; text-align: center;">
             <div style="font-size: 2.5rem; font-weight: 800; color: #34d399;">${score}</div>
-            <div style="font-size: 0.9rem; color: #a7f3d0;">Benar ${correctCount} dari ${totalPg} soal</div>
+            <div style="font-size: 0.9rem; color: #a7f3d0;">Correct: ${correctCount} of ${totalPg} questions</div>
           </div>
           <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Terima kasih atas partisipasi aktif Anda dalam kuis materi Transition Words & Connectors!
+            Thank you for participating actively in the Transition Words & Connectors quiz!
           </p>
         `
       );
 
-      document.getElementById('dockSubmitBtn').innerText = "✅ Terkirim!";
+      document.getElementById('dockSubmitBtn').innerText = "✅ Submitted!";
     }
 
     // Submit Essay
     function submitEssayQuiz() {
-      const name = getValidatedName();
-      if (!name) return;
-      const num = document.getElementById('studentNumber').value.trim() || "-";
+      const creds = getValidatedCredentials();
+      if (!creds) return;
 
       const essayResponses = {};
       let hasAnyAnswer = false;
@@ -674,13 +689,14 @@
       });
 
       if (!hasAnyAnswer) {
-        alert("Silakan isi setidaknya satu jawaban analisis sebelum mengirim!");
+        alert("Please provide at least one case response before submitting!");
         return;
       }
 
       const payload = {
-        name: name,
-        studentNumber: num,
+        name: creds.name,
+        nip: creds.nip,
+        studentNumber: creds.nip,
         type: 'essay',
         essayResponses: essayResponses
       };
@@ -690,30 +706,30 @@
       triggerConfetti();
 
       showModal(
-        "📝 Analisis Esai Berhasil Dikirim!",
+        "📝 Essay Case Analysis Submitted!",
         `
-          <p>Terima kasih, <strong>${escapeHtml(name)}</strong>!</p>
-          <p>Jawaban esai Anda telah terkirim secara live ke layar presenter Elsa, Sofia, Irfan, dan Ahmad untuk dinilai.</p>
+          <p>Thank you, <strong>${escapeHtml(creds.name)}</strong> (NIP: ${escapeHtml(creds.nip)})!</p>
+          <p>Your analytical responses have been dispatched to Elsa, Sofia, Irfan, and Ahmad for rubric-based grading.</p>
         `
       );
     }
 
-    // Submit Tanya Bebas
+    // Submit Custom Question (Discussion)
     function submitCustomQuestion() {
-      const name = getValidatedName();
-      if (!name) return;
-      const num = document.getElementById('studentNumber').value.trim() || "-";
+      const creds = getValidatedCredentials();
+      if (!creds) return;
       const target = document.getElementById('targetPresenterSelect').value;
       const text = document.getElementById('customQuestionText').value.trim();
 
       if (!text) {
-        alert("Harap tuliskan pertanyaan Anda terlebih dahulu!");
+        alert("Please write your question before transmitting!");
         return;
       }
 
       const payload = {
-        name: name,
-        studentNumber: num,
+        name: creds.name,
+        nip: creds.nip,
+        studentNumber: creds.nip,
         type: 'tanya_bebas',
         targetPresenter: target,
         questionText: text
@@ -723,28 +739,15 @@
       AudioManager.chime();
 
       showModal(
-        "💬 Pertanyaan Diterima!",
+        "💬 Question Transmitted!",
         `
-          <p>Pertanyaan dari <strong>${escapeHtml(name)}</strong> ditujukan kepada <strong>${escapeHtml(target)}</strong>:</p>
+          <p>Inquiry from <strong>${escapeHtml(creds.name)}</strong> directed to <strong>${escapeHtml(target)}</strong>:</p>
           <div class="passage-box" style="margin: 14px 0;">"${escapeHtml(text)}"</div>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Pertanyaan Anda telah muncul di layar presenter!</p>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Your question is now visible on the presenter's monitoring screen!</p>
         `
       );
 
       document.getElementById('customQuestionText').value = "";
-    }
-
-    function getValidatedName() {
-      const nameInput = document.getElementById('studentName');
-      const name = (nameInput.value || "").trim();
-      if (!name) {
-        alert("Silakan masukkan Nama Lengkap Anda terlebih dahulu!");
-        nameInput.focus();
-        return null;
-      }
-      localStorage.setItem('student_name', name);
-      localStorage.setItem('student_number', document.getElementById('studentNumber').value.trim());
-      return name;
     }
 
     function showModal(title, bodyHtml) {

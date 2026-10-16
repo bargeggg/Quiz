@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin & Monitoring Presenter: Transition Words Quiz</title>
+  <title>Admin & Monitoring Dashboard: Transition Words Quiz</title>
 
   <!-- Modern Fonts & Styles -->
   <link rel="stylesheet" href="assets/style.css" />
@@ -29,19 +29,19 @@
         <div class="brand-icon">📊</div>
         <div>
           <h1 class="brand-title">Host Dashboard & Live Monitoring</h1>
-          <div class="brand-subtitle">Tim Presenter: Elsa • Sofia • Irfan • Ahmad | Alokasi: 19 Siswa</div>
+          <div class="brand-subtitle">Presenter Team: Elsa • Sofia • Irfan • Ahmad | 19 Students Allocation</div>
         </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
         <!-- Canva Presentation Link -->
-        <a href="https://canva.link/otop855dny25lu6" target="_blank" class="btn btn-secondary btn-sm" title="Buka Slide Canva">
-          🎨 Buka Canva
+        <a href="https://canva.link/otop855dny25lu6" target="_blank" class="btn btn-secondary btn-sm" title="Open Canva Slide Deck">
+          🎨 Open Canva
         </a>
 
         <!-- QR Code Modal Toggle -->
         <button class="btn btn-secondary btn-sm" onclick="openQrModal()">
-          📱 QR Code Teman
+          📱 Participant QR Code
         </button>
 
         <span class="badge badge-room" id="adminRoomBadge">Room: ...</span>
@@ -51,15 +51,15 @@
           <span id="adminStatusText">Live Sync</span>
         </span>
 
-        <span class="badge badge-room" id="onlineBadge" title="Jumlah peserta online">
+        <span class="badge badge-room" id="onlineBadge" title="Online participants count">
           👥 <span id="onlineCount">0</span> Online
         </span>
 
-        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Musik Santai">
-          🎵 Musik: <span id="topMusicStatus">OFF</span>
+        <button class="btn btn-secondary btn-sm" onclick="toggleBgmQuick()" id="topMusicBtn" title="Chill Background Music">
+          🎵 Music: <span id="topMusicStatus">OFF</span>
         </button>
 
-        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Suara">🔊</button>
+        <button class="btn btn-secondary btn-sm" onclick="AudioManager.toggleMute()" id="muteBtn" title="Mute/Unmute Audio">🔊</button>
       </div>
     </header>
 
@@ -69,7 +69,7 @@
         <div class="stat-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">📥</div>
         <div>
           <div class="stat-value" id="statTotalSubmissions">0</div>
-          <div class="stat-label">Total Jawaban Masuk</div>
+          <div class="stat-label">Total Submissions</div>
         </div>
       </div>
 
@@ -77,7 +77,7 @@
         <div class="stat-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">🎯</div>
         <div>
           <div class="stat-value" id="statAvgPgScore">0%</div>
-          <div class="stat-label">Rata-rata Skor PG</div>
+          <div class="stat-label">Average MC Score</div>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
         <div class="stat-icon" style="background: rgba(236, 72, 153, 0.15); color: #f472b6;">📝</div>
         <div>
           <div class="stat-value" id="statTotalEssay">0 / 4</div>
-          <div class="stat-label">Esai Terkumpul (Target: 4)</div>
+          <div class="stat-label">Essays Collected (Target: 4)</div>
         </div>
       </div>
 
@@ -93,7 +93,7 @@
         <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">💬</div>
         <div>
           <div class="stat-value" id="statTotalTanya">0 / 5</div>
-          <div class="stat-label">Penanya Bebas (Target: 5)</div>
+          <div class="stat-label">Q&A Inquiries (Target: 5)</div>
         </div>
       </div>
     </div>
@@ -101,45 +101,45 @@
     <!-- Navigation Tabs -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchAdminTab('feed')" id="tabBtnFeed">
-        <span>⚡</span> Live Feed Jawaban (<span id="feedCount">0</span>)
+        <span>⚡</span> Live Submissions Feed (<span id="feedCount">0</span>)
       </button>
       <button class="tab-btn" onclick="switchAdminTab('wheel')" id="tabBtnWheel">
-        <span>🎡</span> Roda Pengacak Siswa (19 Anak)
+        <span>🎡</span> Wheel of Names (19 Students)
       </button>
       <button class="tab-btn" onclick="switchAdminTab('matrix')" id="tabBtnMatrix">
-        <span>📋</span> Matriks 19 Siswa & Kunci Jawaban
+        <span>📋</span> 19 Students Matrix & Answer Keys
       </button>
       <button class="tab-btn" onclick="switchAdminTab('projector')" id="tabBtnProjector">
-        <span>📽️</span> Mode Layar Proyektor
+        <span>📽️</span> Projector Screen Mode
       </button>
       <button class="tab-btn" onclick="switchAdminTab('settings')" id="tabBtnSettings">
-        <span>⚙️</span> Koneksi & Database
+        <span>⚙️</span> Connection & Database
       </button>
     </div>
 
-    <!-- TAB 1: Live Feed Jawaban -->
+    <!-- TAB 1: Live Feed Submissions -->
     <div id="adminTabFeed" class="admin-pane">
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap: 10px;">
           <div>
-            <h2 style="font-family: var(--font-heading); font-size: 1.2rem;">⚡ Rekap Jawaban Masuk Realtime</h2>
+            <h2 style="font-family: var(--font-heading); font-size: 1.2rem;">⚡ Realtime Submissions Stream</h2>
             <div style="font-size: 0.85rem; color: var(--text-muted);">
-              Data otomatis bertambah dan diperbarui saat teman mengirimkan jawaban dari HP/laptop mereka.
+              Data updates dynamically when participants submit answers via mobile devices or laptops.
             </div>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button class="btn btn-secondary btn-sm" onclick="exportToCsv()">📥 Unduh CSV</button>
-            <button class="btn btn-secondary btn-sm" onclick="printReport()">🖨️ Cetak Rekap</button>
+            <button class="btn btn-secondary btn-sm" onclick="exportToCsv()">📥 Export CSV</button>
+            <button class="btn btn-secondary btn-sm" onclick="printReport()">🖨️ Print Summary</button>
             <button class="btn btn-danger btn-sm" onclick="confirmClearData()">🗑️ Reset Data</button>
           </div>
         </div>
 
         <!-- Filter Buttons -->
         <div style="display:flex; gap:8px; margin-bottom: 14px; overflow-x: auto;">
-          <button class="btn btn-sm btn-secondary filter-btn active" onclick="filterFeed('all', this)">Semua (<span id="countAll">0</span>)</button>
-          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('pilihan_ganda', this)">🎯 Pilihan Ganda (<span id="countPg">0</span>)</button>
-          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('essay', this)">📝 Esai / Analisis (<span id="countEssay">0</span>)</button>
-          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('tanya_bebas', this)">💬 Tanya Bebas (<span id="countTanya">0</span>)</button>
+          <button class="btn btn-sm btn-secondary filter-btn active" onclick="filterFeed('all', this)">All (<span id="countAll">0</span>)</button>
+          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('pilihan_ganda', this)">🎯 Multiple Choice (<span id="countPg">0</span>)</button>
+          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('essay', this)">📝 Essay Analysis (<span id="countEssay">0</span>)</button>
+          <button class="btn btn-sm btn-secondary filter-btn" onclick="filterFeed('tanya_bebas', this)">💬 Q&A Inquiries (<span id="countTanya">0</span>)</button>
         </div>
 
         <!-- Table -->
@@ -147,18 +147,18 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 80px;">Waktu</th>
-                <th style="width: 70px;">No.</th>
-                <th>Nama Siswa</th>
-                <th>Kategori</th>
-                <th>Hasil / Nilai</th>
-                <th style="width: 110px;">Aksi</th>
+                <th style="width: 80px;">Time</th>
+                <th style="width: 140px;">NIP</th>
+                <th>Student Name</th>
+                <th>Category</th>
+                <th>Result / Score</th>
+                <th style="width: 120px;">Actions</th>
               </tr>
             </thead>
             <tbody id="feedTableBody">
               <tr>
                 <td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
-                  Menunggu jawaban pertama dari peserta kuis...
+                  Awaiting first incoming submission from participants...
                 </td>
               </tr>
             </tbody>
@@ -167,7 +167,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: Roda Pengacak Siswa (Wheel of Names) -->
+    <!-- TAB 2: Wheel of Names (Randomizer) -->
     <div id="adminTabWheel" class="admin-pane" style="display: none;">
       <div class="glass-card">
         <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: center;">
@@ -180,10 +180,10 @@
             </div>
             <div style="margin-top: 16px; display:flex; gap: 10px;">
               <button class="btn btn-primary btn-lg" id="btnSpin" onclick="spinTheWheel()">
-                🎡 PUTAR RODA!
+                🎡 SPIN THE WHEEL!
               </button>
               <button class="btn btn-secondary" onclick="populate19Students()">
-                Reset 19 Siswa
+                Reset 19 Students
               </button>
             </div>
           </div>
@@ -191,23 +191,23 @@
           <!-- Controls & Config -->
           <div>
             <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 8px;">
-              🎯 Pengacak Giliran Siswa & Soal
+              🎯 Student & Question Randomizer
             </h3>
             <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
-              Gunakan roda putar ini saat presentasi untuk mengundi giliran 19 siswa kelas secara adil dan interaktif!
+              Spin the interactive wheel during presentations to assign students fairly to Essay, Multiple Choice, or Q&A roles!
             </p>
 
             <div class="form-group">
-              <label class="form-label">Target Giliran Kuis:</label>
+              <label class="form-label">Target Quiz Session:</label>
               <select id="wheelTargetType" class="form-control" onchange="onWheelTargetChange()">
-                <option value="essay">📝 Quiz #1: Esai / Kasus (4 Siswa: Materi Elsa, Sofia, Irfan, Ahmad)</option>
-                <option value="pg">🎯 Quiz #2: Pilihan Ganda (10 Siswa: Soal 1 s/d 10)</option>
-                <option value="tanya">💬 Sesi Tanya Bebas (5 Siswa: Penanya 1 s/d 5)</option>
+                <option value="essay">📝 Quiz #1: Essay Cases (4 Students: Elsa, Sofia, Irfan, Ahmad)</option>
+                <option value="pg">🎯 Quiz #2: Multiple Choice (10 Students: Questions 1 to 10)</option>
+                <option value="tanya">💬 Q&A Discussion (5 Students: Inquirers 1 to 5)</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Daftar Nama Siswa di Roda (1 nama per baris):</label>
+              <label class="form-label">Names / NIPs on Wheel (1 per line):</label>
               <textarea id="wheelNamesInput" class="form-control" rows="8" oninput="updateWheelFromInput()"></textarea>
             </div>
           </div>
@@ -216,20 +216,20 @@
       </div>
     </div>
 
-    <!-- TAB 3: Matriks 19 Siswa & Kunci Jawaban -->
+    <!-- TAB 3: 19 Students Matrix & Answer Keys -->
     <div id="adminTabMatrix" class="admin-pane" style="display: none;">
       <div class="glass-card">
-        <h3 style="font-family: var(--font-heading); margin-bottom: 14px;">📋 Lembar Pembagian 19 Siswa & Panduan Nilai</h3>
+        <h3 style="font-family: var(--font-heading); margin-bottom: 14px;">📋 19 Students Allocation & Evaluation Rubric</h3>
         
         <div class="table-responsive">
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 50px;">No</th>
-                <th style="width: 180px;">Sesi / Kuis</th>
-                <th>Topik & Presenter Penguji</th>
-                <th>Kunci Jawaban / Petunjuk Penilaian</th>
-                <th style="width: 140px;">Status / Skor</th>
+                <th style="width: 50px;">Slot</th>
+                <th style="width: 180px;">Session / Quiz</th>
+                <th>Topic & Examiner Presenter</th>
+                <th>Answer Key / Evaluation Rubric</th>
+                <th style="width: 140px;">Status / Grade</th>
               </tr>
             </thead>
             <tbody id="matrixTableBody">
@@ -240,17 +240,17 @@
       </div>
     </div>
 
-    <!-- TAB 4: Mode Layar Proyektor -->
+    <!-- TAB 4: Projector Screen Mode -->
     <div id="adminTabProjector" class="admin-pane" style="display: none;">
       <div class="glass-card" style="text-align: center; padding: 40px 20px;">
         <span class="badge badge-live" style="font-size: 0.85rem; padding: 6px 16px; margin-bottom: 16px;">
-          Layar Proyektor Kelas
+          Classroom Projector Screen
         </span>
         <h1 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 8px;">
-          Kuis Interaktif: Transition Words & Connectors
+          Transition Words & Connectors
         </h1>
         <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 24px;">
-          Silakan scan QR Code atau buka tautan di bawah melalui smartphone Anda:
+          Please scan the QR code or navigate to the link below using your mobile device or laptop:
         </p>
 
         <!-- Big QR Code Container -->
@@ -262,36 +262,36 @@
           https://...
         </div>
 
-        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.8); padding: 10px 24px; border-radius: var(--radius-full); border: 1px solid var(--border-glow);">
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.8); padding: 10px 24px; border-radius: var(--radius-full); border: 1px solid var(--border-glow); flex-wrap:wrap; justify-content:center;">
           <span>Room Code: <strong style="color: #67e8f9;" id="projectorRoomText">...</strong></span>
           <span>•</span>
-          <span>Peserta Bergabung: <strong style="color: #34d399;" id="projectorCountText">0</strong> Siswa</span>
+          <span>Connected Participants: <strong style="color: #34d399;" id="projectorCountText">0</strong></span>
         </div>
       </div>
     </div>
 
-    <!-- TAB 5: Pengaturan Koneksi & Database -->
+    <!-- TAB 5: Connection & Database Settings -->
     <div id="adminTabSettings" class="admin-pane" style="display: none;">
       <div class="glass-card">
-        <h3 style="font-family: var(--font-heading); margin-bottom: 16px;">⚙️ Konfigurasi Ruangan & Realtime Database</h3>
+        <h3 style="font-family: var(--font-heading); margin-bottom: 16px;">⚙️ Room Configuration & Realtime Sync</h3>
         
         <div class="form-group">
-          <label class="form-label">Nama / Kode Room Saat Ini:</label>
+          <label class="form-label">Current Room Code:</label>
           <div style="display: flex; gap: 10px;">
             <input type="text" id="settingRoomInput" class="form-control" />
-            <button class="btn btn-primary" onclick="changeRoomCode()">Simpan Room</button>
+            <button class="btn btn-primary" onclick="changeRoomCode()">Save Room</button>
           </div>
           <small style="color: var(--text-muted); display: block; margin-top: 6px;">
-            Teman harus memiliki kode room yang sama agar jawabannya masuk ke layar ini.
+            Participants must connect with the identical room code to transmit responses to this dashboard.
           </small>
         </div>
 
         <hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;" />
 
-        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">🔥 Konfigurasi Firebase Realtime Database (Opsional)</h4>
+        <h4 style="font-family: var(--font-heading); margin-bottom: 12px;">🔥 Firebase Realtime Database Configuration (Optional)</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-          Sistem saat ini sudah otomatis terhubung via <strong>Instant Cloud Sync (MQTT over WebSocket TLS)</strong> tanpa perlu setup apapun. 
-          Namun bila Anda ingin menyimpan cadangan ke project Firebase pribadi Anda, masukkan API Key & Database URL di bawah:
+          The system operates automatically out-of-the-box via <strong>Instant Cloud Sync (MQTT over WebSocket TLS)</strong>.
+          If you wish to store permanent archives in your personal Firebase project, supply credentials below:
         </p>
 
         <div class="form-group">
@@ -303,8 +303,8 @@
           <input type="text" id="fbApiKeyInput" class="form-control" placeholder="AIzaSy..." />
         </div>
 
-        <button class="btn btn-success" onclick="saveCustomFirebase()">💾 Simpan Konfigurasi Firebase</button>
-        <button class="btn btn-secondary" onclick="resetCustomFirebase()" style="margin-left: 8px;">Reset ke Default</button>
+        <button class="btn btn-success" onclick="saveCustomFirebase()">💾 Save Firebase Credentials</button>
+        <button class="btn btn-secondary" onclick="resetCustomFirebase()" style="margin-left: 8px;">Reset to Default</button>
       </div>
     </div>
 
@@ -312,14 +312,14 @@
     <div class="modal-overlay" id="detailModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="detailModalTitle">Detail Jawaban Siswa</h3>
+          <h3 class="modal-title" id="detailModalTitle">Participant Submission Details</h3>
           <button class="modal-close" onclick="closeDetailModal()">&times;</button>
         </div>
         <div id="detailModalBody" style="font-size: 0.92rem; line-height: 1.6;">
           <!-- Detail content loaded here -->
         </div>
         <div style="margin-top: 20px; text-align: right;">
-          <button class="btn btn-primary" onclick="closeDetailModal()">Tutup</button>
+          <button class="btn btn-primary" onclick="closeDetailModal()">Close</button>
         </div>
       </div>
     </div>
@@ -328,11 +328,11 @@
     <div class="modal-overlay" id="qrModal">
       <div class="modal-content" style="max-width: 440px; text-align: center;">
         <div class="modal-header">
-          <h3 class="modal-title">📱 Scan untuk Akses Kuis</h3>
+          <h3 class="modal-title">📱 Scan to Access Quiz</h3>
           <button class="modal-close" onclick="closeQrModal()">&times;</button>
         </div>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-          Minta teman di kelas mengarahkan kamera HP ke QR Code ini:
+          Ask participants in class to point their smartphone cameras at this QR code:
         </p>
         <div style="display:flex; justify-content:center; margin-bottom: 16px;">
           <div id="modalQrCode" style="background: white; padding: 14px; border-radius: 12px;"></div>
@@ -341,7 +341,7 @@
           ...
         </div>
         <div style="margin-top: 16px;">
-          <button class="btn btn-primary btn-block" onclick="copyPlayerLink()">📋 Salin Link Kuis</button>
+          <button class="btn btn-primary btn-block" onclick="copyPlayerLink()">📋 Copy Quiz Link</button>
         </div>
       </div>
     </div>
@@ -351,14 +351,14 @@
       <div class="modal-content" style="max-width: 460px; text-align: center;">
         <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
         <h2 style="font-family: var(--font-heading); color: #38bdf8; margin-bottom: 6px;" id="winnerName">
-          Siswa Terpilih!
+          Selected Participant!
         </h2>
-        <div class="badge badge-live" style="margin-bottom: 16px;" id="winnerBadge">Giliran Kuis</div>
+        <div class="badge badge-live" style="margin-bottom: 16px;" id="winnerBadge">Turn Assigned</div>
         <div id="winnerTaskDetails" class="passage-box" style="text-align: left; margin-bottom: 20px;">
           <!-- Task details -->
         </div>
         <button class="btn btn-primary btn-block" onclick="closeWinnerModal()">
-          Lanjutkan Kuis
+          Proceed with Quiz
         </button>
       </div>
     </div>
@@ -370,12 +370,12 @@
     let allSubmissions = [];
     let currentFilter = 'all';
 
-    // Data 19 Siswa Default untuk Roda
+    // Default 19 Students for Wheel
     let wheelParticipants = [
-      "Siswa 1 (Essay 1)", "Siswa 2 (Essay 2)", "Siswa 3 (Essay 3)", "Siswa 4 (Essay 4)",
-      "Siswa 5 (PG 1)", "Siswa 6 (PG 2)", "Siswa 7 (PG 3)", "Siswa 8 (PG 4)", "Siswa 9 (PG 5)",
-      "Siswa 10 (PG 6)", "Siswa 11 (PG 7)", "Siswa 12 (PG 8)", "Siswa 13 (PG 9)", "Siswa 14 (PG 10)",
-      "Siswa 15 (Penanya 1)", "Siswa 16 (Penanya 2)", "Siswa 17 (Penanya 3)", "Siswa 18 (Penanya 4)", "Siswa 19 (Penanya 5)"
+      "Student 1 (Essay 1)", "Student 2 (Essay 2)", "Student 3 (Essay 3)", "Student 4 (Essay 4)",
+      "Student 5 (MC 1)", "Student 6 (MC 2)", "Student 7 (MC 3)", "Student 8 (MC 4)", "Student 9 (MC 5)",
+      "Student 10 (MC 6)", "Student 11 (MC 7)", "Student 12 (MC 8)", "Student 13 (MC 9)", "Student 14 (MC 10)",
+      "Student 15 (Q&A 1)", "Student 16 (Q&A 2)", "Student 17 (Q&A 3)", "Student 18 (Q&A 4)", "Student 19 (Q&A 5)"
     ];
 
     // Canvas Wheel State
@@ -383,7 +383,7 @@
     let isSpinning = false;
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Inisialisasi Realtime Engine sebagai Host
+      // 1. Initialize Realtime Engine as Host
       RealtimeSync.init({
         role: 'host',
         onSubmission: (newSub) => {
@@ -399,7 +399,7 @@
         onStatusChange: (connected, msg) => {
           const statusText = document.getElementById('adminStatusText');
           const statusDot = document.getElementById('adminStatusDot');
-          if (statusText) statusText.innerText = connected ? "Live Sync" : "Lokal";
+          if (statusText) statusText.innerText = connected ? "Live Sync" : "Local";
           if (statusDot) statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
         }
       });
@@ -418,7 +418,7 @@
           loadFeedData();
         })
         .catch(err => {
-          console.error("Gagal load questions.json", err);
+          console.error("Failed to load questions.json", err);
           loadFeedData();
         });
 
@@ -460,7 +460,6 @@
     function loadFeedData() {
       allSubmissions = RealtimeSync.getAllSubmissions();
       
-      // Update counters
       document.getElementById('feedCount').innerText = allSubmissions.length;
       document.getElementById('statTotalSubmissions').innerText = allSubmissions.length;
 
@@ -506,7 +505,7 @@
         tbody.innerHTML = `
           <tr>
             <td colspan="6" style="text-align:center; padding: 36px; color: var(--text-dim);">
-              Belum ada data pada kategori ini.
+              No submissions found in this category.
             </td>
           </tr>
         `;
@@ -521,26 +520,28 @@
         let resultSummary = "";
 
         if (item.type === 'pilihan_ganda') {
-          typeBadge = `<span class="badge badge-irfan">Pilihan Ganda</span>`;
+          typeBadge = `<span class="badge badge-irfan">Multiple Choice</span>`;
           const scoreClass = item.score >= 80 ? 'score-perfect' : (item.score >= 60 ? 'score-good' : 'score-avg');
-          resultSummary = `<span class="score-badge ${scoreClass}">${item.score} / 100</span> <small style="color:var(--text-muted); margin-left:6px;">(${item.correctCount || 0}/10 benar)</small>`;
+          resultSummary = `<span class="score-badge ${scoreClass}">${item.score} / 100</span> <small style="color:var(--text-muted); margin-left:6px;">(${item.correctCount || 0}/10 correct)</small>`;
         } else if (item.type === 'essay') {
-          typeBadge = `<span class="badge badge-elsa">Analisis Esai</span>`;
+          typeBadge = `<span class="badge badge-elsa">Essay Analysis</span>`;
           const countAns = item.essayResponses ? Object.keys(item.essayResponses).length : 0;
-          resultSummary = `<span class="badge badge-room">${countAns} Soal Terjawab</span>`;
+          resultSummary = `<span class="badge badge-room">${countAns} Cases Answered</span>`;
         } else if (item.type === 'tanya_bebas') {
-          typeBadge = `<span class="badge badge-ahmad">Tanya Bebas</span>`;
+          typeBadge = `<span class="badge badge-ahmad">Q&A Inquiry</span>`;
           resultSummary = `<span style="font-size:0.85rem; color:#cbd5e1;">Target: <strong>${escapeHtml(item.targetPresenter || 'Presenter')}</strong></span>`;
         }
 
+        const nipDisplay = item.nip || item.studentNumber || '-';
+
         tr.innerHTML = `
           <td style="color:var(--text-dim); font-size:0.8rem;">${timeStr}</td>
-          <td><strong>#${item.studentNumber || '-'}</strong></td>
+          <td><strong style="color:#38bdf8;">${escapeHtml(nipDisplay)}</strong></td>
           <td><strong style="color:#f8fafc;">${escapeHtml(item.name)}</strong></td>
           <td>${typeBadge}</td>
           <td>${resultSummary}</td>
           <td>
-            <button class="btn btn-secondary btn-sm" onclick="viewDetail('${item.id}')">Lihat Detail</button>
+            <button class="btn btn-secondary btn-sm" onclick="viewDetail('${item.id}')">View Details</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -560,14 +561,15 @@
       if (!item) return;
 
       const body = document.getElementById('detailModalBody');
-      document.getElementById('detailModalTitle').innerText = `Detail Jawaban: ${item.name} (#${item.studentNumber || '-'})`;
+      const nipDisplay = item.nip || item.studentNumber || '-';
+      document.getElementById('detailModalTitle').innerText = `Submission Details: ${item.name} (NIP: ${nipDisplay})`;
 
       if (item.type === 'pilihan_ganda') {
         let detailsHtml = `
           <div style="background: rgba(15,23,42,0.8); padding:14px; border-radius:10px; margin-bottom:14px; border:1px solid var(--border-color);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:1.1rem; font-weight:700;">Skor: <span style="color:#34d399;">${item.score}/100</span></span>
-              <span>Benar ${item.correctCount || 0} dari 10 Soal</span>
+              <span style="font-size:1.1rem; font-weight:700;">Score: <span style="color:#34d399;">${item.score}/100</span></span>
+              <span>Correct: ${item.correctCount || 0} of 10 Questions</span>
             </div>
           </div>
           <div style="display:flex; flex-direction:column; gap:10px;">
@@ -578,9 +580,9 @@
             const mark = rd.isCorrect ? "✅" : "❌";
             detailsHtml += `
               <div style="background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:8px; border-left:3px solid ${rd.isCorrect ? '#10b981' : '#ef4444'};">
-                <div style="font-weight:600; font-size:0.88rem;">Soal ${i+1} (${rd.category}): ${mark}</div>
+                <div style="font-weight:600; font-size:0.88rem;">Question ${i+1} (${rd.category}): ${mark}</div>
                 <div style="font-size:0.83rem; color:var(--text-muted); margin-top:4px;">
-                  Pilihan Siswa: <strong>${rd.studentChoice}</strong> | Kunci Benar: <strong>${rd.correct}</strong>
+                  Participant Choice: <strong>${rd.studentChoice}</strong> | Correct Key: <strong>${rd.correct}</strong>
                 </div>
                 <div style="font-size:0.8rem; color:#94a3b8; margin-top:2px; font-style:italic;">
                   ${rd.explanation || ''}
@@ -604,7 +606,7 @@
                   <span class="badge badge-elsa">${res.presenter} • ${res.topic}</span>
                 </div>
                 <div class="passage-box" style="margin-bottom:8px; font-style:normal; white-space:pre-wrap;">
-                  ${escapeHtml(res.answer || '(Tidak dijawab)')}
+                  ${escapeHtml(res.answer || '(No response provided)')}
                 </div>
               </div>
             `;
@@ -616,10 +618,10 @@
       } else if (item.type === 'tanya_bebas') {
         body.innerHTML = `
           <div class="passage-box" style="margin-bottom:12px;">
-            <strong style="color:#38bdf8;">Target Presenter:</strong> ${escapeHtml(item.targetPresenter || 'Semua Presenter')}
+            <strong style="color:#38bdf8;">Addressed Presenter:</strong> ${escapeHtml(item.targetPresenter || 'All Presenters')}
           </div>
           <div style="background:rgba(15,23,42,0.8); padding:16px; border-radius:10px; border:1px solid var(--border-color);">
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">Pertanyaan Siswa:</div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">Question Content:</div>
             <p style="font-size:1.05rem; color:#f8fafc; font-style:italic;">"${escapeHtml(item.questionText)}"</p>
           </div>
         `;
@@ -632,14 +634,14 @@
       document.getElementById('detailModal').classList.remove('active');
     }
 
-    // TAB 3: Render Matriks 19 Siswa
+    // TAB 3: Render Matrix 19 Students
     function renderMatrixTable() {
       const tbody = document.getElementById('matrixTableBody');
       if (!tbody || !questionsData) return;
 
       tbody.innerHTML = "";
 
-      // 4 Siswa Essay
+      // 4 Essay slots
       questionsData.essay.forEach((e, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -654,23 +656,23 @@
               ${e.key_points.map(kp => `<li>${escapeHtml(kp)}</li>`).join('')}
             </ul>
           </td>
-          <td><input type="text" placeholder="Nilai (0-100)" class="form-control" style="padding:6px; font-size:0.85rem;" /></td>
+          <td><input type="text" placeholder="Grade (0-100)" class="form-control" style="padding:6px; font-size:0.85rem;" /></td>
         `;
         tbody.appendChild(tr);
       });
 
-      // 10 Siswa PG
+      // 10 MC slots
       questionsData.pg.forEach((p, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong>#${idx + 5}</strong></td>
-          <td><span class="badge badge-irfan">Quiz #2 - PG ${idx + 1}</span></td>
+          <td><span class="badge badge-irfan">Quiz #2 - MC ${idx + 1}</span></td>
           <td>
             <strong>${p.presenter}</strong>
             <div style="font-size:0.8rem; color:var(--text-muted);">${p.category}</div>
           </td>
           <td style="font-size:0.83rem;">
-            <div><strong>Kunci: ${p.correct}</strong></div>
+            <div><strong>Key: ${p.correct}</strong></div>
             <div style="color:var(--text-muted);">${escapeHtml(p.explanation)}</div>
           </td>
           <td><span class="badge badge-room">Auto-Graded</span></td>
@@ -678,12 +680,12 @@
         tbody.appendChild(tr);
       });
 
-      // 5 Siswa Tanya Bebas
+      // 5 Q&A slots
       questionsData.tanya_bebas.forEach((t, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong>#${idx + 15}</strong></td>
-          <td><span class="badge badge-ahmad">Tanya Bebas #${idx + 1}</span></td>
+          <td><span class="badge badge-ahmad">Q&A Inquiry #${idx + 1}</span></td>
           <td>
             <strong>${t.target_presenter}</strong>
             <div style="font-size:0.8rem; color:var(--text-muted);">${t.topic}</div>
@@ -692,16 +694,14 @@
             <div style="font-weight:600; color:#cbd5e1;">"${escapeHtml(t.prompt_question)}"</div>
             <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">${escapeHtml(t.talking_points)}</div>
           </td>
-          <td><input type="text" placeholder="Catatan Diskusi" class="form-control" style="padding:6px; font-size:0.85rem;" /></td>
+          <td><input type="text" placeholder="Discussion Notes" class="form-control" style="padding:6px; font-size:0.85rem;" /></td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // TAB 2: Wheel of Names (Roda Keberuntungan)
-    function initWheel() {
-      drawWheel();
-    }
+    // TAB 2: Wheel of Names
+    function initWheel() { drawWheel(); }
 
     function populateWheelInput() {
       document.getElementById('wheelNamesInput').value = wheelParticipants.join('\n');
@@ -709,10 +709,10 @@
 
     function populate19Students() {
       wheelParticipants = [
-        "Siswa 1 (Essay 1)", "Siswa 2 (Essay 2)", "Siswa 3 (Essay 3)", "Siswa 4 (Essay 4)",
-        "Siswa 5 (PG 1)", "Siswa 6 (PG 2)", "Siswa 7 (PG 3)", "Siswa 8 (PG 4)", "Siswa 9 (PG 5)",
-        "Siswa 10 (PG 6)", "Siswa 11 (PG 7)", "Siswa 12 (PG 8)", "Siswa 13 (PG 9)", "Siswa 14 (PG 10)",
-        "Siswa 15 (Penanya 1)", "Siswa 16 (Penanya 2)", "Siswa 17 (Penanya 3)", "Siswa 18 (Penanya 4)", "Siswa 19 (Penanya 5)"
+        "Student 1 (Essay 1)", "Student 2 (Essay 2)", "Student 3 (Essay 3)", "Student 4 (Essay 4)",
+        "Student 5 (MC 1)", "Student 6 (MC 2)", "Student 7 (MC 3)", "Student 8 (MC 4)", "Student 9 (MC 5)",
+        "Student 10 (MC 6)", "Student 11 (MC 7)", "Student 12 (MC 8)", "Student 13 (MC 9)", "Student 14 (MC 10)",
+        "Student 15 (Q&A 1)", "Student 16 (Q&A 2)", "Student 17 (Q&A 3)", "Student 18 (Q&A 4)", "Student 19 (Q&A 5)"
       ];
       populateWheelInput();
       drawWheel();
@@ -731,11 +731,11 @@
     function onWheelTargetChange() {
       const val = document.getElementById('wheelTargetType').value;
       if (val === 'essay') {
-        wheelParticipants = ["Siswa 1", "Siswa 2", "Siswa 3", "Siswa 4"];
+        wheelParticipants = ["Student 1", "Student 2", "Student 3", "Student 4"];
       } else if (val === 'pg') {
-        wheelParticipants = ["Siswa 5", "Siswa 6", "Siswa 7", "Siswa 8", "Siswa 9", "Siswa 10", "Siswa 11", "Siswa 12", "Siswa 13", "Siswa 14"];
+        wheelParticipants = ["Student 5", "Student 6", "Student 7", "Student 8", "Student 9", "Student 10", "Student 11", "Student 12", "Student 13", "Student 14"];
       } else if (val === 'tanya') {
-        wheelParticipants = ["Siswa 15", "Siswa 16", "Siswa 17", "Siswa 18", "Siswa 19"];
+        wheelParticipants = ["Student 15", "Student 16", "Student 17", "Student 18", "Student 19"];
       }
       populateWheelInput();
       drawWheel();
@@ -772,11 +772,10 @@
 
         ctx.fillStyle = sliceColors[i % sliceColors.length];
         ctx.fill();
-        ctx.strokeStyle = '#090d16';
+        ctx.strokeStyle = '#070a12';
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Label
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(start + sliceAngle / 2);
@@ -802,7 +801,7 @@
       isSpinning = true;
       document.getElementById('btnSpin').disabled = true;
 
-      const spinDuration = 3500; // ms
+      const spinDuration = 3500;
       const startTime = performance.now();
       const initialVelocity = 0.4 + Math.random() * 0.3;
       let lastTickTime = 0;
@@ -810,15 +809,12 @@
       function animateSpin(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / spinDuration, 1);
-        
-        // Easing out cubic
         const easeOut = 1 - Math.pow(1 - progress, 3);
         const currentSpeed = initialVelocity * (1 - easeOut);
         
         wheelAngle += currentSpeed;
         drawWheel();
 
-        // Tick sound
         if (currentTime - lastTickTime > (50 + progress * 200)) {
           AudioManager.spinTick();
           lastTickTime = currentTime;
@@ -840,7 +836,6 @@
       const numSlices = wheelParticipants.length;
       const sliceAngle = (2 * Math.PI) / numSlices;
 
-      // Pointer is at the top (angle = 3*PI/2)
       let normalized = (3 * Math.PI / 2 - (wheelAngle % (2 * Math.PI))) % (2 * Math.PI);
       if (normalized < 0) normalized += 2 * Math.PI;
 
@@ -856,11 +851,11 @@
       const targetType = document.getElementById('wheelTargetType').value;
       let taskHtml = "";
       if (targetType === 'essay') {
-        taskHtml = "<strong>Tugas Anda:</strong> Jawab 1 soal kasus analisis esai (Quiz #1).";
+        taskHtml = "<strong>Assigned Task:</strong> Answer 1 essay case study (Quiz #1).";
       } else if (targetType === 'pg') {
-        taskHtml = "<strong>Tugas Anda:</strong> Jawab soal Pilihan Ganda (Quiz #2) nomor terkait.";
+        taskHtml = "<strong>Assigned Task:</strong> Answer Multiple Choice question (Quiz #2) assigned slot.";
       } else {
-        taskHtml = "<strong>Tugas Anda:</strong> Ajukan pertanyaan diskusi pada Sesi Tanya Bebas.";
+        taskHtml = "<strong>Assigned Task:</strong> Pose a discussion inquiry in the Q&A Session.";
       }
       document.getElementById('winnerTaskDetails').innerHTML = taskHtml;
 
@@ -873,32 +868,29 @@
 
     // QR Codes
     function generateQrCodes() {
-      // Tentukan URL Player (halaman index.html)
       const currentLoc = window.location.href.split('admin.html')[0];
       const playerUrl = `${currentLoc}index.html?room=${encodeURIComponent(RealtimeSync.getRoomId())}`;
 
       document.getElementById('projectorUrlText').innerText = playerUrl;
       document.getElementById('modalQrUrlText').innerText = playerUrl;
 
-      // Projector QR
       const projContainer = document.getElementById('projectorQrCode');
       projContainer.innerHTML = "";
       new QRCode(projContainer, {
         text: playerUrl,
         width: 220,
         height: 220,
-        colorDark: "#090d16",
+        colorDark: "#070a12",
         colorLight: "#ffffff"
       });
 
-      // Modal QR
       const modalContainer = document.getElementById('modalQrCode');
       modalContainer.innerHTML = "";
       new QRCode(modalContainer, {
         text: playerUrl,
         width: 180,
         height: 180,
-        colorDark: "#090d16",
+        colorDark: "#070a12",
         colorLight: "#ffffff"
       });
     }
@@ -914,50 +906,49 @@
     function copyPlayerLink() {
       const url = document.getElementById('modalQrUrlText').innerText;
       navigator.clipboard.writeText(url).then(() => {
-        alert("Link kuis berhasil disalin ke clipboard!");
+        alert("Quiz link copied to clipboard!");
       });
     }
 
-    // Setting & Room Change
     function changeRoomCode() {
       const newRoom = document.getElementById('settingRoomInput').value.trim();
-      if (!newRoom) return alert("Kode room tidak boleh kosong!");
+      if (!newRoom) return alert("Room code cannot be empty!");
       RealtimeSync.setRoomId(newRoom);
     }
 
     function saveCustomFirebase() {
       const dbUrl = document.getElementById('fbDbUrlInput').value.trim();
       const apiKey = document.getElementById('fbApiKeyInput').value.trim();
-      if (!dbUrl || !apiKey) return alert("Harap isi Database URL dan API Key Firebase!");
+      if (!dbUrl || !apiKey) return alert("Please provide both Firebase Database URL and API Key!");
 
       const cfg = { apiKey: apiKey, databaseURL: dbUrl };
       localStorage.setItem('custom_firebase_config', JSON.stringify(cfg));
-      alert("Konfigurasi Firebase tersimpan! Halaman akan dimuat ulang...");
+      alert("Firebase configuration saved! Reloading page...");
       window.location.reload();
     }
 
     function resetCustomFirebase() {
       localStorage.removeItem('custom_firebase_config');
-      alert("Konfigurasi Firebase direset ke bawaan. Halaman akan dimuat ulang...");
+      alert("Firebase configuration reset to default. Reloading page...");
       window.location.reload();
     }
 
     function confirmClearData() {
-      if (confirm("Apakah Anda yakin ingin menghapus SEMUA rekap jawaban kuis yang tersimpan?")) {
+      if (confirm("Are you sure you want to permanently clear ALL stored participant submissions?")) {
         RealtimeSync.clearAllSubmissions();
         loadFeedData();
-        alert("Semua jawaban berhasil direset.");
+        alert("All submissions have been reset.");
       }
     }
 
     // Export & Print
     function exportToCsv() {
-      if (allSubmissions.length === 0) return alert("Belum ada data untuk diunduh!");
+      if (allSubmissions.length === 0) return alert("No submissions available to export!");
       
-      let csv = "Waktu,No Siswa,Nama Siswa,Tipe Kuis,Skor / Nilai,Detail Jawaban\n";
+      let csv = "Time,NIP,Student Name,Quiz Type,Score,Answer Details\n";
       allSubmissions.forEach(s => {
         const time = s.submittedAt ? new Date(s.submittedAt).toLocaleTimeString() : "-";
-        const no = s.studentNumber || "-";
+        const nip = s.nip || s.studentNumber || "-";
         const name = `"${(s.name || '').replace(/"/g, '""')}"`;
         const type = s.type;
         const score = s.score !== undefined ? s.score : "-";
@@ -969,14 +960,14 @@
         } else {
           ansDetail = `"${(s.questionText || '').replace(/"/g, '""')}"`;
         }
-        csv += `${time},${no},${name},${type},${score},"${ansDetail}"\n`;
+        csv += `${time},${nip},${name},${type},${score},"${ansDetail}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
-      link.setAttribute("download", `Rekap_Kuis_Transition_Words_${Date.now()}.csv`);
+      link.setAttribute("download", `Transition_Words_Quiz_Submissions_${Date.now()}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1006,7 +997,7 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Chill BGM Event Listeners for Presenter
+    // Chill BGM Event Listeners
     AudioManager.onBgmStateChange((state) => {
       const btn = document.getElementById('adminMusicPlayBtn');
       const wave = document.getElementById('adminSoundwaveAnim');
@@ -1016,12 +1007,12 @@
       if (state.isPlaying && !state.isMuted) {
         if (btn) btn.innerHTML = "⏸";
         if (wave) wave.classList.add('playing');
-        if (sub) sub.innerText = "Musik santai sedang diputar...";
+        if (sub) sub.innerText = "Playing relaxing lo-fi chords...";
         if (topStatus) { topStatus.innerText = "ON 🎶"; topStatus.style.color = "#34d399"; }
       } else {
         if (btn) btn.innerHTML = "▶";
         if (wave) wave.classList.remove('playing');
-        if (sub) sub.innerText = "Klik untuk memutar musik santai";
+        if (sub) sub.innerText = "Click to play chill background chords";
         if (topStatus) { topStatus.innerText = "OFF"; topStatus.style.color = "inherit"; }
       }
     });
@@ -1038,7 +1029,7 @@
 
   <!-- Floating Chill Music Player for Host -->
   <div class="chill-music-widget" id="adminMusicWidget">
-    <button class="music-play-btn" onclick="toggleBgm()" id="adminMusicPlayBtn" title="Putar/Jeda Musik Santai">
+    <button class="music-play-btn" onclick="toggleBgm()" id="adminMusicPlayBtn" title="Play/Pause Chill Music">
       ▶
     </button>
     <div class="music-info">
@@ -1051,13 +1042,13 @@
           <div class="soundwave-bar"></div>
         </div>
       </div>
-      <div class="music-status" id="adminMusicStatusSubtitle">Klik untuk memutar musik santai kelas</div>
+      <div class="music-status" id="adminMusicStatusSubtitle">Click to play chill background chords</div>
     </div>
     <select class="form-control" id="adminTrackSelect" onchange="changeTrack()" style="padding:4px 8px; font-size:0.75rem; width:auto; height:28px; background:rgba(255,255,255,0.08);">
       <option value="lofi">☕ Cozy Lo-Fi</option>
       <option value="ambient">🌌 Ambient Chill</option>
     </select>
-    <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Volume Musik" />
+    <input type="range" class="music-vol-slider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value)" title="Music Volume" />
   </div>
 
 </body>
