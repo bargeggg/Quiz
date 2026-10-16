@@ -85,11 +85,11 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">NIP (Employee / Student ID)</label>
-          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001" required />
+          <input type="text" id="studentNip" class="form-control" placeholder="e.g. 199803122022031001" autocomplete="off" value="" required />
         </div>
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Full Name</label>
-          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" required />
+          <input type="text" id="studentName" class="form-control" placeholder="e.g. Alex Johnson" autocomplete="off" value="" required />
         </div>
       </div>
     </div>
@@ -315,11 +315,15 @@
         }
       });
 
-      // Restore credentials from localStorage if present
-      const savedNip = localStorage.getItem('student_nip');
-      const savedName = localStorage.getItem('student_name');
-      if (savedNip) document.getElementById('studentNip').value = savedNip;
-      if (savedName) document.getElementById('studentName').value = savedName;
+      // Keep credential inputs clean and empty on initial load
+      try {
+        localStorage.removeItem('student_name');
+        localStorage.removeItem('student_nip');
+      } catch (e) {}
+      const nipEl = document.getElementById('studentNip');
+      const nameEl = document.getElementById('studentName');
+      if (nipEl) nipEl.value = '';
+      if (nameEl) nameEl.value = '';
     });
 
     // BGM Controls
@@ -619,10 +623,6 @@
         alert("Please enter your Full Name!");
         nameInput.focus();
         return null;
-      }
-
-      localStorage.setItem('student_nip', nip);
-      localStorage.setItem('student_name', name);
       return { nip: nip, name: name };
     }
 
