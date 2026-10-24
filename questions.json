@@ -1,29 +1,22 @@
 {
-  "presentation": {
-    "title": "Transition Words & Connectors",
-    "canva_url": "https://canva.link/otop855dny25lu6",
-    "deadline": "October 22, 2026",
-    "rehearsal_dates": "October 23-24, 2026",
-    "total_students": 19,
-    "distribution": {
-      "essay": 0,
-      "pilihan_ganda": 13,
-      "tanya_bebas": 0
-    },
+  "settings": {
+    "title": "Transition Words & Connectors Interactive Quiz",
+    "course": "Bahasa Inggris - Semester 5",
+    "description": "Platform kuis interaktif 13 soal pilihan ganda, real-time scoreboard, dan sound effects.",
     "presenters": [
       {
         "slot": 1,
         "name": "Elsa",
-        "topics": ["Addition", "Clarification", "Definition", "Example"],
-        "schema": "Overview > Key Points Explanation > Sentence Examples",
-        "color": "#ec4899"
+        "topics": ["Clarification", "Addition", "Definition", "Example"],
+        "schema": "Overview > Penjelasan per-poin > Contoh kalimat",
+        "color": "#a855f7"
       },
       {
         "slot": 2,
         "name": "Sofia",
         "topics": ["Location", "Time", "Conclusion"],
-        "schema": "Overview > Explanation & Sentence Examples",
-        "color": "#8b5cf6"
+        "schema": "Overview > Penjelasan & Contoh kalimat",
+        "color": "#ec4899"
       },
       {
         "slot": 3,
@@ -56,7 +49,7 @@
         "D. Example, karena mencantumkan contoh acak dari kendaraan listrik."
       ],
       "correct": "C",
-      "explanation": ""
+      "explanation": "Kata transisi 'specifically' berfungsi sebagai penanda Clarification (klarifikasi). Klausa pertama menyatakan kebijakan secara umum (strict congestion pricing policy), lalu klausa kedua memperjelas detail operasionalnya secara presisi (pengenaan tarif harian bagi kendaraan non-listrik pada jam sibuk)."
     },
     {
       "id": "pg2",
@@ -71,7 +64,7 @@
         "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
       ],
       "correct": "B",
-      "explanation": ""
+      "explanation": "Kata transisi 'Furthermore' adalah penanda hubungan Addition (penambahan). Kalimat pertama memaparkan manfaat lingkungan (pengurangan jejak karbon), kemudian kata 'Furthermore' menambahkan argumen/keuntungan kumulatif independen berikutnya, yaitu kemandirian ekonomi jangka panjang."
     },
     {
       "id": "pg3",
@@ -86,7 +79,7 @@
         "D. Clarification, karena memperbaiki kesalahpahaman linguistik yang terjadi sebelumnya."
       ],
       "correct": "A",
-      "explanation": ""
+      "explanation": "Kalimat ini mengikuti rumus formal Definition: [Term/Istilah] + [is/are] + [General Class] + [Specific Characteristics]. Kalimat secara eksplisit mendefinisikan apa itu neurolinguistics dan batasan ruang lingkup keilmuannya."
     },
     {
       "id": "pg4",
@@ -101,7 +94,7 @@
         "D. Within menunjukkan kesimpulan lokasi, sedangkan far menunjukkan urutan tempat."
       ],
       "correct": "B",
-      "explanation": ""
+      "explanation": "Kedua kata adalah transisi spasial/lokasi (Location). Frasa 'within walking distance' menunjukkan jarak dekat yang masih dapat ditempuh dengan berjalan kaki, sedangkan 'far from' menunjukkan jarak spasial yang berjauhan dari pusat kota."
     },
     {
       "id": "pg5",
@@ -116,7 +109,7 @@
         "D. Immediate succession"
       ],
       "correct": "D",
-      "explanation": ""
+      "explanation": "Frasa transisi waktu 'as soon as' (segera setelah) termasuk kategori Immediate Succession (suksesi langsung seketika). Artinya tindakan menelepon harus langsung dilakukan segera saat momen tiba di bandara terjadi tanpa penundaan waktu."
     },
     {
       "id": "pg6",
@@ -131,7 +124,7 @@
         "D. Afterwards"
       ],
       "correct": "C",
-      "explanation": ""
+      "explanation": "'Therefore' (oleh karena itu) adalah konektor yang tepat untuk menarik kesimpulan logis atau konsekuensi akhir (Conclusion/Result) dari premis sebelumnya (jalan banjir sehingga kelas dibatalkan). Meanwhile untuk waktu bersamaan, Afterwards untuk urutan waktu, dan In summary untuk merangkum teks panjang."
     },
     {
       "id": "pg7",
@@ -146,7 +139,7 @@
         "D. Even though the car is old, it is still very fast"
       ],
       "correct": "C",
-      "explanation": ""
+      "explanation": "Hubungan Comparison menyoroti kesamaan atau kesetaraan karakteristik antara dua subjek. Struktur korelatif 'Both ... and ...' pada opsi C membandingkan kedua mobil yang sama-sama cepat. Opsi A adalah Contrast (perbedaan), B adalah Condition (syarat), dan D adalah Concession (pertentangan)."
     },
     {
       "id": "pg8",
@@ -161,7 +154,7 @@
         "D. However"
       ],
       "correct": "A",
-      "explanation": ""
+      "explanation": "Hubungan Concession (konsesi) menyatakan hasil yang tak terduga/berlawanan dari suatu usaha keras. Karena diikuti bentuk gerund/noun phrase ('studying all night'), kata yang tepat secara tata bahasa adalah preposisi 'Despite' (Despite + Noun/Gerund)."
     },
     {
       "id": "pg9",
@@ -176,7 +169,7 @@
         "D. Condition"
       ],
       "correct": "D",
-      "explanation": ""
+      "explanation": "Frasa penghubung 'as long as' memiliki makna 'asalkan / dengan syarat bahwa'. Ini adalah penanda hubungan Condition (persyaratan), di mana izin bermain game hanya terwujud apabila syarat menyelesaikan PR terpenuhi terlebih dahulu."
     },
     {
       "id": "pg10",
@@ -191,7 +184,7 @@
         "D. Cause"
       ],
       "correct": "D",
-      "explanation": ""
+      "explanation": "Frasa 'due to' (disebabkan oleh) memperkenalkan akar penyebab fisik atau alamiah (Cause). Di sini, 'thick fog' (kabut tebal) adalah peristiwa alam yang menjadi penyebab (Cause), sedangkan penundaan penerbangan adalah hasil atau dampaknya (Result/Effect)."
     },
     {
       "id": "pg11",
@@ -206,7 +199,7 @@
         "D. The MBG program uses public money"
       ],
       "correct": "B",
-      "explanation": ""
+      "explanation": "Hubungan Reason menjelaskan motivasi rasional atau pertimbangan logis di balik tindakan manusia. Alasan warga meminta transparansi anggaran adalah keinginannya agar penggunaan anggaran publik dapat dipantau dan dipertanggungjawabkan secara terbuka (open to public scrutiny)."
     },
     {
       "id": "pg12",
@@ -221,7 +214,7 @@
         "D. Result/Effect"
       ],
       "correct": "B",
-      "explanation": ""
+      "explanation": "Struktur 'to + verb' (infinitive of purpose) digunakan untuk mengekspresikan Purpose (tujuan atau cita-cita yang ingin dicapai di masa mendatang). Berolahraga setiap pagi adalah tindakannya, dan menjaga kesehatan adalah tujuan (Purpose) yang ingin diraih."
     },
     {
       "id": "pg13",
@@ -236,7 +229,7 @@
         "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
       ],
       "correct": "C",
-      "explanation": ""
+      "explanation": "Dalam rantai kausalitas (sebab-akibat), penurunan IHSG (decline in the IHSG) adalah pemicu atau penyebab (Cause) awal yang membangkitkan kepanikan dan rasa khawatir para investor (sebagai Result/Effect)."
     }
   ],
   "tanya_bebas": []
