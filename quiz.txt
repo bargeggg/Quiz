@@ -1,11 +1,10 @@
-Anaknya 19
 ===========================
 Quiz
 Quiz #1 (Essay)         = - (Dihilangkan)
 Quiz #2 (Pilihan Ganda) = 13 Soal
-Penanya (Tanya Bebas)   = (Kosong sementara)
+Penanya (Tanya Bebas)   = - (Dihilangkan)
 Note:
-Sesi kuis berfokus pada 13 soal pilihan ganda interaktif, setelahnya sesi tanya bebas
+Sesi kuis berfokus penuh pada 13 soal pilihan ganda interaktif & Class Scoreboard
 ===========================
 Link file persentasi:
 https://canva.link/otop855dny25lu6

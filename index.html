@@ -89,21 +89,6 @@
         </svg>
         <span id="tabLabelPg">Multiple Choice</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay" style="display:none;">
-        <svg viewBox="0 0 24 24">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-        </svg>
-        <span id="tabLabelEssay">Case Study Analysis</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
-        <svg viewBox="0 0 24 24">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-        <span id="tabLabelTanya">Discussion Prompts</span>
-      </button>
       <button class="tab-btn" onclick="switchTab('score')" id="tabNavBtnScore">
         <svg viewBox="0 0 24 24">
           <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
@@ -177,39 +162,7 @@
 
     </div>
 
-    <!-- TAB 2: Essay / Case Analysis (4 Questions) -->
-    <div id="tabContentEssay" class="tab-pane" style="display: none;">
-      <div class="glass-card" style="border-left: 4px solid var(--primary); margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color:#f8fafc;">📝 Quiz #1: Sentence & Case Analysis (4 Cases)</h3>
-          <span class="badge badge-live">Classroom Analysis</span>
-        </div>
-        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6; margin:0;">
-          Read each academic passage aloud on Zoom. Ask participant representatives to identify the 2 transition words, classify their categories, and explain their functional usage. Click <strong>"Reveal Analysis Key"</strong> to highlight transitions and show the rubric!
-        </p>
-      </div>
 
-      <div id="essayContainer">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
-
-    <!-- TAB 3: Q&A Discussion Session (5 Questions) -->
-    <div id="tabContentTanya" class="tab-pane" style="display: none;">
-      <div class="glass-card" style="border-left: 4px solid #8b5cf6; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color:#f8fafc;">💬 Open Q&A Discussion Prompts (5 Inquirers)</h3>
-          <span class="badge badge-room">Interactive Floor</span>
-        </div>
-        <p style="font-size: 0.92rem; color: var(--text-muted); line-height:1.6; margin:0;">
-          Use these curated discussion starter prompts if chosen during the Q&A session. Click <strong>"Show Recommended Discussion Key"</strong> to display background context and talking points.
-        </p>
-      </div>
-
-      <div id="tanyaContainer">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
 
     <!-- TAB 4: Class Scoreboard (Papan Keaktifan Mahasiswa) -->
     <div id="tabContentScore" class="tab-pane" style="display: none;">
@@ -331,15 +284,6 @@
           if (document.getElementById('badgeResetCount')) {
             document.getElementById('badgeResetCount').innerText = questionsData.pg.length;
           }
-          const essayBtn = document.getElementById('tabBtnEssay');
-          if (essayBtn) {
-            essayBtn.style.display = (questionsData.essay && questionsData.essay.length > 0) ? 'inline-flex' : 'none';
-          }
-          const tanyaLabel = document.getElementById('tabLabelTanya');
-          if (tanyaLabel) {
-            const tCount = questionsData.tanya_bebas ? questionsData.tanya_bebas.length : 0;
-            tanyaLabel.innerText = `Discussion Prompts (${tCount})`;
-          }
           try {
             const savedState = localStorage.getItem('quiz_live_state');
             if (savedState) {
@@ -348,8 +292,6 @@
           } catch(e) {}
           buildQuestionPills();
           renderFocusQuestion();
-          renderEssayQuestions();
-          renderTanyaBebas();
           renderScoreboard();
           updateScoreboardBadge();
         })
@@ -358,24 +300,21 @@
         });
     });
 
-    // Toggle Tabs
+    // Toggle Tabs (Multiple Choice & Class Scoreboard)
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-pane').forEach(pane => pane.style.display = 'none');
 
       if (tabId === 'pg') {
-        document.getElementById('tabBtnPg').classList.add('active');
-        document.getElementById('tabContentPg').style.display = 'block';
-      } else if (tabId === 'essay') {
-        document.getElementById('tabBtnEssay').classList.add('active');
-        document.getElementById('tabContentEssay').style.display = 'block';
-      } else if (tabId === 'tanya') {
-        document.getElementById('tabBtnTanya').classList.add('active');
-        document.getElementById('tabContentTanya').style.display = 'block';
+        const btn = document.getElementById('tabBtnPg');
+        if (btn) btn.classList.add('active');
+        const content = document.getElementById('tabContentPg');
+        if (content) content.style.display = 'block';
       } else if (tabId === 'score') {
         const navBtn = document.getElementById('tabNavBtnScore');
         if (navBtn) navBtn.classList.add('active');
-        document.getElementById('tabContentScore').style.display = 'block';
+        const content = document.getElementById('tabContentScore');
+        if (content) content.style.display = 'block';
         renderScoreboard();
       }
 
@@ -865,133 +804,6 @@
       return opt.replace(/^[A-D][\.\)]\s*/i, '').trim();
     }
 
-    // TAB 2: Render Essay / Case Analysis (NO PRESENTER NAMES!)
-    function renderEssayQuestions() {
-      const container = document.getElementById('essayContainer');
-      if (!container || !questionsData) return;
-
-      if (!questionsData.essay || questionsData.essay.length === 0) {
-        container.innerHTML = `
-          <div class="glass-card" style="text-align:center; padding: 48px; color: var(--text-dim);">
-            <div style="font-size: 2.2rem; margin-bottom: 12px;">📝</div>
-            <div style="font-size: 1.15rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px;">Soal Essay Ditiadakan</div>
-            <div style="font-size: 0.92rem; color: #94a3b8;">Sesi kuis berfokus penuh pada Multiple Choice interaktif dan sesi tanya jawab.</div>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = questionsData.essay.map((item, idx) => {
-        const isRevealed = !!essayRevealed[item.id];
-
-        let keyContentHtml = "";
-        if (isRevealed) {
-          keyContentHtml = `
-            <div class="explanation-card" style="margin-top:16px; border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.45);">
-              <div class="explanation-title" style="color:#34d399;">
-                🔍 Analysis Rubric & Identified Transitions:
-              </div>
-              <ul style="padding-left:20px; margin: 8px 0; color:#f1f5f9; line-height:1.75;">
-                ${item.key_points.map(kp => `<li>${escapeHtml(kp)}</li>`).join('')}
-              </ul>
-            </div>
-          `;
-        }
-
-        // NOTE: Presenter badge removed!
-        return `
-          <div class="glass-card" style="margin-bottom: 20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-              <span class="question-number">CASE #${idx + 1}</span>
-              <span class="badge badge-elsa">Topic: ${escapeHtml(item.topic)}</span>
-            </div>
-
-            <div class="passage-box" style="font-size:1.15rem; line-height:1.7; margin-bottom:16px;">
-              "${escapeHtml(item.source_text)}"
-            </div>
-
-            <p style="font-weight:700; font-size:1.02rem; color:#cbd5e1; margin-bottom:16px;">
-              ${escapeHtml(item.question)}
-            </p>
-
-            <div style="display:flex; justify-content:flex-end;">
-              <button class="btn btn-secondary btn-sm" onclick="toggleEssayKey('${item.id}')">
-                ${isRevealed ? '🙈 Hide Analysis Key' : '🔍 Reveal Analysis Key & Highlights'}
-              </button>
-            </div>
-
-            ${keyContentHtml}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleEssayKey(id) {
-      essayRevealed[id] = !essayRevealed[id];
-      renderEssayQuestions();
-      playSfx('click');
-    }
-
-    // TAB 3: Render Q&A Discussion Prompts (NO PRESENTER NAMES!)
-    function renderTanyaBebas() {
-      const container = document.getElementById('tanyaContainer');
-      if (!container || !questionsData) return;
-
-      if (!questionsData.tanya_bebas || questionsData.tanya_bebas.length === 0) {
-        container.innerHTML = `
-          <div class="glass-card" style="text-align:center; padding: 50px 24px; color: var(--text-dim);">
-            <div style="font-size: 2.5rem; margin-bottom: 12px;">💬</div>
-            <div style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">Sesi Tanya Bebas Belum Diisi</div>
-            <div style="font-size: 0.95rem; color: #94a3b8; max-width: 520px; margin: 0 auto; line-height: 1.6;">
-              Daftar pertanyaan dan topik diskusi bebas dibuat kosong terlebih dahulu dan siap digunakan saat sesi tanya jawab dibuka.
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = questionsData.tanya_bebas.map((t, idx) => {
-        const isRevealed = !!tanyaRevealed[t.id];
-
-        let talkingPointsHtml = "";
-        if (isRevealed) {
-          talkingPointsHtml = `
-            <div class="explanation-card" style="margin-top:14px; border-left: 5px solid #6366f1;">
-              <div class="explanation-title" style="color:#a5b4fc;">
-                💡 Recommended Presenter Talking Points:
-              </div>
-              <div class="explanation-text" style="color:#f1f5f9;">
-                ${escapeHtml(t.talking_points)}
-              </div>
-            </div>
-          `;
-        }
-
-        // NOTE: Presenter target badge removed!
-        return `
-          <div class="glass-card" style="margin-bottom: 18px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge badge-live">Discussion Topic #${idx + 1}</span>
-            </div>
-            <p style="font-size:1.18rem; font-weight:700; color:#f8fafc; margin-bottom:14px; line-height:1.55;">
-              "${escapeHtml(t.prompt_question)}"
-            </p>
-            <div style="display:flex; justify-content:flex-end;">
-              <button class="btn btn-secondary btn-sm" onclick="toggleTanyaKey('${t.id}')">
-                ${isRevealed ? '🙈 Hide Talking Points' : '💡 Show Presenter Talking Points'}
-              </button>
-            </div>
-            ${talkingPointsHtml}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleTanyaKey(id) {
-      tanyaRevealed[id] = !tanyaRevealed[id];
-      renderTanyaBebas();
-      playSfx('click');
-    }
 
     function triggerConfetti() {
       if (typeof confetti === 'function') {
