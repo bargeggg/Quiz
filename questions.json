@@ -176,7 +176,7 @@
       "presenter": "Ahmad (#4)",
       "category": "Cause",
       "q": "The flight was delayed due to thick fog.",
-      "instruction": "Look at the keyword “due to”: “The flight was delayed due to thick fog.” What does “thick fog” represent?",
+      "instruction": "Look at the keyword “due to”: What does “thick fog” represent?",
       "options": [
         "A. Purpose",
         "B. Result/Effect",
@@ -206,7 +206,7 @@
       "presenter": "Ahmad (#4)",
       "category": "Purpose",
       "q": "Maya exercises every morning to stay healthy.",
-      "instruction": "Look at the keyword “to”: “Maya exercises every morning to stay healthy.” What does “to stay healthy” express?",
+      "instruction": "Look at the keyword “to”: What does “to stay healthy” express?",
       "options": [
         "A. Reason",
         "B. Purpose",
