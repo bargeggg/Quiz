@@ -96,6 +96,21 @@
     {
       "id": "pg1",
       "presenter": "Elsa (#1)",
+      "category": "Addition",
+      "q": "Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.",
+      "instruction": "Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?",
+      "options": [
+        "A. Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.",
+        "B. Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.",
+        "C. Definition, karena mendefinisikan arti dari kemandirian ekonomi.",
+        "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
+      ],
+      "correct": "B",
+      "explanation": ""
+    },
+    {
+      "id": "pg2",
+      "presenter": "Elsa (#1)",
       "category": "Clarification",
       "q": "The city implemented a strict congestion pricing policy; specifically, it levied a daily fee on all non-electric vehicles entering the downtown core during peak hours.",
       "instruction": "Bagaimana hubungan klausa kedua dengan klausa pertama pada kalimat di atas?",
@@ -109,7 +124,7 @@
       "explanation": ""
     },
     {
-      "id": "pg2",
+      "id": "pg3",
       "presenter": "Elsa (#1)",
       "category": "Definition",
       "q": "Neurolinguistics is an interdisciplinary field that investigates the neural mechanisms in the human brain that control the comprehension, production, and acquisition of language.",
@@ -124,127 +139,7 @@
       "explanation": ""
     },
     {
-      "id": "pg3",
-      "presenter": "Elsa (#1)",
-      "category": "Addition",
-      "q": "Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.",
-      "instruction": "Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?",
-      "options": [
-        "A. Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.",
-        "B. Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.",
-        "C. Definition, karena mendefinisikan arti dari kemandirian ekonomi.",
-        "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
-      ],
-      "correct": "B",
-      "explanation": ""
-    },
-    {
       "id": "pg4",
-      "presenter": "Ahmad (#4)",
-      "category": "Cause",
-      "q": "The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease.",
-      "instruction": "In this cause and effect situation, what does the decline in the IHSG represent?",
-      "options": [
-        "A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.",
-        "B. Reason, because the decline in the IHSG explains why investors start buying stocks.",
-        "C. Cause, because the decline in the IHSG causes investors to become worried.",
-        "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
-      ],
-      "correct": "C",
-      "explanation": ""
-    },
-    {
-      "id": "pg5",
-      "presenter": "Ahmad (#4)",
-      "category": "Cause",
-      "q": "The flight was delayed due to thick fog.",
-      "instruction": "Look at the keyword “due to”: What does “thick fog” represent?",
-      "options": [
-        "A. Purpose",
-        "B. Result/Effect",
-        "C. Reason",
-        "D. Cause"
-      ],
-      "correct": "D",
-      "explanation": ""
-    },
-    {
-      "id": "pg6",
-      "presenter": "Ahmad (#4)",
-      "category": "Purpose",
-      "q": "Maya exercises every morning to stay healthy.",
-      "instruction": "Look at the keyword “to”: What does “to stay healthy” express?",
-      "options": [
-        "A. Reason",
-        "B. Purpose",
-        "C. Cause",
-        "D. Result/Effect"
-      ],
-      "correct": "B",
-      "explanation": ""
-    },
-    {
-      "id": "pg7",
-      "presenter": "Ahmad (#4)",
-      "category": "Reason",
-      "q": "A citizen says, “My reason for asking for transparency in the MBG budget is that people should know how public money is used.”",
-      "instruction": "What is the reason for the citizen's request?",
-      "options": [
-        "A. The citizen asks for budget transparency",
-        "B. The citizen wants public spending to be open to public scrutiny",
-        "C. People knowing how public money is used",
-        "D. The MBG program uses public money"
-      ],
-      "correct": "B",
-      "explanation": ""
-    },
-    {
-      "id": "pg8",
-      "presenter": "Irfan (#3)",
-      "category": "Comparison",
-      "q": "Comparison Transition & Conjunction Structures",
-      "instruction": "Kalimat mana yang punya hubungan “comparison”?",
-      "options": [
-        "A. The red car is fast, but the blue car is quite slow",
-        "B. If you drive the car too fast, you will get a fine",
-        "C. Both the red car and the blue car are incredibly fast",
-        "D. Even though the car is old, it is still very fast"
-      ],
-      "correct": "C",
-      "explanation": ""
-    },
-    {
-      "id": "pg9",
-      "presenter": "Irfan (#3)",
-      "category": "Concession",
-      "q": "_______ studying all night, he still failed the math test.",
-      "instruction": "Which transition word best completes the sentence?",
-      "options": [
-        "A. Despite",
-        "B. Similarly",
-        "C. As long as",
-        "D. However"
-      ],
-      "correct": "A",
-      "explanation": ""
-    },
-    {
-      "id": "pg10",
-      "presenter": "Irfan (#3)",
-      "category": "Condition",
-      "q": "You can play video games as long as you finish your homework first.",
-      "instruction": "Termasuk kalimat jenis apakah pernyataan di atas?",
-      "options": [
-        "A. Concession",
-        "B. Comparison",
-        "C. Contrast",
-        "D. Condition"
-      ],
-      "correct": "D",
-      "explanation": ""
-    },
-    {
-      "id": "pg11",
       "presenter": "Sofia (#2)",
       "category": "Location",
       "q": "The hospital is within walking distance of the bus station, while the airport is far from the city center.",
@@ -259,7 +154,7 @@
       "explanation": ""
     },
     {
-      "id": "pg12",
+      "id": "pg5",
       "presenter": "Sofia (#2)",
       "category": "Time",
       "q": "Call me as soon as you arrive at the airport.",
@@ -274,7 +169,7 @@
       "explanation": ""
     },
     {
-      "id": "pg13",
+      "id": "pg6",
       "presenter": "Sofia (#2)",
       "category": "Conclusion",
       "q": "The road was flooded. _____, the school decided to cancel classes.",
@@ -286,6 +181,111 @@
         "D. Afterwards"
       ],
       "correct": "C",
+      "explanation": ""
+    },
+    {
+      "id": "pg7",
+      "presenter": "Irfan (#3)",
+      "category": "Comparison",
+      "q": "Comparison Transition & Conjunction Structures",
+      "instruction": "Kalimat mana yang punya hubungan “comparison”?",
+      "options": [
+        "A. The red car is fast, but the blue car is quite slow",
+        "B. If you drive the car too fast, you will get a fine",
+        "C. Both the red car and the blue car are incredibly fast",
+        "D. Even though the car is old, it is still very fast"
+      ],
+      "correct": "C",
+      "explanation": ""
+    },
+    {
+      "id": "pg8",
+      "presenter": "Irfan (#3)",
+      "category": "Concession",
+      "q": "_______ studying all night, he still failed the math test.",
+      "instruction": "Which transition word best completes the sentence?",
+      "options": [
+        "A. Despite",
+        "B. Similarly",
+        "C. As long as",
+        "D. However"
+      ],
+      "correct": "A",
+      "explanation": ""
+    },
+    {
+      "id": "pg9",
+      "presenter": "Irfan (#3)",
+      "category": "Condition",
+      "q": "You can play video games as long as you finish your homework first.",
+      "instruction": "Termasuk kalimat jenis apakah pernyataan di atas?",
+      "options": [
+        "A. Concession",
+        "B. Comparison",
+        "C. Contrast",
+        "D. Condition"
+      ],
+      "correct": "D",
+      "explanation": ""
+    },
+    {
+      "id": "pg10",
+      "presenter": "Ahmad (#4)",
+      "category": "Cause",
+      "q": "The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease.",
+      "instruction": "In this cause and effect situation, what does the decline in the IHSG represent?",
+      "options": [
+        "A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.",
+        "B. Reason, because the decline in the IHSG explains why investors start buying stocks.",
+        "C. Cause, because the decline in the IHSG causes investors to become worried.",
+        "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
+      ],
+      "correct": "C",
+      "explanation": ""
+    },
+    {
+      "id": "pg11",
+      "presenter": "Ahmad (#4)",
+      "category": "Cause",
+      "q": "The flight was delayed due to thick fog.",
+      "instruction": "Look at the keyword “due to”: What does “thick fog” represent?",
+      "options": [
+        "A. Purpose",
+        "B. Result/Effect",
+        "C. Reason",
+        "D. Cause"
+      ],
+      "correct": "D",
+      "explanation": ""
+    },
+    {
+      "id": "pg12",
+      "presenter": "Ahmad (#4)",
+      "category": "Reason",
+      "q": "A citizen says, “My reason for asking for transparency in the MBG budget is that people should know how public money is used.”",
+      "instruction": "What is the reason for the citizen's request?",
+      "options": [
+        "A. The citizen asks for budget transparency",
+        "B. The citizen wants public spending to be open to public scrutiny",
+        "C. People knowing how public money is used",
+        "D. The MBG program uses public money"
+      ],
+      "correct": "B",
+      "explanation": ""
+    },
+    {
+      "id": "pg13",
+      "presenter": "Ahmad (#4)",
+      "category": "Purpose",
+      "q": "Maya exercises every morning to stay healthy.",
+      "instruction": "Look at the keyword “to”: What does “to stay healthy” express?",
+      "options": [
+        "A. Reason",
+        "B. Purpose",
+        "C. Cause",
+        "D. Result/Effect"
+      ],
+      "correct": "B",
       "explanation": ""
     }
   ],
