@@ -46,21 +46,6 @@
     {
       "id": "pg1",
       "presenter": "Elsa (#1)",
-      "category": "Addition",
-      "q": "Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.",
-      "instruction": "Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?",
-      "options": [
-        "A. Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.",
-        "B. Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.",
-        "C. Definition, karena mendefinisikan arti dari kemandirian ekonomi.",
-        "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
-      ],
-      "correct": "B",
-      "explanation": ""
-    },
-    {
-      "id": "pg2",
-      "presenter": "Elsa (#1)",
       "category": "Clarification",
       "q": "The city implemented a strict congestion pricing policy; specifically, it levied a daily fee on all non-electric vehicles entering the downtown core during peak hours.",
       "instruction": "Bagaimana hubungan klausa kedua dengan klausa pertama pada kalimat di atas?",
@@ -71,6 +56,21 @@
         "D. Example, karena mencantumkan contoh acak dari kendaraan listrik."
       ],
       "correct": "C",
+      "explanation": ""
+    },
+    {
+      "id": "pg2",
+      "presenter": "Elsa (#1)",
+      "category": "Addition",
+      "q": "Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.",
+      "instruction": "Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?",
+      "options": [
+        "A. Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.",
+        "B. Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.",
+        "C. Definition, karena mendefinisikan arti dari kemandirian ekonomi.",
+        "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
+      ],
+      "correct": "B",
       "explanation": ""
     },
     {
@@ -182,23 +182,8 @@
       "id": "pg10",
       "presenter": "Ahmad (#4)",
       "category": "Cause",
-      "q": "The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease.",
-      "instruction": "In this cause and effect situation, what does the decline in the IHSG represent?",
-      "options": [
-        "A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.",
-        "B. Reason, because the decline in the IHSG explains why investors start buying stocks.",
-        "C. Cause, because the decline in the IHSG causes investors to become worried.",
-        "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
-      ],
-      "correct": "C",
-      "explanation": ""
-    },
-    {
-      "id": "pg11",
-      "presenter": "Ahmad (#4)",
-      "category": "Cause",
       "q": "The flight was delayed due to thick fog.",
-      "instruction": "Look at the keyword “due to”: What does “thick fog” represent?",
+      "instruction": "Look at the keyword “due to”: “The flight was delayed due to thick fog.” What does “thick fog” represent?",
       "options": [
         "A. Purpose",
         "B. Result/Effect",
@@ -209,7 +194,7 @@
       "explanation": ""
     },
     {
-      "id": "pg12",
+      "id": "pg11",
       "presenter": "Ahmad (#4)",
       "category": "Reason",
       "q": "A citizen says, “My reason for asking for transparency in the MBG budget is that people should know how public money is used.”",
@@ -224,11 +209,11 @@
       "explanation": ""
     },
     {
-      "id": "pg13",
+      "id": "pg12",
       "presenter": "Ahmad (#4)",
       "category": "Purpose",
       "q": "Maya exercises every morning to stay healthy.",
-      "instruction": "Look at the keyword “to”: What does “to stay healthy” express?",
+      "instruction": "Look at the keyword “to”: “Maya exercises every morning to stay healthy.” What does “to stay healthy” express?",
       "options": [
         "A. Reason",
         "B. Purpose",
@@ -236,6 +221,21 @@
         "D. Result/Effect"
       ],
       "correct": "B",
+      "explanation": ""
+    },
+    {
+      "id": "pg13",
+      "presenter": "Ahmad (#4)",
+      "category": "Cause",
+      "q": "The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease.",
+      "instruction": "In this cause and effect situation, what does the decline in the IHSG represent?",
+      "options": [
+        "A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.",
+        "B. Reason, because the decline in the IHSG explains why investors start buying stocks.",
+        "C. Cause, because the decline in the IHSG causes investors to become worried.",
+        "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
+      ],
+      "correct": "C",
       "explanation": ""
     }
   ],
