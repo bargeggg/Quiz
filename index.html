@@ -293,6 +293,10 @@
     // Class Scoreboard: { [name]: { answered: number, correct: number, points: number } }
     let classScores = {};
 
+    // Currently selected student respondent
+    let currentRespondentNip = "";
+    let currentRespondentName = "";
+
     // Essay reveal state
     let essayRevealed = {};
 
@@ -346,6 +350,13 @@
             const tCount = questionsData.tanya_bebas ? questionsData.tanya_bebas.length : 0;
             tanyaLabel.innerText = `Discussion Prompts (${tCount})`;
           }
+          try {
+            const savedScores = localStorage.getItem('quiz_class_scores');
+            if (savedScores) {
+              classScores = JSON.parse(savedScores);
+              updateScoreboardBadge();
+            }
+          } catch(e) {}
           buildQuestionPills();
           renderFocusQuestion();
           renderEssayQuestions();
@@ -575,6 +586,26 @@
           </div>
         </div>
 
+        <!-- Respondent Selector Bar for Live Presentation Scoreboard -->
+        <div class="respondent-bar" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; padding:10px 16px; background:linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.85)); border:1px solid rgba(99, 102, 241, 0.3); border-radius:12px; gap:12px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.15rem;">👤</span>
+            <div>
+              <div style="font-size:0.86rem; font-weight:700; color:#f8fafc; line-height:1.2;">Peserta Penjawab:</div>
+              <div style="font-size:0.73rem; color:#94a3b8;">Pilih mahasiswa yang dipanggil di Zoom untuk dicatat ke Class Scoreboard</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <select id="selectStudentRespondent" class="form-control" style="padding:6px 12px; font-size:0.86rem; background:rgba(15,23,42,0.9); color:#f8fafc; border:1px solid rgba(148,163,184,0.3); border-radius:8px; min-width:210px;" onchange="onSelectStudentChange(this.value)" ${isAnswered ? 'disabled' : ''}>
+              <option value="">-- Pilih Mahasiswa (19 Peserta) --</option>
+              ${CLASS_STUDENTS.map(s => `<option value="${escapeHtml(s.nip)}" ${(currentRespondentNip === s.nip || (isAnswered && state.respondentNip === s.nip)) ? 'selected' : ''}>${escapeHtml(s.name)}</option>`).join('')}
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="pickRandomStudent()" title="Pilih Acak Mahasiswa di Zoom" style="padding:6px 12px; font-size:0.82rem; display:inline-flex; align-items:center; gap:4px;" ${isAnswered ? 'disabled' : ''}>
+              🎲 Acak
+            </button>
+          </div>
+        </div>
+
         <!-- Question Passage Box with Large Font for Zoom Screen Share -->
         <div class="passage-box" style="font-size: 1.26rem; line-height: 1.65; margin-bottom: 18px; color: #f8fafc; font-style: normal; border-left: 4px solid #6366f1;">
           "${escapeHtml(q.q)}"
@@ -611,11 +642,21 @@
 
       const isCorrect = (letter.toUpperCase() === q.correct.toUpperCase());
 
+      // Resolve student name
+      let nip = currentRespondentNip ? currentRespondentNip.trim() : "";
+      let name = currentRespondentName ? currentRespondentName.trim() : "";
+      if (!name) {
+        name = "Peserta (Mandiri)";
+        nip = "-";
+      }
+
       // Save state
       liveQuestionsState[qId] = {
         answered: true,
         chosen: letter,
         correct: q.correct,
+        respondentNip: nip,
+        respondentName: name,
         isCorrect: isCorrect
       };
 
@@ -627,9 +668,34 @@
         playSfx('wrong');
       }
 
+      // Record to Class Scoreboard
+      recordScore(nip, name, isCorrect);
+
       // Re-render UI
       renderFocusQuestion();
       buildQuestionPills();
+    }
+
+    function onSelectStudentChange(nip) {
+      const student = CLASS_STUDENTS.find(s => s.nip === nip);
+      if (student) {
+        currentRespondentNip = student.nip;
+        currentRespondentName = student.name;
+      } else {
+        currentRespondentNip = "";
+        currentRespondentName = "";
+      }
+      playSfx('click');
+    }
+
+    function pickRandomStudent() {
+      const randomIndex = Math.floor(Math.random() * CLASS_STUDENTS.length);
+      const student = CLASS_STUDENTS[randomIndex];
+      currentRespondentNip = student.nip;
+      currentRespondentName = student.name;
+      const selectEl = document.getElementById('selectStudentRespondent');
+      if (selectEl) selectEl.value = student.nip;
+      playSfx('spinTick');
     }
 
     // Reset Current Question (Try Again)
@@ -693,6 +759,10 @@
       } else {
         classScores[key].points += 2; // Participation credit
       }
+
+      try {
+        localStorage.setItem('quiz_class_scores', JSON.stringify(classScores));
+      } catch (e) {}
 
       updateScoreboardBadge();
     }
@@ -853,8 +923,9 @@
     }
 
     function clearScoreboard() {
-      if (confirm("Clear all recorded participation scores?")) {
+      if (confirm("Reset seluruh skor dan peringkat kelas di Scoreboard?")) {
         classScores = {};
+        try { localStorage.removeItem('quiz_class_scores'); } catch (e) {}
         renderScoreboard();
         updateScoreboardBadge();
       }
