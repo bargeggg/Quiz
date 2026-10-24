@@ -918,7 +918,18 @@
     // QR Codes
     function generateQrCodes() {
       const currentLoc = window.location.href.split('admin.html')[0];
-      const playerUrl = `${currentLoc}index.html?room=${encodeURIComponent(RealtimeSync.getRoomId())}`;
+      let playerUrl = `${currentLoc}index.html?room=${encodeURIComponent(RealtimeSync.getRoomId())}`;
+
+      // Sisipkan konfigurasi Firebase ke link QR Code jika sudah disetel oleh Host
+      try {
+        const savedFb = localStorage.getItem('custom_firebase_config');
+        if (savedFb) {
+          const parsed = JSON.parse(savedFb);
+          if (parsed.databaseURL && parsed.apiKey) {
+            playerUrl += `&fb_db=${encodeURIComponent(parsed.databaseURL)}&fb_key=${encodeURIComponent(parsed.apiKey)}`;
+          }
+        }
+      } catch (e) {}
 
       document.getElementById('projectorUrlText').innerText = playerUrl;
       document.getElementById('modalQrUrlText').innerText = playerUrl;

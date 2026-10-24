@@ -46,8 +46,13 @@
         </div>
       </div>
 
-      <!-- Right Header: Class Scoreboard Button & Sound FX Toggle -->
-      <div style="display:flex; align-items:center; gap:12px;">
+      <!-- Right Header: Identity, Scoreboard Button, SFX, & Live Status -->
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-secondary btn-sm" id="btnStudentIdentity" onclick="openStudentModal()" title="Ubah Nama Identitas Mahasiswa" style="display:inline-flex; align-items:center; gap:6px; border-radius:99px; padding:6px 14px; font-weight:700; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.35); color:#f8fafc; font-size:0.86rem; cursor:pointer;">
+          <span style="font-size:0.95rem;">👤</span>
+          <span id="currentStudentDisplay">Pilih Nama</span>
+        </button>
+
         <button class="header-scoreboard-btn" onclick="switchTab('score')" id="headerScoreboardBtn" title="Lihat Papan Skor Partisipasi Kelas">
           <span class="scoreboard-cup-icon">
             <svg class="trophy-gold-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -72,9 +77,9 @@
           </span>
         </button>
 
-        <span class="badge badge-live" title="Live Zoom Presentation Screen">
-          <span class="pulse-dot"></span>
-          <span>Live Session</span>
+        <span class="badge badge-live" id="liveSyncStatusBadge" title="Status Sinkronisasi Realtime Cloud">
+          <span class="pulse-dot" id="liveSyncPulseDot"></span>
+          <span id="liveSyncStatusText">Live Sync</span>
         </span>
       </div>
     </header>
@@ -203,13 +208,41 @@
         </div>
       </div>
 
+      <!-- Sub-Tabs: Leaderboard Mahasiswa vs Rekap Soal -->
+      <div style="display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary btn-sm" id="btnScoreboardLeaderboard" onclick="switchScoreboardSubTab('leaderboard')" style="display:inline-flex; align-items:center; gap:6px;">
+          <span>🏆 Papan Skor Mahasiswa (Live Leaderboard)</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="btnScoreboardQuestions" onclick="switchScoreboardSubTab('questions')" style="display:inline-flex; align-items:center; gap:6px;">
+          <span>📋 Rekap Jawaban Saya (13 Soal)</span>
+        </button>
+      </div>
+
       <!-- Scoreboard Progress Summary -->
       <div id="podiumGridContainer">
         <!-- Generated via JS -->
       </div>
 
-      <!-- Full Question Score Table -->
-      <div class="glass-card" style="padding:0; overflow:hidden; border-radius: var(--radius-xl);">
+      <!-- VIEW 1: Live Class Leaderboard (Semua Mahasiswa) -->
+      <div id="leaderboardViewContainer" class="glass-card" style="padding:0; overflow:hidden; border-radius: var(--radius-xl); margin-bottom: 20px;">
+        <table class="table-custom" style="width:100%; border-collapse:separate; border-spacing:0;">
+          <thead>
+            <tr>
+              <th style="width: 14%; text-align:center;">PERINGKAT</th>
+              <th style="width: 32%;">MAHASISWA</th>
+              <th style="text-align:center; width: 18%;">PROGRES SOAL</th>
+              <th style="text-align:center; width: 18%;">BENAR / SALAH</th>
+              <th style="text-align:center; width: 18%;">TOTAL POIN</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- VIEW 2: Full Question Score Table (13 Soal Saya) -->
+      <div id="questionsViewContainer" class="glass-card" style="padding:0; overflow:hidden; border-radius: var(--radius-xl); display:none; margin-bottom: 20px;">
         <table class="table-custom" style="width:100%; border-collapse:separate; border-spacing:0;">
           <thead>
             <tr>
@@ -228,6 +261,61 @@
 
   </div>
 
+  <!-- Modal Identitas Mahasiswa (Kahoot-Style Name Entry) -->
+  <div class="modal-overlay" id="studentIdentityModal">
+    <div class="modal-content" style="max-width: 480px; text-align: left;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display:flex; align-items:center; gap:8px;">
+          <span>🎓</span> Masuk Sesi Kuis Interaktif
+        </h3>
+        <button class="modal-close" onclick="closeStudentModal()">&times;</button>
+      </div>
+      <div style="padding: 6px 0 14px;">
+        <p style="font-size: 0.94rem; color: #cbd5e1; margin-bottom: 16px; line-height: 1.5;">
+          Pilih nama Anda dari daftar 19 mahasiswa kelas atau ketik nama Anda untuk berpartisipasi dalam kuis live:
+        </p>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+            Pilih Nama Mahasiswa (19 Peserta Kelas):
+          </label>
+          <select id="modalStudentSelect" class="form-control" style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(99,102,241,0.4); border-radius: 10px;" onchange="onModalStudentSelect(this.value)">
+            <option value="">-- Pilih Nama Mahasiswa --</option>
+          </select>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+          <span style="font-size:0.78rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;">atau ketik manual</span>
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+            Nama Lengkap / Panggilan:
+          </label>
+          <input type="text" id="modalStudentNameInput" class="form-control" placeholder="Contoh: Muhammad Kahfi" style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(148,163,184,0.3); border-radius: 10px;" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
+            NIP / NIM (Opsional):
+          </label>
+          <input type="text" id="modalStudentNipInput" class="form-control" placeholder="Nomor Induk Mahasiswa..." style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(148,163,184,0.3); border-radius: 10px;" />
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+          <span style="font-size:0.84rem; color:#38bdf8; font-weight:700;" id="modalRoomDisplay">
+            Room: TRANSITION-2026
+          </span>
+          <button class="btn btn-primary" onclick="saveStudentIdentityAndStart()" style="padding: 10px 24px; font-size: 0.95rem; font-weight: 700;">
+            🚀 Masuk Kuis Live
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     let questionsData = null;
     let currentQuestionIndex = 0;
@@ -235,14 +323,17 @@
     // Live question state: { [qId]: { answered: boolean, chosen: string, correct: string, respondent: string, isCorrect: boolean } }
     let liveQuestionsState = {};
     
-    // Class Scoreboard: { [name]: { answered: number, correct: number, points: number } }
-    let classScores = {};
+    // Map of all participating students' submissions in the room: { [studentKey]: submissionData }
+    let classSubmissions = {};
 
-    // Essay reveal state
-    let essayRevealed = {};
+    // Current student identity
+    let currentStudent = {
+      name: "",
+      nip: ""
+    };
 
-    // Discussion talking points reveal state
-    let tanyaRevealed = {};
+    // Sub-view toggle in scoreboard: 'leaderboard' | 'questions'
+    let scoreboardSubView = 'leaderboard';
 
     // Sound FX mute state
     let isSfxMuted = false;
@@ -271,7 +362,13 @@
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Load questions.json with anti-cache timestamp
+      // 1. Inisialisasi Identitas Mahasiswa
+      initStudentIdentity();
+
+      // 2. Inisialisasi Engine Realtime Synchronization (Firebase + MQTT + Broadcast)
+      initRealtimeEngine();
+
+      // 3. Load questions.json with anti-cache timestamp
       fetch('questions.json?v=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -288,8 +385,10 @@
               liveQuestionsState = JSON.parse(savedState);
             }
           } catch(e) {}
+
           buildQuestionPills();
           renderFocusQuestion();
+          loadExistingSubmissions();
           renderScoreboard();
           updateScoreboardBadge();
         })
@@ -297,6 +396,174 @@
           console.error("Failed to load questions.json", err);
         });
     });
+
+    // Inisialisasi Engine Realtime
+    function initRealtimeEngine() {
+      RealtimeSync.init({
+        role: 'player',
+        onSubmission: (sub) => {
+          handleIncomingSubmission(sub);
+        },
+        onPresence: (count, participants) => {
+          const countBadge = document.getElementById('headerScoreCount');
+          if (countBadge) countBadge.innerText = `${count} Online`;
+        },
+        onStatusChange: (connected, msg, type) => {
+          const statusText = document.getElementById('liveSyncStatusText');
+          const statusDot = document.getElementById('liveSyncPulseDot');
+          const statusBadge = document.getElementById('liveSyncStatusBadge');
+          if (statusText) {
+            if (connected) {
+              statusText.innerText = (type === 'firebase') ? "Firebase Live" : "Cloud Sync";
+            } else {
+              statusText.innerText = "Mode Lokal";
+            }
+          }
+          if (statusDot) statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
+          if (statusBadge) statusBadge.title = msg;
+        },
+        onHostAction: (payload) => {
+          if (payload && payload.action === 'clear_submissions') {
+            classSubmissions = {};
+            renderScoreboard();
+          }
+        }
+      });
+    }
+
+    function handleIncomingSubmission(sub) {
+      if (!sub || !sub.name) return;
+      const key = (sub.nip && sub.nip !== '-') ? sub.nip : sub.name.toLowerCase().trim();
+      classSubmissions[key] = sub;
+      renderScoreboard();
+      updateScoreboardBadge();
+    }
+
+    function loadExistingSubmissions() {
+      const stored = RealtimeSync.getAllSubmissions();
+      if (Array.isArray(stored)) {
+        stored.forEach(sub => {
+          if (sub && sub.name) {
+            const key = (sub.nip && sub.nip !== '-') ? sub.nip : sub.name.toLowerCase().trim();
+            classSubmissions[key] = sub;
+          }
+        });
+      }
+    }
+
+    // Inisialisasi Identitas Mahasiswa
+    function initStudentIdentity() {
+      try {
+        currentStudent.name = localStorage.getItem('quiz_student_name') || "";
+        currentStudent.nip = localStorage.getItem('quiz_student_nip') || "";
+      } catch (e) {}
+
+      // Populate dropdown modal
+      const selectEl = document.getElementById('modalStudentSelect');
+      if (selectEl) {
+        selectEl.innerHTML = `<option value="">-- Pilih Nama Mahasiswa (19 Peserta Kelas) --</option>` +
+          CLASS_STUDENTS.map(s => `<option value="${escapeHtml(s.nip)}">${escapeHtml(s.name)} (NIP: ${s.nip.slice(-4)})</option>`).join('');
+      }
+
+      const roomText = document.getElementById('modalRoomDisplay');
+      if (roomText) {
+        roomText.innerText = `Room: ${RealtimeSync.getRoomId()}`;
+      }
+
+      updateStudentDisplay();
+
+      // Jika belum ada nama tersimpan, tampilkan modal otomatis
+      if (!currentStudent.name) {
+        setTimeout(openStudentModal, 600);
+      } else {
+        RealtimeSync.setParticipant(currentStudent.name, currentStudent.nip);
+      }
+    }
+
+    function updateStudentDisplay() {
+      const display = document.getElementById('currentStudentDisplay');
+      if (display) {
+        display.innerText = currentStudent.name ? currentStudent.name : "Pilih Nama";
+      }
+    }
+
+    function openStudentModal() {
+      const modal = document.getElementById('studentIdentityModal');
+      if (!modal) return;
+      document.getElementById('modalStudentNameInput').value = currentStudent.name || "";
+      document.getElementById('modalStudentNipInput').value = currentStudent.nip || "";
+
+      const selectEl = document.getElementById('modalStudentSelect');
+      if (selectEl) {
+        selectEl.value = currentStudent.nip || "";
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeStudentModal() {
+      const modal = document.getElementById('studentIdentityModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function onModalStudentSelect(nip) {
+      const s = CLASS_STUDENTS.find(item => item.nip === nip);
+      if (s) {
+        document.getElementById('modalStudentNameInput').value = s.name;
+        document.getElementById('modalStudentNipInput').value = s.nip;
+      }
+    }
+
+    function saveStudentIdentityAndStart() {
+      const rawName = document.getElementById('modalStudentNameInput').value.trim();
+      const rawNip = document.getElementById('modalStudentNipInput').value.trim();
+
+      if (!rawName) {
+        alert("Mohon masukkan atau pilih nama Anda terlebih dahulu.");
+        return;
+      }
+
+      currentStudent.name = rawName;
+      currentStudent.nip = rawNip || "-";
+
+      try {
+        localStorage.setItem('quiz_student_name', currentStudent.name);
+        localStorage.setItem('quiz_student_nip', currentStudent.nip);
+      } catch (e) {}
+
+      RealtimeSync.setParticipant(currentStudent.name, currentStudent.nip);
+      updateStudentDisplay();
+      closeStudentModal();
+      playSfx('click');
+
+      // Sync submission jika sudah ada jawaban sebelumnya
+      broadcastCurrentStudentProgress();
+    }
+
+    function broadcastCurrentStudentProgress() {
+      if (!questionsData) return;
+      const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
+      const correctList = answeredList.filter(q => liveQuestionsState[q.id].isCorrect);
+      const totalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
+
+      const studentKey = (currentStudent.nip && currentStudent.nip !== '-') ? currentStudent.nip : (currentStudent.name || 'player').replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+
+      const payload = {
+        id: `sub_pg_${studentKey}`,
+        name: currentStudent.name || "Peserta Kuis",
+        nip: currentStudent.nip || "-",
+        type: 'pilihan_ganda',
+        score: totalPoints,
+        correctCount: correctList.length,
+        totalQuestions: questionsData.pg.length,
+        answeredCount: answeredList.length,
+        submittedAt: Date.now(),
+        answers: liveQuestionsState
+      };
+
+      RealtimeSync.submitAnswer(payload);
+      handleIncomingSubmission(payload);
+    }
 
     // Toggle Tabs (Multiple Choice & Class Scoreboard)
     function switchTab(tabId) {
@@ -317,6 +584,29 @@
       }
 
       playSfx('click');
+    }
+
+    // Switch sub-tab in scoreboard (Leaderboard vs 13 Questions)
+    function switchScoreboardSubTab(mode) {
+      scoreboardSubView = mode;
+      const btnLead = document.getElementById('btnScoreboardLeaderboard');
+      const btnQues = document.getElementById('btnScoreboardQuestions');
+      const boxLead = document.getElementById('leaderboardViewContainer');
+      const boxQues = document.getElementById('questionsViewContainer');
+
+      if (mode === 'leaderboard') {
+        if (btnLead) { btnLead.className = 'btn btn-primary btn-sm'; }
+        if (btnQues) { btnQues.className = 'btn btn-secondary btn-sm'; }
+        if (boxLead) boxLead.style.display = 'block';
+        if (boxQues) boxQues.style.display = 'none';
+      } else {
+        if (btnLead) { btnLead.className = 'btn btn-secondary btn-sm'; }
+        if (btnQues) { btnQues.className = 'btn btn-primary btn-sm'; }
+        if (boxLead) boxLead.style.display = 'none';
+        if (boxQues) boxQues.style.display = 'block';
+      }
+      playSfx('click');
+      renderScoreboard();
     }
 
     // Sound FX Manager (No Background Music)
@@ -353,25 +643,6 @@
       }
     }
 
-    // Smart Normalizer to ensure NIP and Name are NEVER accidentally swapped
-    function normalizeParticipant(nip, name) {
-      let cleanNip = (nip || "").trim();
-      let cleanName = (name || "").trim();
-
-      // If cleanNip consists purely of letters (e.g. "kahfi", "Sofi") 
-      // and cleanName consists purely of digits (e.g. "21312", "1998..."),
-      // the user typed Name into NIP and NIP into Name! Swap them automatically:
-      const nipIsAllLetters = /^[A-Za-z\s\.\,\'\-]+$/.test(cleanNip);
-      const nameIsAllDigits = /^[0-9\-\s]+$/.test(cleanName);
-
-      if (nipIsAllLetters && nameIsAllDigits) {
-        const temp = cleanNip;
-        cleanNip = cleanName;
-        cleanName = temp;
-      }
-      return { nip: cleanNip, name: cleanName };
-    }
-
     function playSfx(type) {
       if (isSfxMuted) return;
       try {
@@ -391,7 +662,7 @@
       }
     }
 
-    // Build Question Jump Pills (1 - 10)
+    // Build Question Jump Pills (1 - 13)
     function buildQuestionPills() {
       const container = document.getElementById('questionPillsContainer');
       if (!container || !questionsData) return;
@@ -539,7 +810,7 @@
                   </svg>
                 </button>
               ` : `
-                <button class="btn btn-primary btn-sm" onclick="switchTab('scoreboard')" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
+                <button class="btn btn-primary btn-sm" onclick="switchTab('score')" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
                   <span>Lihat Scoreboard Kuis 🏆</span>
                 </button>
               `}
@@ -548,7 +819,6 @@
         `;
       }
 
-      // Render Question Card cleanly without respondent bar
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:8px;">
           <div style="display:flex; align-items:center; gap:8px;">
@@ -556,9 +826,14 @@
               Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
             </span>
           </div>
+          ${currentStudent.name ? `
+            <div style="font-size:0.84rem; color:#94a3b8; display:flex; align-items:center; gap:6px;">
+              <span>Mengerjakan sebagai:</span>
+              <strong style="color:#38bdf8;">${escapeHtml(currentStudent.name)}</strong>
+            </div>
+          ` : ''}
         </div>
 
-        <!-- Question Passage Box with Large Font for Zoom Screen Share -->
         <div class="passage-box" style="font-size: 1.26rem; line-height: 1.65; margin-bottom: 18px; color: #f8fafc; font-style: normal; border-left: 4px solid #6366f1;">
           "${escapeHtml(q.q)}"
         </div>
@@ -567,12 +842,10 @@
           ${escapeHtml(q.instruction)}
         </p>
 
-        <!-- 4 Options List -->
         <div class="options-list">
           ${optionsHtml}
         </div>
 
-        <!-- Explanation & Outcome Box -->
         ${explanationHtml}
       `;
 
@@ -583,18 +856,23 @@
       if (nextBtn) nextBtn.disabled = (currentQuestionIndex === questionsData.pg.length - 1);
     }
 
-    // Handle Option Selection & Instant Game-Show Reveal
+    // Handle Option Selection & Instant Live Transmission
     function handleOptionSelect(qId, letter) {
       if (!questionsData) return;
       const q = questionsData.pg.find(item => item.id === qId);
       if (!q) return;
 
-      // If already answered, don't re-trigger unless reset
+      // Pastikan ada identitas mahasiswa
+      if (!currentStudent.name) {
+        openStudentModal();
+        return;
+      }
+
       if (liveQuestionsState[qId]) return;
 
       const isCorrect = (letter.toUpperCase() === q.correct.toUpperCase());
 
-      // Save state
+      // Save state lokal
       liveQuestionsState[qId] = {
         answered: true,
         chosen: letter,
@@ -615,6 +893,9 @@
         localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState));
       } catch (e) {}
 
+      // Siarkan ke seluruh perangkat (Firebase + MQTT + BroadcastChannel)
+      broadcastCurrentStudentProgress();
+
       // Re-render UI
       renderFocusQuestion();
       buildQuestionPills();
@@ -630,6 +911,7 @@
         delete liveQuestionsState[q.id];
         try { localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState)); } catch (e) {}
       }
+      broadcastCurrentStudentProgress();
       renderFocusQuestion();
       buildQuestionPills();
       renderScoreboard();
@@ -648,6 +930,7 @@
         isCorrect: true
       };
       try { localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState)); } catch (e) {}
+      broadcastCurrentStudentProgress();
       playSfx('chime');
       renderFocusQuestion();
       buildQuestionPills();
@@ -661,6 +944,7 @@
         liveQuestionsState = {};
         try { localStorage.removeItem('quiz_live_state'); } catch (e) {}
         currentQuestionIndex = 0;
+        broadcastCurrentStudentProgress();
         renderFocusQuestion();
         buildQuestionPills();
         renderScoreboard();
@@ -671,25 +955,38 @@
 
     function updateScoreboardBadge() {
       if (!questionsData) return;
-      const answeredCount = questionsData.pg.filter(q => liveQuestionsState[q.id]).length;
+      const count = Object.keys(classSubmissions).length;
       const el = document.getElementById('headerScoreCount');
-      if (el) el.innerText = `${answeredCount}/${questionsData.pg.length}`;
+      if (el) el.innerText = `${count} Active`;
     }
 
-    // Render Elegant Quiz Performance Scoreboard (Matrix per No Soal)
+    // Render Elegant Scoreboard (Leaderboard & Question Breakdown)
     function renderScoreboard() {
-      const tbody = document.getElementById('scoreboardTableBody');
-      const podiumContainer = document.getElementById('podiumGridContainer');
-      if (!tbody || !questionsData) return;
-
+      if (!questionsData) return;
       const totalQuestions = questionsData.pg.length;
       const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
       const answeredCount = answeredList.length;
       const correctCount = answeredList.filter(q => liveQuestionsState[q.id].isCorrect).length;
-      const totalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
-      const accuracyPercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+      const myTotalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
 
-      // Render Single Luxury Progress Metric Card (Total Skor Kuis & Akurasi Jawaban dihilangkan)
+      // Pastikan data sendiri masuk ke classSubmissions
+      if (currentStudent.name) {
+        const studentKey = (currentStudent.nip && currentStudent.nip !== '-') ? currentStudent.nip : currentStudent.name.toLowerCase().trim();
+        classSubmissions[studentKey] = {
+          name: currentStudent.name,
+          nip: currentStudent.nip || "-",
+          score: myTotalPoints,
+          correctCount: correctCount,
+          totalQuestions: totalQuestions,
+          answeredCount: answeredCount,
+          submittedAt: Date.now()
+        };
+      }
+
+      const participantCount = Object.keys(classSubmissions).length;
+
+      // Render Progress Summary Card
+      const podiumContainer = document.getElementById('podiumGridContainer');
       if (podiumContainer) {
         const percent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
         podiumContainer.innerHTML = `
@@ -705,7 +1002,7 @@
                   </svg>
                 </div>
                 <div>
-                  <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.6px; color:#a5b4fc; font-weight:700;">Progres Kuis</div>
+                  <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.6px; color:#a5b4fc; font-weight:700;">Progres Kuis Personal (${escapeHtml(currentStudent.name || 'Anda')})</div>
                   <div style="font-size:1.25rem; font-weight:800; color:#f8fafc; font-family:var(--font-heading);">
                     ${answeredCount} / ${totalQuestions} Soal Terjawab
                     <span style="font-size:0.88rem; font-weight:600; color:#94a3b8; margin-left:8px;">(${percent}% Selesai)</span>
@@ -713,16 +1010,13 @@
                 </div>
               </div>
 
-              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
                 <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:6px 14px; border-radius:10px; font-size:0.88rem;">
+                  <span style="color:#38bdf8; font-weight:700;">👥 ${participantCount} Peserta Live</span>
+                  <span style="color:#64748b;">•</span>
                   <span style="color:#34d399; font-weight:700;">✓ ${correctCount} Benar</span>
                   <span style="color:#64748b;">•</span>
-                  <span style="color:#f87171; font-weight:700;">✕ ${answeredCount - correctCount} Salah</span>
-                  <span style="color:#64748b;">•</span>
-                  <span style="color:#94a3b8; font-weight:600;">⏳ Sisa ${totalQuestions - answeredCount}</span>
-                </div>
-                <div style="width:130px; height:8px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden;">
-                  <div style="height:100%; width:${percent}%; background:linear-gradient(90deg, #6366f1, #38bdf8); border-radius:99px; transition:width 0.3s ease;"></div>
+                  <span style="color:#fbbf24; font-weight:800;">⭐ ${myTotalPoints} Pts</span>
                 </div>
               </div>
             </div>
@@ -730,7 +1024,108 @@
         `;
       }
 
-      // Render Table Rows per No Soal
+      // Render View 1: Leaderboard Table
+      renderLeaderboardTable();
+
+      // Render View 2: Question Rows Table
+      renderQuestionsTable();
+    }
+
+    // Render Table Mahasiswa (Live Leaderboard)
+    function renderLeaderboardTable() {
+      const tbody = document.getElementById('leaderboardTableBody');
+      if (!tbody) return;
+
+      const list = Object.values(classSubmissions);
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; padding: 32px; color: #94a3b8;">
+              Belum ada peserta yang mengumpulkan jawaban. Jawaban yang dipilih di HP/laptop akan langsung tampil di sini secara live!
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // Urutkan berdasarkan total skor tertinggi, lalu jumlah benar tertinggi
+      list.sort((a, b) => {
+        if ((b.score || 0) !== (a.score || 0)) {
+          return (b.score || 0) - (a.score || 0);
+        }
+        return (b.correctCount || 0) - (a.correctCount || 0);
+      });
+
+      tbody.innerHTML = list.map((item, idx) => {
+        let rankBadgeClass = "rank-badge-other";
+        let trophyIcon = "";
+        if (idx === 0) {
+          rankBadgeClass = "rank-badge-gold";
+          trophyIcon = "🥇";
+        } else if (idx === 1) {
+          rankBadgeClass = "rank-badge-silver";
+          trophyIcon = "🥈";
+        } else if (idx === 2) {
+          rankBadgeClass = "rank-badge-bronze";
+          trophyIcon = "🥉";
+        }
+
+        const isMe = currentStudent.name && (item.name.toLowerCase() === currentStudent.name.toLowerCase());
+        const rowHighlightStyle = isMe ? "background: rgba(99, 102, 241, 0.12); border-left: 3px solid #6366f1;" : "";
+
+        const answeredCount = item.answeredCount !== undefined ? item.answeredCount : (item.answers ? Object.keys(item.answers).length : 0);
+        const correctCount = item.correctCount || 0;
+        const wrongCount = Math.max(0, answeredCount - correctCount);
+        const totalScore = item.score !== undefined ? item.score : (correctCount * 10 + wrongCount * 2);
+
+        return `
+          <tr class="scoreboard-row" style="${rowHighlightStyle}">
+            <td style="text-align:center;">
+              <span class="rank-badge ${rankBadgeClass}" style="min-width:32px; font-weight:800;">
+                ${trophyIcon ? trophyIcon : idx + 1}
+              </span>
+            </td>
+            <td>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:34px; height:34px; border-radius:50%; background:rgba(99,102,241,0.2); border:1px solid rgba(99,102,241,0.4); display:flex; align-items:center; justify-content:center; font-weight:800; color:#a5b4fc; font-size:0.86rem;">
+                  ${escapeHtml((item.name || 'P').charAt(0).toUpperCase())}
+                </div>
+                <div>
+                  <div style="font-weight:700; color:#f8fafc; font-size:0.96rem;">
+                    ${escapeHtml(item.name)} ${isMe ? `<span style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:2px 6px; border-radius:4px; margin-left:4px;">Anda</span>` : ''}
+                  </div>
+                  <div style="font-size:0.78rem; color:#94a3b8;">
+                    NIP: ${escapeHtml(item.nip || '-')}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <span style="display:inline-block; padding:4px 12px; border-radius:8px; font-weight:700; font-size:0.86rem; background:rgba(255,255,255,0.06); color:#cbd5e1;">
+                ${answeredCount} / 13 Soal
+              </span>
+            </td>
+            <td style="text-align:center;">
+              <span style="color:#34d399; font-weight:700; font-size:0.88rem;">✓ ${correctCount}</span>
+              <span style="color:#64748b; margin:0 4px;">•</span>
+              <span style="color:#f87171; font-weight:700; font-size:0.88rem;">✕ ${wrongCount}</span>
+            </td>
+            <td style="text-align:center;">
+              <span class="table-score-pill" style="font-size:0.92rem; font-weight:800;">
+                ⭐ ${totalScore} Pts
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Render Table 13 Soal Personal
+    function renderQuestionsTable() {
+      const tbody = document.getElementById('scoreboardTableBody');
+      if (!tbody || !questionsData) return;
+
       tbody.innerHTML = questionsData.pg.map((q, idx) => {
         const state = liveQuestionsState[q.id];
         const isAnswered = !!state;
@@ -774,39 +1169,35 @@
     }
 
     function copyScoreboardSummary() {
-      if (!questionsData) return;
-      const totalQ = questionsData.pg.length;
-      const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
-      const correctList = answeredList.filter(q => liveQuestionsState[q.id].isCorrect);
-      const wrongList = answeredList.filter(q => !liveQuestionsState[q.id].isCorrect);
-      const totalPts = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
+      const list = Object.values(classSubmissions);
+      let text = "🏆 *PAPAN SKOR LIVE KUIS TRANSITION WORDS & CONNECTORS*\n";
+      text += `📅 Tanggal: ${new Date().toLocaleDateString('id-ID')} | Sesi Kuis Live\n`;
+      text += `👥 Total Peserta: ${list.length} Mahasiswa\n\n`;
 
-      let text = "🏆 *REKAP HASIL KUIS TRANSITION WORDS & CONNECTORS*\n";
-      text += `📅 Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
-      text += `📊 Progres: ${answeredList.length}/${totalQ} Soal | Benar: ${correctList.length} | Salah: ${wrongList.length} | Total Skor: ${totalPts} Pts\n\n`;
-      
-      questionsData.pg.forEach((q, i) => {
-        const state = liveQuestionsState[q.id];
-        let statusText = "⏳ Belum dijawab";
-        if (state) {
-          statusText = state.isCorrect ? `✅ Benar (${state.chosen}) [+10 Pts]` : `❌ Salah (${state.chosen}) [Kunci: ${q.correct}] [+2 Pts]`;
-        }
-        text += `• Soal ${i + 1}: ${statusText}\n`;
-      });
+      if (list.length > 0) {
+        list.sort((a, b) => (b.score || 0) - (a.score || 0));
+        text += "*Peringkat Kelas:*\n";
+        list.forEach((s, i) => {
+          const medal = i === 0 ? "🥇" : (i === 1 ? "🥈" : (i === 2 ? "🥉" : `${i + 1}.`));
+          text += `${medal} ${s.name} (${s.nip || '-'}) : ${s.score || 0} Pts (✓ ${s.correctCount || 0}/13)\n`;
+        });
+      }
+
       text += "\nTerima kasih atas partisipasi aktif dalam presentasi Transition Words & Connectors!";
 
       navigator.clipboard.writeText(text).then(() => {
-        alert("Ringkasan hasil kuis berhasil disalin! Silakan paste ke chat Zoom atau grup.");
+        alert("Ringkasan papan skor live berhasil disalin! Silakan paste ke chat Zoom atau grup.");
       }).catch(() => {
-        prompt("Salin ringkasan hasil kuis ini:", text);
+        prompt("Salin ringkasan papan skor live ini:", text);
       });
     }
 
     function clearScoreboard() {
-      if (confirm("Reset seluruh hasil jawaban dan skor kuis?")) {
+      if (confirm("Reset seluruh hasil jawaban dan skor kuis pada perangkat ini?")) {
         liveQuestionsState = {};
         try { localStorage.removeItem('quiz_live_state'); } catch (e) {}
         currentQuestionIndex = 0;
+        broadcastCurrentStudentProgress();
         renderFocusQuestion();
         buildQuestionPills();
         renderScoreboard();
@@ -819,7 +1210,6 @@
     function cleanOptionText(opt) {
       return opt.replace(/^[A-D][\.\)]\s*/i, '').trim();
     }
-
 
     function triggerConfetti() {
       if (typeof confetti === 'function') {

@@ -1,5 +1,5 @@
 // Realtime Synchronization Engine
-// Mendukung: Instant Cloud Sync (MQTT over WebSocket TLS), Firebase Realtime DB, dan BroadcastChannel lokal.
+// Mendukung sinkronisasi penuh: Firebase Realtime Database (Primary Cloud), Instant Cloud Sync (MQTT over WebSocket TLS), dan BroadcastChannel (Multi-tab lokal).
 
 const RealtimeSync = (function() {
   const DEFAULT_ROOM = "TRANSITION-2026";
@@ -11,12 +11,25 @@ const RealtimeSync = (function() {
   let userRole = "player"; // 'player' atau 'host'
   let mqttClient = null;
   let isConnected = false;
+  let connectionType = "local"; // 'firebase' | 'mqtt' | 'local'
+
+  let currentParticipant = {
+    name: "",
+    nip: ""
+  };
+
+  try {
+    currentParticipant.name = localStorage.getItem('quiz_student_name') || "";
+    currentParticipant.nip = localStorage.getItem('quiz_student_nip') || "";
+  } catch (e) {}
+
   let listeners = {
     onSubmission: null,
     onPresence: null,
     onStatusChange: null,
     onHostAction: null
   };
+
   let localChannel = null;
   let presenceInterval = null;
   let onlineParticipants = new Map();
@@ -34,10 +47,10 @@ const RealtimeSync = (function() {
   }
 
   function saveLocalSubmission(sub) {
+    if (!sub || !sub.id) return;
     try {
       const key = `submissions_${currentRoom}`;
       const list = JSON.parse(localStorage.getItem(key) || '[]');
-      // Cek apakah id submission sudah ada
       const idx = list.findIndex(s => s.id === sub.id);
       if (idx >= 0) {
         list[idx] = sub;
@@ -65,7 +78,7 @@ const RealtimeSync = (function() {
       try {
         localChannel = new BroadcastChannel(`quiz_${currentRoom}`);
         localChannel.onmessage = (event) => {
-          handleIncomingMessage(event.data);
+          handleIncomingMessage(event.data, 'broadcast_channel');
         };
       } catch (e) {
         console.warn("BroadcastChannel error:", e);
@@ -74,7 +87,7 @@ const RealtimeSync = (function() {
   }
 
   // Handle incoming data universal
-  function handleIncomingMessage(payload) {
+  function handleIncomingMessage(payload, source = 'unknown') {
     if (!payload || !payload.type) return;
 
     if (payload.type === 'submission') {
@@ -84,14 +97,16 @@ const RealtimeSync = (function() {
       }
     } else if (payload.type === 'presence') {
       const p = payload.data;
-      onlineParticipants.set(p.clientId, {
-        name: p.name,
-        role: p.role,
-        lastSeen: Date.now()
-      });
-      prunePresence();
-      if (listeners.onPresence) {
-        listeners.onPresence(onlineParticipants.size, Array.from(onlineParticipants.values()));
+      if (p && p.clientId) {
+        onlineParticipants.set(p.clientId, {
+          name: p.name || 'Peserta',
+          role: p.role || 'player',
+          lastSeen: Date.now()
+        });
+        prunePresence();
+        if (listeners.onPresence) {
+          listeners.onPresence(onlineParticipants.size, Array.from(onlineParticipants.values()));
+        }
       }
     } else if (payload.type === 'host_action') {
       if (listeners.onHostAction) {
@@ -103,17 +118,19 @@ const RealtimeSync = (function() {
   function prunePresence() {
     const now = Date.now();
     for (const [id, data] of onlineParticipants.entries()) {
-      if (now - data.lastSeen > 30000) { // 30 detik tanpa ping = offline
+      if (now - data.lastSeen > 35000) { // 35 detik tanpa ping = offline
         onlineParticipants.delete(id);
       }
     }
   }
 
-  // Setup MQTT over WebSocket (Cloud Realtime tanpa konfigurasi)
+  // Setup MQTT over WebSocket (Cloud Realtime Fallback)
   function setupMQTT() {
     if (typeof Paho === 'undefined' || !Paho.MQTT) {
-      console.warn("Paho MQTT client belum termuat, beralih ke fallback mode.");
-      updateStatus(false, "Mode Lokal / Offline");
+      console.warn("Paho MQTT client belum termuat.");
+      if (!firebaseDb) {
+        updateStatus(false, "Mode Lokal / Offline", "local");
+      }
       return;
     }
 
@@ -123,24 +140,28 @@ const RealtimeSync = (function() {
       mqttClient = new Paho.MQTT.Client(MQTT_BROKER, MQTT_PORT, MQTT_PATH, clientId);
 
       mqttClient.onConnectionLost = (responseObject) => {
-        isConnected = false;
-        updateStatus(false, "Terputus, mencoba koneksi ulang...");
+        if (!firebaseDb) {
+          isConnected = false;
+          updateStatus(false, "Koneksi cloud terputus, mencoba ulang...", "local");
+        }
         if (responseObject.errorCode !== 0) {
           console.warn("MQTT connection lost:", responseObject.errorMessage);
         }
-        setTimeout(setupMQTT, 4000);
+        setTimeout(setupMQTT, 5000);
       };
 
       mqttClient.onMessageArrived = (message) => {
         try {
           const payload = JSON.parse(message.payloadString);
-          handleIncomingMessage(payload);
+          handleIncomingMessage(payload, 'mqtt');
         } catch (e) {
           console.warn("Failed to parse incoming MQTT payload", e);
         }
       };
 
-      updateStatus(false, "Menghubungkan ke Cloud Room...");
+      if (!firebaseDb) {
+        updateStatus(false, "Menghubungkan ke Cloud Room...", "local");
+      }
 
       mqttClient.connect({
         useSSL: true,
@@ -148,37 +169,44 @@ const RealtimeSync = (function() {
         keepAliveInterval: 30,
         cleanSession: true,
         onSuccess: () => {
-          isConnected = true;
-          updateStatus(true, `Terhubung ke Cloud (Room: ${currentRoom})`);
+          if (!firebaseDb) {
+            isConnected = true;
+            connectionType = "mqtt";
+            updateStatus(true, `Terhubung ke Cloud MQTT (Room: ${currentRoom})`, "mqtt");
+          }
           
           // Subscribe ke room topic
           const topic = `antigravity/quiz/${currentRoom}/#`;
           mqttClient.subscribe(topic, { qos: 1 });
-          console.log("📡 Terhubung ke topic:", topic);
+          console.log("📡 Terhubung ke topic MQTT:", topic);
 
           // Mulai presence heartbeat
           startPresenceHeartbeat(clientId);
         },
         onFailure: (err) => {
-          isConnected = false;
-          updateStatus(false, "Koneksi Cloud Tertunda (Fallback Aktif)");
+          if (!firebaseDb) {
+            isConnected = false;
+            updateStatus(false, "Koneksi Cloud Tertunda (Fallback Aktif)", "local");
+          }
           console.warn("MQTT Connect failed:", err);
-          setTimeout(setupMQTT, 8000);
+          setTimeout(setupMQTT, 10000);
         }
       });
     } catch (e) {
       console.warn("MQTT init error:", e);
-      updateStatus(false, "Fallback Mode Aktif");
+      if (!firebaseDb) {
+        updateStatus(false, "Fallback Mode Aktif", "local");
+      }
     }
   }
 
   function startPresenceHeartbeat(clientId) {
     if (presenceInterval) clearInterval(presenceInterval);
     const sendPing = () => {
-      const studentName = (document.getElementById('studentName') && document.getElementById('studentName').value) || userRole;
+      const activeName = currentParticipant.name || userRole;
       RealtimeSync.broadcast('presence', {
         clientId: clientId,
-        name: studentName,
+        name: activeName,
         role: userRole,
         time: Date.now()
       });
@@ -187,29 +215,102 @@ const RealtimeSync = (function() {
     presenceInterval = setInterval(sendPing, 10000); // Tiap 10 detik
   }
 
-  function updateStatus(connected, message) {
+  function updateStatus(connected, message, type = "local") {
     isConnected = connected;
+    connectionType = type;
     if (listeners.onStatusChange) {
-      listeners.onStatusChange(connected, message);
+      listeners.onStatusChange(connected, message, type);
     }
   }
 
-  // Setup Firebase Realtime Database jika aktif
+  // Setup Firebase Realtime Database
   function setupFirebase() {
     if (typeof firebaseDb !== 'undefined' && firebaseDb) {
       try {
-        const ref = firebaseDb.ref(`rooms/${currentRoom}/submissions`);
-        ref.on('child_added', (snapshot) => {
-          const data = snapshot.val();
-          if (data) {
-            handleIncomingMessage({ type: 'submission', data: data });
+        console.log("🔥 Menginisialisasi listener Firebase Realtime Database pada room:", currentRoom);
+
+        // Pantau status koneksi Firebase
+        const connectedRef = firebaseDb.ref(".info/connected");
+        connectedRef.on("value", (snap) => {
+          if (snap.val() === true) {
+            isConnected = true;
+            connectionType = "firebase";
+            updateStatus(true, `Terhubung ke Firebase Realtime DB (Room: ${currentRoom})`, "firebase");
+
+            // Setup presence otomatis di Firebase
+            const myPresenceRef = firebaseDb.ref(`rooms/${currentRoom}/presence/${getPresenceClientId()}`);
+            myPresenceRef.onDisconnect().remove();
+            myPresenceRef.set({
+              name: currentParticipant.name || userRole,
+              role: userRole,
+              nip: currentParticipant.nip || "-",
+              time: Date.now()
+            });
           }
         });
-        console.log("🔥 Firebase Listener aktif pada room:", currentRoom);
+
+        // 1. Ambil data submission yang sudah ada (Initial Snapshot)
+        const subRef = firebaseDb.ref(`rooms/${currentRoom}/submissions`);
+        subRef.once('value', (snapshot) => {
+          const val = snapshot.val();
+          if (val) {
+            console.log("🔥 Memuat", Object.keys(val).length, "submission dari Firebase Cloud");
+            Object.values(val).forEach(item => {
+              saveLocalSubmission(item);
+              if (listeners.onSubmission) {
+                listeners.onSubmission(item);
+              }
+            });
+          }
+        });
+
+        // 2. Dengarkan penambahan submission baru
+        subRef.on('child_added', (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            handleIncomingMessage({ type: 'submission', data: data }, 'firebase');
+          }
+        });
+
+        // 3. Dengarkan pembaruan nilai submission (misal mahasiswa menjawab soal berikutnya)
+        subRef.on('child_changed', (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            handleIncomingMessage({ type: 'submission', data: data }, 'firebase');
+          }
+        });
+
+        // 4. Dengarkan presence di Firebase
+        const presRef = firebaseDb.ref(`rooms/${currentRoom}/presence`);
+        presRef.on('value', (snapshot) => {
+          const presData = snapshot.val() || {};
+          const participants = Object.values(presData);
+          if (listeners.onPresence) {
+            listeners.onPresence(participants.length, participants);
+          }
+        });
+
+        // 5. Dengarkan aksi host (reset room dsb)
+        const hostRef = firebaseDb.ref(`rooms/${currentRoom}/host_action`);
+        hostRef.on('value', (snapshot) => {
+          const actionData = snapshot.val();
+          if (actionData && actionData.timestamp && (Date.now() - actionData.timestamp < 15000)) {
+            handleIncomingMessage({ type: 'host_action', data: actionData }, 'firebase');
+          }
+        });
+
       } catch (e) {
         console.warn("Firebase listener error:", e);
       }
     }
+  }
+
+  let cachedPresenceClientId = null;
+  function getPresenceClientId() {
+    if (!cachedPresenceClientId) {
+      cachedPresenceClientId = `pres_${userRole}_` + Math.random().toString(36).substring(2, 9);
+    }
+    return cachedPresenceClientId;
   }
 
   return {
@@ -221,24 +322,53 @@ const RealtimeSync = (function() {
       listeners.onStatusChange = config.onStatusChange || null;
       listeners.onHostAction = config.onHostAction || null;
 
-      localStorage.setItem('active_quiz_room', currentRoom);
+      try {
+        localStorage.setItem('active_quiz_room', currentRoom);
+      } catch (e) {}
 
       setupBroadcastChannel();
-      setupMQTT();
       setupFirebase();
+      setupMQTT();
 
-      // Trigger presence check interval
+      // Trigger interval pembersihan presence lokal
       setInterval(() => {
         prunePresence();
-        if (listeners.onPresence) {
+        if (listeners.onPresence && (!firebaseDb || !isConnected)) {
           listeners.onPresence(onlineParticipants.size, Array.from(onlineParticipants.values()));
         }
       }, 5000);
 
       return {
         room: currentRoom,
-        role: userRole
+        role: userRole,
+        connectionType: connectionType
       };
+    },
+
+    setParticipant(name, nip = "") {
+      currentParticipant.name = (name || "").trim();
+      currentParticipant.nip = (nip || "").trim();
+      try {
+        localStorage.setItem('quiz_student_name', currentParticipant.name);
+        localStorage.setItem('quiz_student_nip', currentParticipant.nip);
+      } catch (e) {}
+
+      // Update Firebase presence jika terhubung
+      if (typeof firebaseDb !== 'undefined' && firebaseDb) {
+        try {
+          const myPresenceRef = firebaseDb.ref(`rooms/${currentRoom}/presence/${getPresenceClientId()}`);
+          myPresenceRef.set({
+            name: currentParticipant.name,
+            role: userRole,
+            nip: currentParticipant.nip,
+            time: Date.now()
+          });
+        } catch (e) {}
+      }
+    },
+
+    getParticipant() {
+      return currentParticipant;
     },
 
     broadcast(type, data) {
@@ -249,15 +379,15 @@ const RealtimeSync = (function() {
         data: data
       };
 
-      // 1. BroadcastChannel (Lokal tab)
+      // 1. BroadcastChannel (Antar tab lokal)
       if (localChannel) {
         try {
           localChannel.postMessage(packet);
         } catch (e) {}
       }
 
-      // 2. MQTT Cloud (Antar HP & Laptop di internet)
-      if (mqttClient && isConnected) {
+      // 2. MQTT Cloud (Antar perangkat internet)
+      if (mqttClient && mqttClient.isConnected()) {
         try {
           const topic = `antigravity/quiz/${currentRoom}/${type}`;
           const msg = new Paho.MQTT.Message(JSON.stringify(packet));
@@ -269,20 +399,31 @@ const RealtimeSync = (function() {
         }
       }
 
-      // 3. Firebase (jika aktif)
-      if (type === 'submission' && typeof firebaseDb !== 'undefined' && firebaseDb) {
+      // 3. Firebase Realtime Database
+      if (typeof firebaseDb !== 'undefined' && firebaseDb) {
         try {
-          firebaseDb.ref(`rooms/${currentRoom}/submissions`).push(data);
+          if (type === 'submission') {
+            const subId = data.id || ('sub_' + Date.now());
+            firebaseDb.ref(`rooms/${currentRoom}/submissions/${subId}`).set(data);
+          } else if (type === 'host_action') {
+            firebaseDb.ref(`rooms/${currentRoom}/host_action`).set({
+              action: data.action,
+              payload: data.payload,
+              timestamp: Date.now()
+            });
+          }
         } catch (e) {
-          console.warn("Firebase push error", e);
+          console.warn("Firebase sync error", e);
         }
       }
     },
 
     submitAnswer(submissionData) {
-      // Pastikan ada ID unik
       if (!submissionData.id) {
-        submissionData.id = 'sub_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+        const studentId = (submissionData.nip && submissionData.nip !== '-') 
+          ? submissionData.nip 
+          : (submissionData.name || 'anon').replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+        submissionData.id = `sub_pg_${studentId}`;
       }
       submissionData.submittedAt = Date.now();
       submissionData.room = currentRoom;
@@ -303,7 +444,9 @@ const RealtimeSync = (function() {
     setRoomId(newRoom) {
       if (!newRoom) return;
       currentRoom = newRoom.trim().toUpperCase();
-      localStorage.setItem('active_quiz_room', currentRoom);
+      try {
+        localStorage.setItem('active_quiz_room', currentRoom);
+      } catch (e) {}
       window.location.search = `?room=${encodeURIComponent(currentRoom)}`;
     },
 
@@ -312,17 +455,38 @@ const RealtimeSync = (function() {
     },
 
     clearAllSubmissions() {
-      localStorage.removeItem(`submissions_${currentRoom}`);
+      try {
+        localStorage.removeItem(`submissions_${currentRoom}`);
+      } catch (e) {}
+
       if (typeof firebaseDb !== 'undefined' && firebaseDb) {
         try {
           firebaseDb.ref(`rooms/${currentRoom}/submissions`).remove();
         } catch (e) {}
       }
+
+      this.broadcastHostAction('clear_submissions');
     },
 
     deleteSubmission(id) {
       const list = getLocalSubmissions().filter(s => s.id !== id);
-      localStorage.setItem(`submissions_${currentRoom}`, JSON.stringify(list));
+      try {
+        localStorage.setItem(`submissions_${currentRoom}`, JSON.stringify(list));
+      } catch (e) {}
+
+      if (typeof firebaseDb !== 'undefined' && firebaseDb) {
+        try {
+          firebaseDb.ref(`rooms/${currentRoom}/submissions/${id}`).remove();
+        } catch (e) {}
+      }
+    },
+
+    getConnectionType() {
+      return connectionType;
+    },
+
+    isLiveConnected() {
+      return isConnected;
     }
   };
 })();
