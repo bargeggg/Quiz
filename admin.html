@@ -6,6 +6,11 @@
   <title>Admin & Monitoring Dashboard: Transition Words Quiz</title>
 
   <!-- Modern Fonts & Styles -->
+  <!-- Prevent Aggressive Browser Caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
   <link rel="stylesheet" href="assets/style.css" />
 
   <!-- External Libraries -->
@@ -451,8 +456,8 @@
       document.getElementById('settingRoomInput').value = currentRoom;
       document.getElementById('projectorRoomText').innerText = currentRoom;
 
-      // 2. Load questions.json
-      fetch('questions.json')
+      // 2. Load questions.json with anti-cache timestamp
+      fetch('questions.json?v=' + Date.now())
         .then(res => res.json())
         .then(data => {
           questionsData = data;
