@@ -203,8 +203,8 @@
         </div>
       </div>
 
-      <!-- Top 3 Metric Cards -->
-      <div class="podium-grid" id="podiumGridContainer">
+      <!-- Scoreboard Progress Summary -->
+      <div id="podiumGridContainer">
         <!-- Generated via JS -->
       </div>
 
@@ -644,48 +644,43 @@
       const totalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
       const accuracyPercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
 
-      // Render 3 Luxury KPI Metric Cards
+      // Render Single Luxury Progress Metric Card (Total Skor Kuis & Akurasi Jawaban dihilangkan)
       if (podiumContainer) {
+        const percent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
         podiumContainer.innerHTML = `
-          <div class="podium-card first" style="border: 1px solid rgba(99, 102, 241, 0.4); background: linear-gradient(145deg, rgba(20, 26, 48, 0.85), rgba(12, 16, 32, 0.95));">
-            <div class="podium-crown-badge">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#6366f1">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-              </svg>
-            </div>
-            <div class="podium-rank-tag silver">Progres Kuis</div>
-            <div class="podium-name">${answeredCount} / ${totalQuestions} Soal</div>
-            <div class="podium-nip">Sisa ${totalQuestions - answeredCount} soal belum dijawab</div>
-            <div class="podium-score gold">${Math.round((answeredCount / totalQuestions) * 100)}% Selesai</div>
-          </div>
+          <div class="glass-card" style="margin-bottom: 22px; padding: 18px 24px; border-radius: var(--radius-xl); background: linear-gradient(135deg, rgba(20, 26, 48, 0.85), rgba(12, 16, 32, 0.95)); border: 1.5px solid rgba(99, 102, 241, 0.35); box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:44px; height:44px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.35); display:flex; align-items:center; justify-content:center; color:#818cf8;">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                </div>
+                <div>
+                  <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.6px; color:#a5b4fc; font-weight:700;">Progres Kuis</div>
+                  <div style="font-size:1.25rem; font-weight:800; color:#f8fafc; font-family:var(--font-heading);">
+                    ${answeredCount} / ${totalQuestions} Soal Terjawab
+                    <span style="font-size:0.88rem; font-weight:600; color:#94a3b8; margin-left:8px;">(${percent}% Selesai)</span>
+                  </div>
+                </div>
+              </div>
 
-          <div class="podium-card second" style="border: 1px solid rgba(245, 158, 11, 0.45); background: linear-gradient(145deg, rgba(32, 26, 16, 0.85), rgba(16, 14, 10, 0.95));">
-            <div class="podium-crown-badge">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="#fbbf24">
-                <path d="M19 4h-2V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v1a6 6 0 0 0 5 5.91A6 6 0 0 0 11 17.91V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.09A6 6 0 0 0 17 13.91 6 6 0 0 0 22 8V7a3 3 0 0 0-3-3zM4 8V7a1 1 0 0 1 1-1h2v4.82A4 4 0 0 1 4 8zm16 0a4 4 0 0 1-3 2.82V6h2a1 1 0 0 1 1 1v1z"/>
-              </svg>
+              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:6px 14px; border-radius:10px; font-size:0.88rem;">
+                  <span style="color:#34d399; font-weight:700;">✓ ${correctCount} Benar</span>
+                  <span style="color:#64748b;">•</span>
+                  <span style="color:#f87171; font-weight:700;">✕ ${answeredCount - correctCount} Salah</span>
+                  <span style="color:#64748b;">•</span>
+                  <span style="color:#94a3b8; font-weight:600;">⏳ Sisa ${totalQuestions - answeredCount}</span>
+                </div>
+                <div style="width:130px; height:8px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden;">
+                  <div style="height:100%; width:${percent}%; background:linear-gradient(90deg, #6366f1, #38bdf8); border-radius:99px; transition:width 0.3s ease;"></div>
+                </div>
+              </div>
             </div>
-            <div class="podium-rank-tag gold">Total Skor Kuis</div>
-            <div class="podium-name">${totalPoints} Pts Terkumpul</div>
-            <div class="podium-nip">Maksimal ${totalQuestions * 10} poin kuis</div>
-            <div class="podium-score gold">⭐ Poin Presentasi Zoom</div>
-          </div>
-
-          <div class="podium-card third" style="border: 1px solid rgba(16, 185, 129, 0.4); background: linear-gradient(145deg, rgba(14, 30, 24, 0.85), rgba(10, 18, 14, 0.95));">
-            <div class="podium-crown-badge">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#10b981">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle>
-              </svg>
-            </div>
-            <div class="podium-rank-tag bronze">Status Jawaban</div>
-            <div class="podium-name">${correctCount} Benar • ${answeredCount - correctCount} Salah</div>
-            <div class="podium-nip">${totalQuestions - answeredCount} Soal Belum Dijawab</div>
-            <div class="podium-score bronze">🎯 Evaluasi Kuis</div>
           </div>
         `;
       }
