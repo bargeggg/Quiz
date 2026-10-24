@@ -703,11 +703,12 @@
         tbody.appendChild(tr);
       });
 
-      // 10 MC slots
+      // MC slots
+      const mcStart = (questionsData.essay ? questionsData.essay.length : 0) + 1;
       questionsData.pg.forEach((p, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>#${idx + 5}</strong></td>
+          <td><strong>#${idx + mcStart}</strong></td>
           <td><span class="badge badge-irfan">Quiz #2 - MC ${idx + 1}</span></td>
           <td>
             <strong>${p.presenter}</strong>

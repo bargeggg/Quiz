@@ -83,20 +83,20 @@
         </svg>
         <span id="tabLabelPg">Multiple Choice</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay">
+      <button class="tab-btn" onclick="switchTab('essay')" id="tabBtnEssay" style="display:none;">
         <svg viewBox="0 0 24 24">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
           <polyline points="14 2 14 8 20 8"></polyline>
           <line x1="16" y1="13" x2="8" y2="13"></line>
           <line x1="16" y1="17" x2="8" y2="17"></line>
         </svg>
-        <span>Case Study Analysis (4)</span>
+        <span id="tabLabelEssay">Case Study Analysis</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tanya')" id="tabBtnTanya">
         <svg viewBox="0 0 24 24">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
-        <span>Discussion Prompts (5)</span>
+        <span id="tabLabelTanya">Discussion Prompts</span>
       </button>
       <button class="tab-btn" onclick="switchTab('score')" id="tabNavBtnScore">
         <svg viewBox="0 0 24 24">
@@ -330,6 +330,15 @@
           }
           if (document.getElementById('badgeResetCount')) {
             document.getElementById('badgeResetCount').innerText = questionsData.pg.length;
+          }
+          const essayBtn = document.getElementById('tabBtnEssay');
+          if (essayBtn) {
+            essayBtn.style.display = (questionsData.essay && questionsData.essay.length > 0) ? 'inline-flex' : 'none';
+          }
+          const tanyaLabel = document.getElementById('tabLabelTanya');
+          if (tanyaLabel) {
+            const tCount = questionsData.tanya_bebas ? questionsData.tanya_bebas.length : 0;
+            tanyaLabel.innerText = `Discussion Prompts (${tCount})`;
           }
           buildQuestionPills();
           renderFocusQuestion();
@@ -855,6 +864,17 @@
       const container = document.getElementById('essayContainer');
       if (!container || !questionsData) return;
 
+      if (!questionsData.essay || questionsData.essay.length === 0) {
+        container.innerHTML = `
+          <div class="glass-card" style="text-align:center; padding: 48px; color: var(--text-dim);">
+            <div style="font-size: 2.2rem; margin-bottom: 12px;">📝</div>
+            <div style="font-size: 1.15rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px;">Soal Essay Ditiadakan</div>
+            <div style="font-size: 0.92rem; color: #94a3b8;">Sesi kuis berfokus penuh pada Multiple Choice interaktif dan sesi tanya jawab.</div>
+          </div>
+        `;
+        return;
+      }
+
       container.innerHTML = questionsData.essay.map((item, idx) => {
         const isRevealed = !!essayRevealed[item.id];
 
@@ -910,6 +930,19 @@
     function renderTanyaBebas() {
       const container = document.getElementById('tanyaContainer');
       if (!container || !questionsData) return;
+
+      if (!questionsData.tanya_bebas || questionsData.tanya_bebas.length === 0) {
+        container.innerHTML = `
+          <div class="glass-card" style="text-align:center; padding: 50px 24px; color: var(--text-dim);">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">💬</div>
+            <div style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">Sesi Tanya Bebas Belum Diisi</div>
+            <div style="font-size: 0.95rem; color: #94a3b8; max-width: 520px; margin: 0 auto; line-height: 1.6;">
+              Daftar pertanyaan dan topik diskusi bebas dibuat kosong terlebih dahulu dan siap digunakan saat sesi tanya jawab dibuka.
+            </div>
+          </div>
+        `;
+        return;
+      }
 
       container.innerHTML = questionsData.tanya_bebas.map((t, idx) => {
         const isRevealed = !!tanyaRevealed[t.id];

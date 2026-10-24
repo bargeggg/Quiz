@@ -6,9 +6,9 @@
     "rehearsal_dates": "October 23-24, 2026",
     "total_students": 19,
     "distribution": {
-      "essay": 4,
+      "essay": 0,
       "pilihan_ganda": 13,
-      "tanya_bebas": 5
+      "tanya_bebas": 0
     },
     "presenters": [
       {
@@ -41,57 +41,7 @@
       }
     ]
   },
-  "essay": [
-    {
-      "id": "e1",
-      "slot": 1,
-      "presenter": "Elsa (#1)",
-      "topic": "Addition & Clarification",
-      "source_text": "The university updated its laboratory facilities; furthermore, it provided high-speed internet access to all research rooms. In other words, students now have modern resources to complete their thesis efficiently.",
-      "question": "Identify 2 (two) transition words or phrases in the passage above, specify their respective categories, and explain their functional usage within the sentences!",
-      "key_points": [
-        "Transition 1: 'furthermore' -> Category: Addition. Adds complementary information regarding high-speed internet access after mentioning laboratory facilities.",
-        "Transition 2: 'in other words' -> Category: Clarification. Clarifies and restates the idea from the perspective of student research efficiency."
-      ]
-    },
-    {
-      "id": "e2",
-      "slot": 2,
-      "presenter": "Sofia (#2)",
-      "topic": "Location & Time",
-      "source_text": "Whenever heavy rainfall occurs in the upstream region, water levels surge rapidly. Downstream, along the riverbank settlements, residents must immediately evacuate to safer ground.",
-      "question": "Identify the word or phrase indicating a Time marker and the one indicating a Location marker in the passage above!",
-      "key_points": [
-        "Time marker: 'Whenever heavy rainfall occurs' (or the word 'whenever'). Expresses the temporal condition when water surges.",
-        "Location marker: 'Downstream, along the riverbank settlements' (or 'downstream'). Indicates the geographical location of residents affected."
-      ]
-    },
-    {
-      "id": "e3",
-      "slot": 3,
-      "presenter": "Irfan (#3)",
-      "topic": "Contrast & Condition",
-      "source_text": "Provided that all team members submit their project components before Friday, we can conduct the final rehearsal smoothly. On the contrary, if anyone fails to meet the deadline, the entire schedule will collapse.",
-      "question": "Identify the transition signaling Condition and the transition signaling Contrast in the passage above!",
-      "key_points": [
-        "Condition transition: 'Provided that' (sets the prerequisite/condition for a smooth rehearsal).",
-        "Contrast transition: 'On the contrary' (emphasizes a direct counter-outcome if deadlines are missed)."
-      ]
-    },
-    {
-      "id": "e4",
-      "slot": 4,
-      "presenter": "Ahmad (#4)",
-      "topic": "Cause, Reason, Purpose, Result/Effect",
-      "source_text": "Land burning in Kalimantan is an environmental problem that produces thick smoke and pollutes the air. Some landowners burn land because they want to clear areas for oil palm plantations. The purpose of clearing land is to establish plantations and increase agricultural production. However, this practice can have serious consequences for local communities. As a result, air pollution can increase the risk of respiratory illnesses, disrupt daily activities, and cause economic losses.",
-      "question": "Based on the paragraph above:\n1. Which word/phrase indicates Reason and what is the underlying reason?\n2. Which clause/phrase indicates Purpose?\n3. Which transition signals Result/Effect and what is its impact on society?",
-      "key_points": [
-        "1. Reason marker: 'because' -> Reason: Landowners intend to clear land for palm plantations ('they want to clear areas for oil palm plantations').",
-        "2. Purpose marker: 'The purpose of clearing land is...' -> Purpose: To establish plantations and boost agricultural yields.",
-        "3. Result marker: 'As a result' -> Impact: Escalated risk of respiratory illnesses, daily disruption, and economic losses."
-      ]
-    }
-  ],
+  "essay": [],
   "pg": [
     {
       "id": "pg1",
@@ -289,51 +239,5 @@
       "explanation": ""
     }
   ],
-  "tanya_bebas": [
-    {
-      "id": "tb1",
-      "student_slot": 15,
-      "student_label": "Participant 15",
-      "target_presenter": "Elsa (#1 - Addition & Clarification)",
-      "topic": "Addition vs Clarification",
-      "prompt_question": "When should we choose 'furthermore' instead of 'in addition', and how do their nuances of formality differ?",
-      "talking_points": "'Furthermore' carries a more formal weight to strengthen argumentation, whereas 'in addition' is more neutral for simply listing points."
-    },
-    {
-      "id": "tb2",
-      "student_slot": 16,
-      "student_label": "Participant 16",
-      "target_presenter": "Sofia (#2 - Time & Conclusion)",
-      "topic": "Conclusion in Academic Writing",
-      "prompt_question": "Are there particular concluding transitions that should be avoided in formal academic writing?",
-      "talking_points": "Phrases like 'all in all' or 'to wrap up' are often considered informal for academic journals; 'In conclusion', 'Thus', or 'To summarize' are preferred."
-    },
-    {
-      "id": "tb3",
-      "student_slot": 17,
-      "student_label": "Participant 17",
-      "target_presenter": "Irfan (#3 - Contrast vs Concession)",
-      "topic": "Contrast vs Concession",
-      "prompt_question": "What is the fundamental grammatical and semantic difference between 'Contrast' (e.g. however) and 'Concession' (e.g. although)?",
-      "talking_points": "Contrast juxtaposes two distinct opposing ideas, whereas Concession concedes a factual point that might otherwise invalidate the main clause."
-    },
-    {
-      "id": "tb4",
-      "student_slot": 18,
-      "student_label": "Participant 18",
-      "target_presenter": "Ahmad (#4 - Cause, Reason, Purpose)",
-      "topic": "Reason vs Purpose",
-      "prompt_question": "How can one easily differentiate the causal connector 'because' (Reason) from 'so that' / 'in order to' (Purpose)?",
-      "talking_points": "Reason ('because') looks backward to explain why something took place, whereas Purpose ('so that') looks forward toward the intended objective."
-    },
-    {
-      "id": "tb5",
-      "student_slot": 19,
-      "student_label": "Participant 19",
-      "target_presenter": "All Presenters (Elsa, Sofia, Irfan, Ahmad)",
-      "topic": "Overusing Transitions",
-      "prompt_question": "If a paragraph contains multiple transition words in nearly every sentence, is it considered well-connected or overused?",
-      "talking_points": "Overuse creates clunky, mechanical prose. Transitions should feel organic and be placed only where a clear logical bridge is necessary."
-    }
-  ]
+  "tanya_bebas": []
 }
