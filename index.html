@@ -213,12 +213,10 @@
         <table class="table-custom" style="width:100%; border-collapse:separate; border-spacing:0;">
           <thead>
             <tr>
-              <th style="width: 260px;">NO SOAL</th>
-              <th style="text-align:center; width: 120px;">TERJAWAB</th>
-              <th style="text-align:center; width: 110px;">BENAR</th>
-              <th style="text-align:center; width: 140px;">AKURASI</th>
-              <th style="text-align:center; width: 130px;">TOTAL POIN</th>
-              <th style="text-align:center; width: 120px;">STATUS</th>
+              <th style="width: 28%;">NO SOAL</th>
+              <th style="text-align:center; width: 24%;">TERJAWAB</th>
+              <th style="text-align:center; width: 24%;">STATUS</th>
+              <th style="text-align:center; width: 24%;">TOTAL POIN</th>
             </tr>
           </thead>
           <tbody id="scoreboardTableBody">
@@ -684,10 +682,10 @@
                 <circle cx="12" cy="12" r="2"></circle>
               </svg>
             </div>
-            <div class="podium-rank-tag bronze">Akurasi Jawaban</div>
-            <div class="podium-name">${accuracyPercent}% Tepat</div>
-            <div class="podium-nip">${correctCount} Benar • ${answeredCount - correctCount} Kurang Tepat</div>
-            <div class="podium-score bronze">🎯 Akurasi Partisipasi</div>
+            <div class="podium-rank-tag bronze">Status Jawaban</div>
+            <div class="podium-name">${correctCount} Benar • ${answeredCount - correctCount} Salah</div>
+            <div class="podium-nip">${totalQuestions - answeredCount} Soal Belum Dijawab</div>
+            <div class="podium-score bronze">🎯 Evaluasi Kuis</div>
           </div>
         `;
       }
@@ -697,8 +695,6 @@
         const state = liveQuestionsState[q.id];
         const isAnswered = !!state;
         const isCorrect = isAnswered && state.isCorrect;
-        const accuracy = isAnswered ? (isCorrect ? 100 : 0) : 0;
-        const points = isAnswered ? (isCorrect ? 10 : 2) : 0;
 
         let rankBadgeClass = "rank-badge-other";
         if (idx === 0) rankBadgeClass = "rank-badge-gold";
@@ -710,47 +706,27 @@
             <td>
               <div style="display:flex; align-items:center; gap:12px;">
                 <span class="rank-badge ${rankBadgeClass}" style="min-width:32px; font-weight:800;">${idx + 1}</span>
-                <div>
-                  <div style="font-weight:700; color:#f8fafc; font-size:0.96rem; line-height:1.2;">Soal ${idx + 1}</div>
-                  <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">
-                    <span style="color:#a5b4fc; font-weight:600;">${escapeHtml(q.category)}</span> • ${escapeHtml(q.presenter.split(' ')[0])}
-                  </div>
-                </div>
+                <span style="font-weight:700; color:#f8fafc; font-size:0.98rem;">Soal ${idx + 1}</span>
               </div>
             </td>
             <td style="text-align:center;">
               ${isAnswered 
-                ? `<span style="display:inline-block; padding:4px 10px; border-radius:8px; font-weight:700; font-size:0.86rem; background:rgba(99,102,241,0.2); color:#a5b4fc; border:1px solid rgba(99,102,241,0.35);">Opsi (${state.chosen})</span>` 
-                : `<span style="color:#64748b; font-size:0.84rem;">- Belum -</span>`}
+                ? `<span style="display:inline-block; padding:5px 12px; border-radius:8px; font-weight:700; font-size:0.88rem; background:rgba(99,102,241,0.2); color:#a5b4fc; border:1px solid rgba(99,102,241,0.35);">Opsi (${state.chosen})</span>` 
+                : `<span style="color:#64748b; font-size:0.86rem;">- Belum -</span>`}
             </td>
             <td style="text-align:center;">
               ${isAnswered 
                 ? (isCorrect 
-                    ? `<span class="table-correct-pill">✓ 1</span>` 
-                    : `<span style="display:inline-flex; align-items:center; gap:3px; padding:3px 8px; border-radius:6px; font-size:0.82rem; font-weight:700; background:rgba(239,68,68,0.18); color:#f87171; border:1px solid rgba(239,68,68,0.35);">✗ 0</span>`) 
-                : `<span style="color:#64748b; font-size:0.85rem;">0</span>`}
-            </td>
-            <td style="text-align:center;">
-              <div class="accuracy-wrapper" style="justify-content:center;">
-                <div class="accuracy-bar" style="width:65px;">
-                  <div class="accuracy-fill" style="width:${accuracy}%; background:${isCorrect ? '#10b981' : '#ef4444'};"></div>
-                </div>
-                <span class="accuracy-text" style="color:${isAnswered ? (isCorrect ? '#34d399' : '#f87171') : '#64748b'}; font-weight:700;">${accuracy}%</span>
-              </div>
+                    ? `<span class="badge-status-active" style="background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-weight:700; font-size:0.86rem; padding:5px 14px;"><span class="pulse-dot-sm"></span> Benar</span>` 
+                    : `<span style="display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:12px; font-size:0.86rem; font-weight:700; background:rgba(239,68,68,0.18); border:1px solid rgba(239,68,68,0.4); color:#f87171;">✕ Salah</span>`) 
+                : `<span style="display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:12px; font-size:0.82rem; font-weight:600; background:rgba(100,116,139,0.15); border:1px solid rgba(148,163,184,0.2); color:#94a3b8;">⏳ Belum Dijawab</span>`}
             </td>
             <td style="text-align:center;">
               ${isAnswered 
                 ? (isCorrect 
-                    ? `<span class="table-score-pill">⭐ +10 pts</span>` 
-                    : `<span class="table-score-pill" style="color:#f59e0b; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.12);">⭐ +2 pts</span>`) 
-                : `<span style="color:#64748b; font-size:0.85rem; font-family:var(--font-heading);">0 pts</span>`}
-            </td>
-            <td style="text-align:center;">
-              ${isAnswered 
-                ? (isCorrect 
-                    ? `<span class="badge-status-active" style="background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.35); color:#34d399;"><span class="pulse-dot-sm"></span> Selesai</span>` 
-                    : `<span style="display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:12px; font-size:0.75rem; font-weight:700; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.35); color:#f87171;">Review</span>`) 
-                : `<span style="display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:12px; font-size:0.75rem; font-weight:600; background:rgba(100,116,139,0.15); border:1px solid rgba(148,163,184,0.2); color:#94a3b8;">Menunggu</span>`}
+                    ? `<span class="table-score-pill" style="font-size:0.9rem;">⭐ +10 pts</span>` 
+                    : `<span class="table-score-pill" style="color:#f59e0b; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.12); font-size:0.9rem;">⭐ +2 pts</span>`) 
+                : `<span style="color:#64748b; font-size:0.86rem; font-family:var(--font-heading);">0 pts</span>`}
             </td>
           </tr>
         `;
@@ -762,12 +738,12 @@
       const totalQ = questionsData.pg.length;
       const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
       const correctList = answeredList.filter(q => liveQuestionsState[q.id].isCorrect);
+      const wrongList = answeredList.filter(q => !liveQuestionsState[q.id].isCorrect);
       const totalPts = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
-      const acc = answeredList.length > 0 ? Math.round((correctList.length / answeredList.length) * 100) : 0;
 
       let text = "🏆 *REKAP HASIL KUIS TRANSITION WORDS & CONNECTORS*\n";
       text += `📅 Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
-      text += `📊 Progres: ${answeredList.length}/${totalQ} Soal | Benar: ${correctList.length} | Akurasi: ${acc}% | Total Skor: ${totalPts} Pts\n\n`;
+      text += `📊 Progres: ${answeredList.length}/${totalQ} Soal | Benar: ${correctList.length} | Salah: ${wrongList.length} | Total Skor: ${totalPts} Pts\n\n`;
       
       questionsData.pg.forEach((q, i) => {
         const state = liveQuestionsState[q.id];
@@ -775,7 +751,7 @@
         if (state) {
           statusText = state.isCorrect ? `✅ Benar (${state.chosen}) [+10 Pts]` : `❌ Salah (${state.chosen}) [Kunci: ${q.correct}] [+2 Pts]`;
         }
-        text += `• Soal ${i + 1} (${q.category}): ${statusText}\n`;
+        text += `• Soal ${i + 1}: ${statusText}\n`;
       });
       text += "\nTerima kasih atas partisipasi aktif dalam presentasi Transition Words & Connectors!";
 
