@@ -2,7 +2,7 @@ Anaknya 19
 ===========================
 Quiz
 Quiz #1 (Essay)         = 4
-Quiz #2 (Pilihan Ganda) = 10
+Quiz #2 (Pilihan Ganda) = 13
 Penanya (Tanya Bebas)   = 5
 Note:
 Pertanyaan quiz 1 dan 2 boleh di acak, setelahnya sesi tanya bebas
@@ -11,9 +11,9 @@ Link file persentasi:
 https://canva.link/otop855dny25lu6
 Skema Slide:
 Elsa  : #1 = Overview > Penjelasan per-poin > contoh kalimat
-Sofia : #2 = -
+Sofia : #2 = Overview > Penjelasan & contoh kalimat
 Irfan : #3 = Overview > contoh kalimat
-Ahmad : #4 = -
+Ahmad : #4 = Overview > Penjelasan & studi kasus
 Deadline: 22 Oktober 2026
 Sesi latihan persentasi: 23-24 Oktober 2026
 ===========================
@@ -23,38 +23,111 @@ Sofia : #2 - Location, Time, and Conclusion
 Irfan : #3 - Comparison, Contrast, Concession, and Condition
 Ahmad : #4 - Cause, Reason, Purpose, Result/Effect
 ===========================
-Contoh Soal:
-#3 - Comparison, Contrast, Concession, and Condition
-At first, I thought Doree would be upset when she heard the news. Quite the opposite, she just smiled and did not let it bother her.
-A. Comparison
-B. Consession
-C. Contrast *
-D. Condition
+Bank Soal Pilihan Ganda (13 Soal - Tanpa Penjelasan):
 
-In case if I ran out of money, may I borrow you cards.
-A. Comparison
-B. Consession
+SOAL 1
+“The city implemented a strict congestion pricing policy; specifically, it levied a daily fee on all non-electric vehicles entering the downtown core during peak hours.”
+Bagaimana hubungan klausa kedua dengan klausa pertama pada kalimat di atas?
+A) Addition, karena memperkenalkan kebijakan baru yang sama sekali terpisah.
+B) Definition, karena menjelaskan arti kamus dari kata congestion pricing.
+C) Clarification, karena merumuskan kembali pernyataan umum dengan detail operasional yang presisi.
+D) Example, karena mencantumkan contoh acak dari kendaraan listrik.
+Kunci Jawaban: C
+
+SOAL 2
+“Neurolinguistics is an interdisciplinary field that investigates the neural mechanisms in the human brain that control the comprehension, production, and acquisition of language.”
+Hubungan ide apa yang paling mendominasi kalimat di atas?
+A) Definition, karena secara eksplisit menguraikan arti dan ruang lingkup dasar dari istilah neurolinguistics.
+B) Addition, karena menambahkan detail kumulatif tentang fungsi otak manusia.
+C) Example, karena mencontohkan salah satu cabang dari ilmu psikologi modern.
+D) Clarification, karena memperbaiki kesalahpahaman linguistik yang terjadi sebelumnya.
+Kunci Jawaban: A
+
+SOAL 3
+“Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.”
+Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?
+A) Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.
+B) Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.
+C) Definition, karena mendefinisikan arti dari kemandirian ekonomi.
+D) Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik.
+Kunci Jawaban: B
+
+SOAL 4
+The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease. In this cause and effect situation, what does the decline in the IHSG represent?
+A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.
+B. Reason, because the decline in the IHSG explains why investors start buying stocks.
+C. Cause, because the decline in the IHSG causes investors to become worried.
+D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation.
+Kunci Jawaban: C
+
+SOAL 5
+Look at the keyword “due to”: “The flight was delayed due to thick fog.” What does “thick fog” represent?
+A. Purpose
+B. Result/Effect
+C. Reason
+D. Cause
+Kunci Jawaban: D
+
+SOAL 6
+Look at the keyword “to”: “Maya exercises every morning to stay healthy.” What does “to stay healthy” express?
+A. Reason
+B. Purpose
+C. Cause
+D. Result/Effect
+Kunci Jawaban: B
+
+SOAL 7
+A citizen says, “My reason for asking for transparency in the MBG budget is that people should know how public money is used.” What is the reason for the citizen's request?
+A. The citizen asks for budget transparency
+B. The citizen wants public spending to be open to public scrutiny
+C. People knowing how public money is used
+D. The MBG program uses public money
+Kunci Jawaban: B
+
+SOAL 8
+Kalimat mana yang punya hubungan "comparison"?
+A. The red car is fast, but the blue car is quite slow
+B. If you drive the car too fast, you will get a fine
+C. Both the red car and the blue car are incredibly fast
+D. Even though the car is old, it is still very fast
+Kunci Jawaban: C
+
+SOAL 9
+_______ studying all night, he still failed the math test.
+A. Despite
+B. Similarly
+C. As long as
+D. However
+Kunci Jawaban: A
+
+SOAL 10
+"You can play video games as long as you finish your homework first." termasuk kalimat?
+A. Concession
+B. Comparison
 C. Contrast
-D. Condition *
+D. Condition
+Kunci Jawaban: D
 
-#1
-Many people were shocked with the result of the election. Evidently, they never expected that Donald Trump could win the election and became the President ot the United States of America.
-A. Addition
-B. Clarification *
-C. Example
+SOAL 11
+“The hospital is within walking distance of the bus station, while the airport is far from the city center.” What is the difference between the meanings of “within” and “far” in the sentence above?
+A. Within menunjukkan tempat yang bersebelahan, sedangkan far menunjukkan tempat di dalam batas tertentu.
+B. Within menunjukkan jarak yang masih dapat dijangkau dengan berjalan kaki, sedangkan far menunjukkan jarak yang jauh.
+C. Within menunjukkan arah pergerakan, sedangkan far menunjukkan posisi yang berlawanan.
+D. Within menunjukkan kesimpulan lokasi, sedangkan far menunjukkan urutan tempat.
+Kunci Jawaban: B
 
-#2
-When the time comes, you must accompany me to go to the stores.
-A. Location
-B. Time *
-C. Conclusion
+SOAL 12
+“Call me as soon as you arrive at the airport.” The phrase “as soon as” belongs to which category of time transitions?
+A. Before
+B. Simultaneous
+C. After
+D. Immediate succession
+Kunci Jawaban: D
 
-When the time comes, you must accompany me to go to the stores.
-Which word that indicates the type of sentence?. And which type of this sentence?.
-A. When the time comes. * and the type is 'time'
-B. Accompany me.
-C. Go to the stores.
-
-#4
-Land burning in Kalimantan is an environmental problem that produces thick smoke and pollutes the air. Some landowners burn land because they want to clear areas for oil palm plantations. The purpose of clearing land is to establish plantations and increase agricultural production. However, this practice can have serious consequences for local communities. As a result, air pollution can increase the risk of respiratory illnesses, disrupt daily activities, and cause economic losses.
-Which word that indicates the 'cause' of this event? and what the 'reason' of it?
+SOAL 13
+“The road was flooded. _____, the school decided to cancel classes.” Which transition word best completes the sentence?
+A. In summary
+B. Meanwhile
+C. Therefore
+D. Afterwards
+Kunci Jawaban: C

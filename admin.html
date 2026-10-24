@@ -243,7 +243,7 @@
               <label class="form-label">Target Quiz Session:</label>
               <select id="wheelTargetType" class="form-control" onchange="onWheelTargetChange()">
                 <option value="essay">📝 Quiz #1: Essay Cases (4 Students: Elsa, Sofia, Irfan, Ahmad)</option>
-                <option value="pg">🎯 Quiz #2: Multiple Choice (10 Students: Questions 1 to 10)</option>
+                <option value="pg">🎯 Quiz #2: Multiple Choice Questions (Interactive Game Show)</option>
                 <option value="tanya">💬 Q&A Discussion (5 Students: Inquirers 1 to 5)</option>
               </select>
             </div>
@@ -722,11 +722,12 @@
         tbody.appendChild(tr);
       });
 
-      // 5 Q&A slots
+      // Q&A slots
+      const qnaStart = (questionsData.essay ? questionsData.essay.length : 4) + (questionsData.pg ? questionsData.pg.length : 13) + 1;
       questionsData.tanya_bebas.forEach((t, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>#${idx + 15}</strong></td>
+          <td><strong>#${idx + qnaStart}</strong></td>
           <td><span class="badge badge-ahmad">Q&A Inquiry #${idx + 1}</span></td>
           <td>
             <strong>${t.target_presenter}</strong>

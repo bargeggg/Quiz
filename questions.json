@@ -7,7 +7,7 @@
     "total_students": 19,
     "distribution": {
       "essay": 4,
-      "pilihan_ganda": 10,
+      "pilihan_ganda": 13,
       "tanya_bebas": 5
     },
     "presenters": [
@@ -95,153 +95,198 @@
   "pg": [
     {
       "id": "pg1",
-      "presenter": "Irfan (#3)",
-      "category": "Contrast",
-      "q": "At first, I thought Doree would be upset when she heard the news. Quite the opposite, she just smiled and did not let it bother her.",
-      "instruction": "What type of transition is used in the sentence?",
+      "presenter": "Elsa (#1)",
+      "category": "Clarification",
+      "q": "The city implemented a strict congestion pricing policy; specifically, it levied a daily fee on all non-electric vehicles entering the downtown core during peak hours.",
+      "instruction": "Bagaimana hubungan klausa kedua dengan klausa pertama pada kalimat di atas?",
       "options": [
-        "A. Comparison",
-        "B. Concession",
-        "C. Contrast",
-        "D. Condition"
+        "A. Addition, karena memperkenalkan kebijakan baru yang sama sekali terpisah.",
+        "B. Definition, karena menjelaskan arti kamus dari kata congestion pricing.",
+        "C. Clarification, karena merumuskan kembali pernyataan umum dengan detail operasional yang presisi.",
+        "D. Example, karena mencantumkan contoh acak dari kendaraan listrik."
       ],
       "correct": "C",
-      "explanation": "'Quite the opposite' indicates a direct contrast to the initial expectation that Doree would be upset."
+      "explanation": ""
     },
     {
       "id": "pg2",
-      "presenter": "Sofia (#2)",
-      "category": "Time & Sentence Type",
-      "q": "When the time comes, you must accompany me to go to the stores.",
-      "instruction": "Which word/clause indicates the type of sentence, and what type is it?",
+      "presenter": "Elsa (#1)",
+      "category": "Definition",
+      "q": "Neurolinguistics is an interdisciplinary field that investigates the neural mechanisms in the human brain that control the comprehension, production, and acquisition of language.",
+      "instruction": "Hubungan ide apa yang paling mendominasi kalimat di atas?",
       "options": [
-        "A. 'When the time comes' - Time",
-        "B. 'Accompany me' - Location",
-        "C. 'Go to the stores' - Conclusion",
-        "D. 'Must accompany' - Condition"
+        "A. Definition, karena secara eksplisit menguraikan arti dan ruang lingkup dasar dari istilah neurolinguistics.",
+        "B. Addition, karena menambahkan detail kumulatif tentang fungsi otak manusia.",
+        "C. Example, karena mencontohkan salah satu cabang dari ilmu psikologi modern.",
+        "D. Clarification, karena memperbaiki kesalahpahaman linguistik yang terjadi sebelumnya."
       ],
       "correct": "A",
-      "explanation": "The clause 'When the time comes' is an adverbial clause of time signaling temporal context (Time)."
+      "explanation": ""
     },
     {
       "id": "pg3",
       "presenter": "Elsa (#1)",
-      "category": "Clarification",
-      "q": "Many people were shocked with the result of the election. Evidently, they never expected that Donald Trump could win the election and became the President of the United States of America.",
-      "instruction": "The word 'Evidently' in this context expresses:",
+      "category": "Addition",
+      "q": "Renewable energy sources significantly reduce carbon footprints. Furthermore, they foster long-term economic independence by insulating countries from volatile global fossil fuel markets.",
+      "instruction": "Hubungan logis apa yang ditandai oleh kata “Furthermore” pada teks di atas?",
       "options": [
-        "A. Addition",
-        "B. Clarification",
-        "C. Example",
-        "D. Comparison"
+        "A. Clarification, karena menjelaskan mekanisme fisik dari pengurangan karbon.",
+        "B. Addition, karena memperkenalkan keuntungan independen dan kumulatif lainnya dari energi terbarukan.",
+        "C. Definition, karena mendefinisikan arti dari kemandirian ekonomi.",
+        "D. Example, karena memberikan contoh jenis sumber energi terbarukan yang spesifik."
       ],
       "correct": "B",
-      "explanation": "'Evidently' is used here to clarify and emphasize why the general public was surprised by the election outcome."
+      "explanation": ""
     },
     {
       "id": "pg4",
       "presenter": "Ahmad (#4)",
-      "category": "Result / Effect",
-      "q": "The factory failed to maintain its safety valve properly. Consequently, toxic steam escaped into the surrounding residential area.",
-      "instruction": "The word 'Consequently' serves to indicate:",
+      "category": "Cause",
+      "q": "The IHSG is falling, investors are starting to panic, and many people are worried that the value of their investments will decrease.",
+      "instruction": "In this cause and effect situation, what does the decline in the IHSG represent?",
       "options": [
-        "A. Purpose",
-        "B. Cause",
-        "C. Reason",
-        "D. Result / Effect"
+        "A. Purpose, because the decline in the IHSG is the goal of investors when they invest in the stock market.",
+        "B. Reason, because the decline in the IHSG explains why investors start buying stocks.",
+        "C. Cause, because the decline in the IHSG causes investors to become worried.",
+        "D. Result/Effect, because the decline in the IHSG is the outcome of investors' concerns about the economic situation."
       ],
-      "correct": "D",
-      "explanation": "'Consequently' denotes the immediate outcome or effect resulting from the failure to maintain the safety valve."
+      "correct": "C",
+      "explanation": ""
     },
     {
       "id": "pg5",
-      "presenter": "Irfan (#3)",
-      "category": "Condition",
-      "q": "In case if I ran out of money, may I borrow your cards.",
-      "instruction": "The phrase 'In case' expresses:",
+      "presenter": "Ahmad (#4)",
+      "category": "Cause",
+      "q": "The flight was delayed due to thick fog.",
+      "instruction": "Look at the keyword “due to”: What does “thick fog” represent?",
       "options": [
-        "A. Comparison",
-        "B. Concession",
-        "C. Contrast",
-        "D. Condition"
+        "A. Purpose",
+        "B. Result/Effect",
+        "C. Reason",
+        "D. Cause"
       ],
       "correct": "D",
-      "explanation": "'In case' establishes a hypothetical condition or precautionary contingency (Condition)."
+      "explanation": ""
     },
     {
       "id": "pg6",
-      "presenter": "Elsa (#1)",
-      "category": "Example",
-      "q": "The newly established startup offers numerous perks to its employees; for instance, free catered lunch and gym memberships.",
-      "instruction": "The phrase 'for instance' belongs to which category?",
+      "presenter": "Ahmad (#4)",
+      "category": "Purpose",
+      "q": "Maya exercises every morning to stay healthy.",
+      "instruction": "Look at the keyword “to”: What does “to stay healthy” express?",
       "options": [
-        "A. Example",
-        "B. Clarification",
-        "C. Definition",
-        "D. Addition"
+        "A. Reason",
+        "B. Purpose",
+        "C. Cause",
+        "D. Result/Effect"
       ],
-      "correct": "A",
-      "explanation": "'for instance' is synonymous with 'for example' and introduces illustrative examples."
+      "correct": "B",
+      "explanation": ""
     },
     {
       "id": "pg7",
-      "presenter": "Sofia (#2)",
-      "category": "Conclusion",
-      "q": "To wrap up our group presentation, regular physical exercise combined with a balanced diet is essential for cardiovascular health.",
-      "instruction": "The phrase 'To wrap up' indicates:",
+      "presenter": "Ahmad (#4)",
+      "category": "Reason",
+      "q": "A citizen says, “My reason for asking for transparency in the MBG budget is that people should know how public money is used.”",
+      "instruction": "What is the reason for the citizen's request?",
       "options": [
-        "A. Location",
-        "B. Time",
-        "C. Conclusion",
-        "D. Clarification"
+        "A. The citizen asks for budget transparency",
+        "B. The citizen wants public spending to be open to public scrutiny",
+        "C. People knowing how public money is used",
+        "D. The MBG program uses public money"
       ],
-      "correct": "C",
-      "explanation": "'To wrap up' functions as a concluding signal summarizing final remarks."
+      "correct": "B",
+      "explanation": ""
     },
     {
       "id": "pg8",
       "presenter": "Irfan (#3)",
-      "category": "Concession",
-      "q": "Even though the research team faced continuous budget cuts, they successfully completed the vaccine trial ahead of schedule.",
-      "instruction": "The connector 'Even though' expresses:",
+      "category": "Comparison",
+      "q": "Comparison Transition & Conjunction Structures",
+      "instruction": "Kalimat mana yang punya hubungan “comparison”?",
       "options": [
-        "A. Concession",
-        "B. Comparison",
-        "C. Condition",
-        "D. Addition"
+        "A. The red car is fast, but the blue car is quite slow",
+        "B. If you drive the car too fast, you will get a fine",
+        "C. Both the red car and the blue car are incredibly fast",
+        "D. Even though the car is old, it is still very fast"
       ],
-      "correct": "A",
-      "explanation": "'Even though' introduces a concession clause acknowledging an obstacle that did not stop the primary achievement."
+      "correct": "C",
+      "explanation": ""
     },
     {
       "id": "pg9",
-      "presenter": "Ahmad (#4)",
-      "category": "Purpose",
-      "q": "Engineers installed high-performance cooling fans so that the data servers would not overheat during peak operational hours.",
-      "instruction": "The phrase 'so that' functions to show:",
+      "presenter": "Irfan (#3)",
+      "category": "Concession",
+      "q": "_______ studying all night, he still failed the math test.",
+      "instruction": "Which transition word best completes the sentence?",
       "options": [
-        "A. Purpose",
-        "B. Cause",
-        "C. Contrast",
-        "D. Definition"
+        "A. Despite",
+        "B. Similarly",
+        "C. As long as",
+        "D. However"
       ],
       "correct": "A",
-      "explanation": "'so that' is a conjunction expressing intent, goal, or objective (Purpose)."
+      "explanation": ""
     },
     {
       "id": "pg10",
-      "presenter": "Elsa (#1)",
-      "category": "Definition",
-      "q": "Digital literacy refers to an individual's ability to locate, evaluate, and compose clear information through various digital platforms.",
-      "instruction": "The predicate phrase 'refers to' explicitly signals:",
+      "presenter": "Irfan (#3)",
+      "category": "Condition",
+      "q": "You can play video games as long as you finish your homework first.",
+      "instruction": "Termasuk kalimat jenis apakah pernyataan di atas?",
       "options": [
-        "A. Addition",
-        "B. Definition",
-        "C. Clarification",
-        "D. Concession"
+        "A. Concession",
+        "B. Comparison",
+        "C. Contrast",
+        "D. Condition"
+      ],
+      "correct": "D",
+      "explanation": ""
+    },
+    {
+      "id": "pg11",
+      "presenter": "Sofia (#2)",
+      "category": "Location",
+      "q": "The hospital is within walking distance of the bus station, while the airport is far from the city center.",
+      "instruction": "What is the difference between the meanings of “within” and “far” in the sentence above?",
+      "options": [
+        "A. Within menunjukkan tempat yang bersebelahan, sedangkan far menunjukkan tempat di dalam batas tertentu.",
+        "B. Within menunjukkan jarak yang masih dapat dijangkau dengan berjalan kaki, sedangkan far menunjukkan jarak yang jauh.",
+        "C. Within menunjukkan arah pergerakan, sedangkan far menunjukkan posisi yang berlawanan.",
+        "D. Within menunjukkan kesimpulan lokasi, sedangkan far menunjukkan urutan tempat."
       ],
       "correct": "B",
-      "explanation": "'refers to' is a standard academic marker used to provide the formal definition of a term."
+      "explanation": ""
+    },
+    {
+      "id": "pg12",
+      "presenter": "Sofia (#2)",
+      "category": "Time",
+      "q": "Call me as soon as you arrive at the airport.",
+      "instruction": "The phrase “as soon as” belongs to which category of time transitions?",
+      "options": [
+        "A. Before",
+        "B. Simultaneous",
+        "C. After",
+        "D. Immediate succession"
+      ],
+      "correct": "D",
+      "explanation": ""
+    },
+    {
+      "id": "pg13",
+      "presenter": "Sofia (#2)",
+      "category": "Conclusion",
+      "q": "The road was flooded. _____, the school decided to cancel classes.",
+      "instruction": "Which transition word best completes the sentence?",
+      "options": [
+        "A. In summary",
+        "B. Meanwhile",
+        "C. Therefore",
+        "D. Afterwards"
+      ],
+      "correct": "C",
+      "explanation": ""
     }
   ],
   "tanya_bebas": [
