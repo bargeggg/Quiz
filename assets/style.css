@@ -865,6 +865,8 @@ body {
   color: #f1f5f9;
   line-height: 1.45;
   flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 
 /* Answered States */
@@ -909,12 +911,22 @@ body {
 
 .opt-badge-tag {
   margin-left: auto;
-  font-size: 0.76rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 4px 10px;
+  line-height: 1;
+  padding: 5px 12px;
   border-radius: 999px;
   letter-spacing: 0.3px;
-  white-space: nowrap;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.opt-badge-tag svg {
   flex-shrink: 0;
 }
 
@@ -977,6 +989,8 @@ body {
   font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .outcome-badge-wrong {
@@ -991,6 +1005,8 @@ body {
   font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .explanation-outcome-msg {
@@ -1994,11 +2010,15 @@ body {
   .opt-text {
     font-size: 0.92rem;
     line-height: 1.4;
+    min-width: 0;
   }
 
   .opt-badge-tag {
     font-size: 0.72rem;
-    padding: 3px 8px;
+    padding: 4px 9px;
+    gap: 4px;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
 
   /* Explanation Card on Phone */
