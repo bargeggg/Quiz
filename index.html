@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Quiz Show: Transition Words & Connectors</title>
 
-  <!-- Modern Fonts & Styles -->
   <!-- Prevent Aggressive Browser Caching -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -16,22 +15,17 @@
   <link rel="stylesheet" href="assets/style.css" />
 
   <!-- External Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <!-- Local App Modules -->
-  <script src="firebase-config.js"></script>
   <script src="assets/audio.js"></script>
-  <script src="assets/realtime.js"></script>
 </head>
 
 <body>
   <div class="container">
 
-    <!-- Top Navigation Header with Integrated Class Scoreboard -->
-    <header class="top-navbar" style="margin-bottom: 20px;">
+    <!-- Top Navigation Header -->
+    <header class="top-navbar" style="margin-bottom: 24px;">
       <div class="brand-wrapper">
         <div class="brand-icon">
           <svg viewBox="0 0 24 24">
@@ -46,28 +40,8 @@
         </div>
       </div>
 
-      <!-- Right Header: Identity, Scoreboard Button, SFX, & Live Status -->
-      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn-secondary btn-sm" id="btnStudentIdentity" onclick="openStudentModal()" title="Ubah Nama Identitas Mahasiswa" style="display:inline-flex; align-items:center; gap:6px; border-radius:99px; padding:6px 14px; font-weight:700; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.35); color:#f8fafc; font-size:0.86rem; cursor:pointer;">
-          <span style="font-size:0.95rem;">👤</span>
-          <span id="currentStudentDisplay">Pilih Nama</span>
-        </button>
-
-        <button class="header-scoreboard-btn" onclick="switchTab('score')" id="headerScoreboardBtn" title="Lihat Papan Skor Partisipasi Kelas">
-          <span class="scoreboard-cup-icon">
-            <svg class="trophy-gold-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M19 4h-2V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v1a6 6 0 0 0 5 5.91A6 6 0 0 0 11 17.91V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.09A6 6 0 0 0 17 13.91 6 6 0 0 0 22 8V7a3 3 0 0 0-3-3zM4 8V7a1 1 0 0 1 1-1h2v4.82A4 4 0 0 1 4 8zm16 0a4 4 0 0 1-3 2.82V6h2a1 1 0 0 1 1 1v1z"/>
-            </svg>
-          </span>
-          <div class="scoreboard-btn-info">
-            <span class="scoreboard-btn-title">Class Scoreboard</span>
-            <span class="scoreboard-btn-count">
-              <span class="pulse-amber-dot"></span>
-              <span id="headerScoreCount">0</span> Active
-            </span>
-          </div>
-        </button>
-
+      <!-- Right Header: Sound FX Toggle & Live Session Badge -->
+      <div style="display:flex; align-items:center; gap:12px;">
         <button class="sfx-toggle-btn" onclick="toggleSFX()" id="sfxToggleBtn" title="Toggle Sound Effects">
           <span id="sfxIconWrap">
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -77,39 +51,17 @@
           </span>
         </button>
 
-        <span class="badge badge-live" id="liveSyncStatusBadge" title="Status Sinkronisasi Realtime Cloud">
-          <span class="pulse-dot" id="liveSyncPulseDot"></span>
-          <span id="liveSyncStatusText">Live Sync</span>
+        <span class="badge badge-live" title="Interactive Presentation Screen">
+          <span class="pulse-dot"></span>
+          <span>Live Session</span>
         </span>
       </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <div class="nav-tabs" style="margin-bottom: 22px;">
-      <button class="tab-btn active" onclick="switchTab('pg')" id="tabBtnPg">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="6"></circle>
-          <circle cx="12" cy="12" r="2"></circle>
-        </svg>
-        <span id="tabLabelPg">Multiple Choice</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('score')" id="tabNavBtnScore">
-        <svg viewBox="0 0 24 24">
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-          <path d="M4 22h16"></path>
-          <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path>
-          <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
-        </svg>
-        <span>Class Scoreboard</span>
-      </button>
-    </div>
+    <!-- Main Question View (Pure Multiple Choice Quiz) -->
+    <div id="tabContentPg" class="tab-pane active" style="display:block;">
 
-    <!-- TAB 1: Multiple Choice (10 Questions) - Live Game Show -->
-    <div id="tabContentPg" class="tab-pane">
-
-      <!-- Question Jump Strip -->
+      <!-- Question Jump Strip (Navigator) -->
       <div class="question-strip-wrapper">
         <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
           <span class="navigator-label">
@@ -119,10 +71,10 @@
               <rect x="14" y="14" width="7" height="7"></rect>
               <rect x="3" y="14" width="7" height="7"></rect>
             </svg>
-            <span>Navigator:</span>
+            <span>Navigator Soal:</span>
           </span>
           <div class="question-pills-grid" id="questionPillsContainer">
-            <!-- Circular Pills 1 to 10 generated via JS -->
+            <!-- Circular Pills 1 to 13 generated via JS -->
           </div>
         </div>
         <div>
@@ -133,7 +85,7 @@
               <path d="M3 22v-6h6"></path>
               <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
             </svg>
-            <span>Reset Session</span>
+            <span>Reset Jawaban</span>
             <span class="badge-reset-count" id="badgeResetCount"></span>
           </button>
         </div>
@@ -145,7 +97,7 @@
           <div style="text-align:center; padding: 40px; color: var(--text-dim);">Loading interactive question bank...</div>
         </div>
 
-        <!-- Presenter Bottom Navigation Bar -->
+        <!-- Bottom Navigation Bar -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 20px; flex-wrap:wrap; gap:12px;">
           <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -167,215 +119,24 @@
 
     </div>
 
-
-
-    <!-- TAB 4: Class Scoreboard (Papan Keaktifan Mahasiswa) -->
-    <div id="tabContentScore" class="tab-pane" style="display: none;">
-      
-      <!-- Luxury Scoreboard Top Banner -->
-      <div class="scoreboard-banner-card">
-        <div class="scoreboard-banner-left">
-          <div class="scoreboard-banner-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-              <path d="M19 4h-2V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v1a6 6 0 0 0 5 5.91A6 6 0 0 0 11 17.91V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.09A6 6 0 0 0 17 13.91 6 6 0 0 0 22 8V7a3 3 0 0 0-3-3zM4 8V7a1 1 0 0 1 1-1h2v4.82A4 4 0 0 1 4 8zm16 0a4 4 0 0 1-3 2.82V6h2a1 1 0 0 1 1 1v1z"/>
-            </svg>
-          </div>
-          <div>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <h3 class="scoreboard-main-title">Live Quiz Performance & Scoreboard</h3>
-              <span class="badge-scoreboard-live"><span class="pulse-amber-dot"></span> Realtime</span>
-            </div>
-            <p class="scoreboard-main-desc">
-              Papan rekap skor dan status performa realtime untuk 13 soal presentasi Transition Words & Connectors via Zoom.
-            </p>
-          </div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <button class="btn btn-primary btn-sm" onclick="copyScoreboardSummary()">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span>Salin Ringkasan untuk Chat Zoom</span>
-          </button>
-          <button class="btn btn-secondary btn-sm" onclick="clearScoreboard()">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-            <span>Reset Skor</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Sub-Tabs: Leaderboard Mahasiswa vs Rekap Soal -->
-      <div style="display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; align-items:center;">
-        <button class="btn btn-primary btn-sm" id="btnScoreboardLeaderboard" onclick="switchScoreboardSubTab('leaderboard')" style="display:inline-flex; align-items:center; gap:6px;">
-          <span>🏆 Papan Skor Mahasiswa (Live Leaderboard)</span>
-        </button>
-        <button class="btn btn-secondary btn-sm" id="btnScoreboardQuestions" onclick="switchScoreboardSubTab('questions')" style="display:inline-flex; align-items:center; gap:6px;">
-          <span>📋 Rekap Jawaban Saya (13 Soal)</span>
-        </button>
-      </div>
-
-      <!-- Scoreboard Progress Summary -->
-      <div id="podiumGridContainer">
-        <!-- Generated via JS -->
-      </div>
-
-      <!-- VIEW 1: Live Class Leaderboard (Semua Mahasiswa) -->
-      <div id="leaderboardViewContainer" class="glass-card" style="padding:0; overflow:hidden; border-radius: var(--radius-xl); margin-bottom: 20px;">
-        <table class="table-custom" style="width:100%; border-collapse:separate; border-spacing:0;">
-          <thead>
-            <tr>
-              <th style="width: 14%; text-align:center;">PERINGKAT</th>
-              <th style="width: 32%;">MAHASISWA</th>
-              <th style="text-align:center; width: 18%;">PROGRES SOAL</th>
-              <th style="text-align:center; width: 18%;">BENAR / SALAH</th>
-              <th style="text-align:center; width: 18%;">TOTAL POIN</th>
-            </tr>
-          </thead>
-          <tbody id="leaderboardTableBody">
-            <!-- Rendered via JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- VIEW 2: Full Question Score Table (13 Soal Saya) -->
-      <div id="questionsViewContainer" class="glass-card" style="padding:0; overflow:hidden; border-radius: var(--radius-xl); display:none; margin-bottom: 20px;">
-        <table class="table-custom" style="width:100%; border-collapse:separate; border-spacing:0;">
-          <thead>
-            <tr>
-              <th style="width: 28%;">NO SOAL</th>
-              <th style="text-align:center; width: 24%;">TERJAWAB</th>
-              <th style="text-align:center; width: 24%;">STATUS</th>
-              <th style="text-align:center; width: 24%;">TOTAL POIN</th>
-            </tr>
-          </thead>
-          <tbody id="scoreboardTableBody">
-            <!-- Rendered via JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Modal Identitas Mahasiswa (Kahoot-Style Name Entry) -->
-  <div class="modal-overlay" id="studentIdentityModal">
-    <div class="modal-content" style="max-width: 480px; text-align: left;">
-      <div class="modal-header">
-        <h3 class="modal-title" style="display:flex; align-items:center; gap:8px;">
-          <span>🎓</span> Masuk Sesi Kuis Interaktif
-        </h3>
-        <button class="modal-close" onclick="closeStudentModal()">&times;</button>
-      </div>
-      <div style="padding: 6px 0 14px;">
-        <p style="font-size: 0.94rem; color: #cbd5e1; margin-bottom: 16px; line-height: 1.5;">
-          Pilih nama Anda dari daftar 19 mahasiswa kelas atau ketik nama Anda untuk berpartisipasi dalam kuis live:
-        </p>
-
-        <div class="form-group" style="margin-bottom: 14px;">
-          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
-            Pilih Nama Mahasiswa (19 Peserta Kelas):
-          </label>
-          <select id="modalStudentSelect" class="form-control" style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(99,102,241,0.4); border-radius: 10px;" onchange="onModalStudentSelect(this.value)">
-            <option value="">-- Pilih Nama Mahasiswa --</option>
-          </select>
-        </div>
-
-        <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
-          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
-          <span style="font-size:0.78rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;">atau ketik manual</span>
-          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
-        </div>
-
-        <div class="form-group" style="margin-bottom: 14px;">
-          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
-            Nama Lengkap / Panggilan:
-          </label>
-          <input type="text" id="modalStudentNameInput" class="form-control" placeholder="Contoh: Muhammad Kahfi" style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(148,163,184,0.3); border-radius: 10px;" />
-        </div>
-
-        <div class="form-group" style="margin-bottom: 20px;">
-          <label style="display:block; font-size: 0.85rem; font-weight: 700; color: #a5b4fc; margin-bottom: 6px;">
-            NIP / NIM (Opsional):
-          </label>
-          <input type="text" id="modalStudentNipInput" class="form-control" placeholder="Nomor Induk Mahasiswa..." style="width: 100%; padding: 10px 14px; font-size: 0.92rem; background: rgba(15,23,42,0.9); color: #f8fafc; border: 1px solid rgba(148,163,184,0.3); border-radius: 10px;" />
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
-          <span style="font-size:0.84rem; color:#38bdf8; font-weight:700;" id="modalRoomDisplay">
-            Room: TRANSITION-2026
-          </span>
-          <button class="btn btn-primary" onclick="saveStudentIdentityAndStart()" style="padding: 10px 24px; font-size: 0.95rem; font-weight: 700;">
-            🚀 Masuk Kuis Live
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
     let questionsData = null;
     let currentQuestionIndex = 0;
     
-    // Live question state: { [qId]: { answered: boolean, chosen: string, correct: string, respondent: string, isCorrect: boolean } }
+    // Live question state: { [qId]: { answered: boolean, chosen: string, correct: string, isCorrect: boolean } }
     let liveQuestionsState = {};
-    
-    // Map of all participating students' submissions in the room: { [studentKey]: submissionData }
-    let classSubmissions = {};
-
-    // Current student identity
-    let currentStudent = {
-      name: "",
-      nip: ""
-    };
-
-    // Sub-view toggle in scoreboard: 'leaderboard' | 'questions'
-    let scoreboardSubView = 'leaderboard';
 
     // Sound FX mute state
     let isSfxMuted = false;
 
-    // 19 Class participants with official NIP & Full Name for quick selection
-    const CLASS_STUDENTS = [
-      { nip: "199801122022031001", name: "Sofi" },
-      { nip: "199802152022031002", name: "Budi Santoso" },
-      { nip: "199803202022032003", name: "Rina Marlina" },
-      { nip: "199804252022031004", name: "Aditya Pratama" },
-      { nip: "199805102022032005", name: "Dewi Lestari" },
-      { nip: "199806142022031006", name: "Fajar Hidayat" },
-      { nip: "199807182022032007", name: "Gita Gutawa" },
-      { nip: "199808222022031008", name: "Hendra Wijaya" },
-      { nip: "199809052022032009", name: "Indah Permata" },
-      { nip: "199810112022031010", name: "Joko Anwar" },
-      { nip: "199811192022032011", name: "Kiki Amalia" },
-      { nip: "199812232022031012", name: "Lukman Hakim" },
-      { nip: "199901042022032013", name: "Maya Sari" },
-      { nip: "199902082022031014", name: "Naufal Zaki" },
-      { nip: "199903122022032015", name: "Putri Utami" },
-      { nip: "199904162022031016", name: "Rian Saputra" },
-      { nip: "199905202022032017", name: "Siti Rahma" },
-      { nip: "199906242022031018", name: "Taufik Hidayat" },
-      { nip: "199907282022031019", name: "Wahyu Nugroho" }
-    ];
-
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Inisialisasi Identitas Mahasiswa
-      initStudentIdentity();
-
-      // 2. Inisialisasi Engine Realtime Synchronization (Firebase + MQTT + Broadcast)
-      initRealtimeEngine();
-
-      // 3. Load questions.json with anti-cache timestamp
+      // Load questions.json with anti-cache timestamp
       fetch('questions.json?v=' + Date.now())
         .then(res => res.json())
         .then(data => {
           questionsData = data;
-          if (document.getElementById('tabLabelPg')) {
-            document.getElementById('tabLabelPg').innerText = `Multiple Choice (${questionsData.pg.length})`;
-          }
           if (document.getElementById('badgeResetCount')) {
             document.getElementById('badgeResetCount').innerText = questionsData.pg.length;
           }
@@ -388,226 +149,11 @@
 
           buildQuestionPills();
           renderFocusQuestion();
-          loadExistingSubmissions();
-          renderScoreboard();
-          updateScoreboardBadge();
         })
         .catch(err => {
           console.error("Failed to load questions.json", err);
         });
     });
-
-    // Inisialisasi Engine Realtime
-    function initRealtimeEngine() {
-      RealtimeSync.init({
-        role: 'player',
-        onSubmission: (sub) => {
-          handleIncomingSubmission(sub);
-        },
-        onPresence: (count, participants) => {
-          const countBadge = document.getElementById('headerScoreCount');
-          if (countBadge) countBadge.innerText = `${count} Online`;
-        },
-        onStatusChange: (connected, msg, type) => {
-          const statusText = document.getElementById('liveSyncStatusText');
-          const statusDot = document.getElementById('liveSyncPulseDot');
-          const statusBadge = document.getElementById('liveSyncStatusBadge');
-          if (statusText) {
-            if (connected) {
-              statusText.innerText = (type === 'firebase') ? "Firebase Live" : "Cloud Sync";
-            } else {
-              statusText.innerText = "Mode Lokal";
-            }
-          }
-          if (statusDot) statusDot.className = connected ? "pulse-dot" : "pulse-dot offline";
-          if (statusBadge) statusBadge.title = msg;
-        },
-        onHostAction: (payload) => {
-          if (payload && payload.action === 'clear_submissions') {
-            classSubmissions = {};
-            renderScoreboard();
-          }
-        }
-      });
-    }
-
-    function handleIncomingSubmission(sub) {
-      if (!sub || !sub.name) return;
-      const key = (sub.nip && sub.nip !== '-') ? sub.nip : sub.name.toLowerCase().trim();
-      classSubmissions[key] = sub;
-      renderScoreboard();
-      updateScoreboardBadge();
-    }
-
-    function loadExistingSubmissions() {
-      const stored = RealtimeSync.getAllSubmissions();
-      if (Array.isArray(stored)) {
-        stored.forEach(sub => {
-          if (sub && sub.name) {
-            const key = (sub.nip && sub.nip !== '-') ? sub.nip : sub.name.toLowerCase().trim();
-            classSubmissions[key] = sub;
-          }
-        });
-      }
-    }
-
-    // Inisialisasi Identitas Mahasiswa
-    function initStudentIdentity() {
-      try {
-        currentStudent.name = localStorage.getItem('quiz_student_name') || "";
-        currentStudent.nip = localStorage.getItem('quiz_student_nip') || "";
-      } catch (e) {}
-
-      // Populate dropdown modal
-      const selectEl = document.getElementById('modalStudentSelect');
-      if (selectEl) {
-        selectEl.innerHTML = `<option value="">-- Pilih Nama Mahasiswa (19 Peserta Kelas) --</option>` +
-          CLASS_STUDENTS.map(s => `<option value="${escapeHtml(s.nip)}">${escapeHtml(s.name)} (NIP: ${s.nip.slice(-4)})</option>`).join('');
-      }
-
-      const roomText = document.getElementById('modalRoomDisplay');
-      if (roomText) {
-        roomText.innerText = `Room: ${RealtimeSync.getRoomId()}`;
-      }
-
-      updateStudentDisplay();
-
-      // Jika belum ada nama tersimpan, tampilkan modal otomatis
-      if (!currentStudent.name) {
-        setTimeout(openStudentModal, 600);
-      } else {
-        RealtimeSync.setParticipant(currentStudent.name, currentStudent.nip);
-      }
-    }
-
-    function updateStudentDisplay() {
-      const display = document.getElementById('currentStudentDisplay');
-      if (display) {
-        display.innerText = currentStudent.name ? currentStudent.name : "Pilih Nama";
-      }
-    }
-
-    function openStudentModal() {
-      const modal = document.getElementById('studentIdentityModal');
-      if (!modal) return;
-      document.getElementById('modalStudentNameInput').value = currentStudent.name || "";
-      document.getElementById('modalStudentNipInput').value = currentStudent.nip || "";
-
-      const selectEl = document.getElementById('modalStudentSelect');
-      if (selectEl) {
-        selectEl.value = currentStudent.nip || "";
-      }
-
-      modal.classList.add('active');
-    }
-
-    function closeStudentModal() {
-      const modal = document.getElementById('studentIdentityModal');
-      if (modal) modal.classList.remove('active');
-    }
-
-    function onModalStudentSelect(nip) {
-      const s = CLASS_STUDENTS.find(item => item.nip === nip);
-      if (s) {
-        document.getElementById('modalStudentNameInput').value = s.name;
-        document.getElementById('modalStudentNipInput').value = s.nip;
-      }
-    }
-
-    function saveStudentIdentityAndStart() {
-      const rawName = document.getElementById('modalStudentNameInput').value.trim();
-      const rawNip = document.getElementById('modalStudentNipInput').value.trim();
-
-      if (!rawName) {
-        alert("Mohon masukkan atau pilih nama Anda terlebih dahulu.");
-        return;
-      }
-
-      currentStudent.name = rawName;
-      currentStudent.nip = rawNip || "-";
-
-      try {
-        localStorage.setItem('quiz_student_name', currentStudent.name);
-        localStorage.setItem('quiz_student_nip', currentStudent.nip);
-      } catch (e) {}
-
-      RealtimeSync.setParticipant(currentStudent.name, currentStudent.nip);
-      updateStudentDisplay();
-      closeStudentModal();
-      playSfx('click');
-
-      // Sync submission jika sudah ada jawaban sebelumnya
-      broadcastCurrentStudentProgress();
-    }
-
-    function broadcastCurrentStudentProgress() {
-      if (!questionsData) return;
-      const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
-      const correctList = answeredList.filter(q => liveQuestionsState[q.id].isCorrect);
-      const totalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
-
-      const studentKey = (currentStudent.nip && currentStudent.nip !== '-') ? currentStudent.nip : (currentStudent.name || 'player').replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-
-      const payload = {
-        id: `sub_pg_${studentKey}`,
-        name: currentStudent.name || "Peserta Kuis",
-        nip: currentStudent.nip || "-",
-        type: 'pilihan_ganda',
-        score: totalPoints,
-        correctCount: correctList.length,
-        totalQuestions: questionsData.pg.length,
-        answeredCount: answeredList.length,
-        submittedAt: Date.now(),
-        answers: liveQuestionsState
-      };
-
-      RealtimeSync.submitAnswer(payload);
-      handleIncomingSubmission(payload);
-    }
-
-    // Toggle Tabs (Multiple Choice & Class Scoreboard)
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach(pane => pane.style.display = 'none');
-
-      if (tabId === 'pg') {
-        const btn = document.getElementById('tabBtnPg');
-        if (btn) btn.classList.add('active');
-        const content = document.getElementById('tabContentPg');
-        if (content) content.style.display = 'block';
-      } else if (tabId === 'score') {
-        const navBtn = document.getElementById('tabNavBtnScore');
-        if (navBtn) navBtn.classList.add('active');
-        const content = document.getElementById('tabContentScore');
-        if (content) content.style.display = 'block';
-        renderScoreboard();
-      }
-
-      playSfx('click');
-    }
-
-    // Switch sub-tab in scoreboard (Leaderboard vs 13 Questions)
-    function switchScoreboardSubTab(mode) {
-      scoreboardSubView = mode;
-      const btnLead = document.getElementById('btnScoreboardLeaderboard');
-      const btnQues = document.getElementById('btnScoreboardQuestions');
-      const boxLead = document.getElementById('leaderboardViewContainer');
-      const boxQues = document.getElementById('questionsViewContainer');
-
-      if (mode === 'leaderboard') {
-        if (btnLead) { btnLead.className = 'btn btn-primary btn-sm'; }
-        if (btnQues) { btnQues.className = 'btn btn-secondary btn-sm'; }
-        if (boxLead) boxLead.style.display = 'block';
-        if (boxQues) boxQues.style.display = 'none';
-      } else {
-        if (btnLead) { btnLead.className = 'btn btn-secondary btn-sm'; }
-        if (btnQues) { btnQues.className = 'btn btn-primary btn-sm'; }
-        if (boxLead) boxLead.style.display = 'none';
-        if (boxQues) boxQues.style.display = 'block';
-      }
-      playSfx('click');
-      renderScoreboard();
-    }
 
     // Sound FX Manager (No Background Music)
     function toggleSFX() {
@@ -810,8 +356,8 @@
                   </svg>
                 </button>
               ` : `
-                <button class="btn btn-primary btn-sm" onclick="switchTab('score')" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
-                  <span>Lihat Scoreboard Kuis 🏆</span>
+                <button class="btn btn-primary btn-sm" onclick="jumpToQuestion(0)" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
+                  <span>🎉 Selesai (Kembali ke Soal 1)</span>
                 </button>
               `}
             </div>
@@ -826,12 +372,9 @@
               Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
             </span>
           </div>
-          ${currentStudent.name ? `
-            <div style="font-size:0.84rem; color:#94a3b8; display:flex; align-items:center; gap:6px;">
-              <span>Mengerjakan sebagai:</span>
-              <strong style="color:#38bdf8;">${escapeHtml(currentStudent.name)}</strong>
-            </div>
-          ` : ''}
+          <span style="font-size:0.86rem; color:#a5b4fc; font-weight:700; background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); padding:4px 12px; border-radius:8px;">
+            📘 ${escapeHtml(q.category)}
+          </span>
         </div>
 
         <div class="passage-box" style="font-size: 1.26rem; line-height: 1.65; margin-bottom: 18px; color: #f8fafc; font-style: normal; border-left: 4px solid #6366f1;">
@@ -856,17 +399,11 @@
       if (nextBtn) nextBtn.disabled = (currentQuestionIndex === questionsData.pg.length - 1);
     }
 
-    // Handle Option Selection & Instant Live Transmission
+    // Handle Option Selection
     function handleOptionSelect(qId, letter) {
       if (!questionsData) return;
       const q = questionsData.pg.find(item => item.id === qId);
       if (!q) return;
-
-      // Pastikan ada identitas mahasiswa
-      if (!currentStudent.name) {
-        openStudentModal();
-        return;
-      }
 
       if (liveQuestionsState[qId]) return;
 
@@ -893,14 +430,9 @@
         localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState));
       } catch (e) {}
 
-      // Siarkan ke seluruh perangkat (Firebase + MQTT + BroadcastChannel)
-      broadcastCurrentStudentProgress();
-
       // Re-render UI
       renderFocusQuestion();
       buildQuestionPills();
-      renderScoreboard();
-      updateScoreboardBadge();
     }
 
     // Reset Current Question (Try Again)
@@ -911,297 +443,19 @@
         delete liveQuestionsState[q.id];
         try { localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState)); } catch (e) {}
       }
-      broadcastCurrentStudentProgress();
       renderFocusQuestion();
       buildQuestionPills();
-      renderScoreboard();
-      updateScoreboardBadge();
       playSfx('click');
-    }
-
-    // Direct Reveal Key (if no student answers)
-    function revealDirectKey() {
-      if (!questionsData) return;
-      const q = questionsData.pg[currentQuestionIndex];
-      liveQuestionsState[q.id] = {
-        answered: true,
-        chosen: q.correct,
-        correct: q.correct,
-        isCorrect: true
-      };
-      try { localStorage.setItem('quiz_live_state', JSON.stringify(liveQuestionsState)); } catch (e) {}
-      broadcastCurrentStudentProgress();
-      playSfx('chime');
-      renderFocusQuestion();
-      buildQuestionPills();
-      renderScoreboard();
-      updateScoreboardBadge();
     }
 
     // Reset All Questions
     function resetAllQuestions() {
-      if (confirm(`Reset seluruh ${questionsData.pg.length} soal untuk sesi kuis interaktif baru?`)) {
+      if (confirm(`Reset seluruh ${questionsData.pg.length} soal untuk sesi kuis baru?`)) {
         liveQuestionsState = {};
         try { localStorage.removeItem('quiz_live_state'); } catch (e) {}
         currentQuestionIndex = 0;
-        broadcastCurrentStudentProgress();
         renderFocusQuestion();
         buildQuestionPills();
-        renderScoreboard();
-        updateScoreboardBadge();
-        playSfx('click');
-      }
-    }
-
-    function updateScoreboardBadge() {
-      if (!questionsData) return;
-      const count = Object.keys(classSubmissions).length;
-      const el = document.getElementById('headerScoreCount');
-      if (el) el.innerText = `${count} Active`;
-    }
-
-    // Render Elegant Scoreboard (Leaderboard & Question Breakdown)
-    function renderScoreboard() {
-      if (!questionsData) return;
-      const totalQuestions = questionsData.pg.length;
-      const answeredList = questionsData.pg.filter(q => liveQuestionsState[q.id]);
-      const answeredCount = answeredList.length;
-      const correctCount = answeredList.filter(q => liveQuestionsState[q.id].isCorrect).length;
-      const myTotalPoints = answeredList.reduce((acc, q) => acc + (liveQuestionsState[q.id].isCorrect ? 10 : 2), 0);
-
-      // Pastikan data sendiri masuk ke classSubmissions
-      if (currentStudent.name) {
-        const studentKey = (currentStudent.nip && currentStudent.nip !== '-') ? currentStudent.nip : currentStudent.name.toLowerCase().trim();
-        classSubmissions[studentKey] = {
-          name: currentStudent.name,
-          nip: currentStudent.nip || "-",
-          score: myTotalPoints,
-          correctCount: correctCount,
-          totalQuestions: totalQuestions,
-          answeredCount: answeredCount,
-          submittedAt: Date.now()
-        };
-      }
-
-      const participantCount = Object.keys(classSubmissions).length;
-
-      // Render Progress Summary Card
-      const podiumContainer = document.getElementById('podiumGridContainer');
-      if (podiumContainer) {
-        const percent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
-        podiumContainer.innerHTML = `
-          <div class="glass-card" style="margin-bottom: 22px; padding: 18px 24px; border-radius: var(--radius-xl); background: linear-gradient(135deg, rgba(20, 26, 48, 0.85), rgba(12, 16, 32, 0.95)); border: 1.5px solid rgba(99, 102, 241, 0.35); box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-              <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:44px; height:44px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.35); display:flex; align-items:center; justify-content:center; color:#818cf8;">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                  </svg>
-                </div>
-                <div>
-                  <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.6px; color:#a5b4fc; font-weight:700;">Progres Kuis Personal (${escapeHtml(currentStudent.name || 'Anda')})</div>
-                  <div style="font-size:1.25rem; font-weight:800; color:#f8fafc; font-family:var(--font-heading);">
-                    ${answeredCount} / ${totalQuestions} Soal Terjawab
-                    <span style="font-size:0.88rem; font-weight:600; color:#94a3b8; margin-left:8px;">(${percent}% Selesai)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
-                <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:6px 14px; border-radius:10px; font-size:0.88rem;">
-                  <span style="color:#38bdf8; font-weight:700;">👥 ${participantCount} Peserta Live</span>
-                  <span style="color:#64748b;">•</span>
-                  <span style="color:#34d399; font-weight:700;">✓ ${correctCount} Benar</span>
-                  <span style="color:#64748b;">•</span>
-                  <span style="color:#fbbf24; font-weight:800;">⭐ ${myTotalPoints} Pts</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      // Render View 1: Leaderboard Table
-      renderLeaderboardTable();
-
-      // Render View 2: Question Rows Table
-      renderQuestionsTable();
-    }
-
-    // Render Table Mahasiswa (Live Leaderboard)
-    function renderLeaderboardTable() {
-      const tbody = document.getElementById('leaderboardTableBody');
-      if (!tbody) return;
-
-      const list = Object.values(classSubmissions);
-
-      if (list.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" style="text-align:center; padding: 32px; color: #94a3b8;">
-              Belum ada peserta yang mengumpulkan jawaban. Jawaban yang dipilih di HP/laptop akan langsung tampil di sini secara live!
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      // Urutkan berdasarkan total skor tertinggi, lalu jumlah benar tertinggi
-      list.sort((a, b) => {
-        if ((b.score || 0) !== (a.score || 0)) {
-          return (b.score || 0) - (a.score || 0);
-        }
-        return (b.correctCount || 0) - (a.correctCount || 0);
-      });
-
-      tbody.innerHTML = list.map((item, idx) => {
-        let rankBadgeClass = "rank-badge-other";
-        let trophyIcon = "";
-        if (idx === 0) {
-          rankBadgeClass = "rank-badge-gold";
-          trophyIcon = "🥇";
-        } else if (idx === 1) {
-          rankBadgeClass = "rank-badge-silver";
-          trophyIcon = "🥈";
-        } else if (idx === 2) {
-          rankBadgeClass = "rank-badge-bronze";
-          trophyIcon = "🥉";
-        }
-
-        const isMe = currentStudent.name && (item.name.toLowerCase() === currentStudent.name.toLowerCase());
-        const rowHighlightStyle = isMe ? "background: rgba(99, 102, 241, 0.12); border-left: 3px solid #6366f1;" : "";
-
-        const answeredCount = item.answeredCount !== undefined ? item.answeredCount : (item.answers ? Object.keys(item.answers).length : 0);
-        const correctCount = item.correctCount || 0;
-        const wrongCount = Math.max(0, answeredCount - correctCount);
-        const totalScore = item.score !== undefined ? item.score : (correctCount * 10 + wrongCount * 2);
-
-        return `
-          <tr class="scoreboard-row" style="${rowHighlightStyle}">
-            <td style="text-align:center;">
-              <span class="rank-badge ${rankBadgeClass}" style="min-width:32px; font-weight:800;">
-                ${trophyIcon ? trophyIcon : idx + 1}
-              </span>
-            </td>
-            <td>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:34px; height:34px; border-radius:50%; background:rgba(99,102,241,0.2); border:1px solid rgba(99,102,241,0.4); display:flex; align-items:center; justify-content:center; font-weight:800; color:#a5b4fc; font-size:0.86rem;">
-                  ${escapeHtml((item.name || 'P').charAt(0).toUpperCase())}
-                </div>
-                <div>
-                  <div style="font-weight:700; color:#f8fafc; font-size:0.96rem;">
-                    ${escapeHtml(item.name)} ${isMe ? `<span style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:2px 6px; border-radius:4px; margin-left:4px;">Anda</span>` : ''}
-                  </div>
-                  <div style="font-size:0.78rem; color:#94a3b8;">
-                    NIP: ${escapeHtml(item.nip || '-')}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td style="text-align:center;">
-              <span style="display:inline-block; padding:4px 12px; border-radius:8px; font-weight:700; font-size:0.86rem; background:rgba(255,255,255,0.06); color:#cbd5e1;">
-                ${answeredCount} / 13 Soal
-              </span>
-            </td>
-            <td style="text-align:center;">
-              <span style="color:#34d399; font-weight:700; font-size:0.88rem;">✓ ${correctCount}</span>
-              <span style="color:#64748b; margin:0 4px;">•</span>
-              <span style="color:#f87171; font-weight:700; font-size:0.88rem;">✕ ${wrongCount}</span>
-            </td>
-            <td style="text-align:center;">
-              <span class="table-score-pill" style="font-size:0.92rem; font-weight:800;">
-                ⭐ ${totalScore} Pts
-              </span>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    // Render Table 13 Soal Personal
-    function renderQuestionsTable() {
-      const tbody = document.getElementById('scoreboardTableBody');
-      if (!tbody || !questionsData) return;
-
-      tbody.innerHTML = questionsData.pg.map((q, idx) => {
-        const state = liveQuestionsState[q.id];
-        const isAnswered = !!state;
-        const isCorrect = isAnswered && state.isCorrect;
-
-        let rankBadgeClass = "rank-badge-other";
-        if (idx === 0) rankBadgeClass = "rank-badge-gold";
-        else if (idx === 1) rankBadgeClass = "rank-badge-silver";
-        else if (idx === 2) rankBadgeClass = "rank-badge-bronze";
-
-        return `
-          <tr class="scoreboard-row">
-            <td>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <span class="rank-badge ${rankBadgeClass}" style="min-width:32px; font-weight:800;">${idx + 1}</span>
-                <span style="font-weight:700; color:#f8fafc; font-size:0.98rem;">Soal ${idx + 1}</span>
-              </div>
-            </td>
-            <td style="text-align:center;">
-              ${isAnswered 
-                ? `<span style="display:inline-block; padding:5px 12px; border-radius:8px; font-weight:700; font-size:0.88rem; background:rgba(99,102,241,0.2); color:#a5b4fc; border:1px solid rgba(99,102,241,0.35);">Opsi (${state.chosen})</span>` 
-                : `<span style="color:#64748b; font-size:0.86rem;">- Belum -</span>`}
-            </td>
-            <td style="text-align:center;">
-              ${isAnswered 
-                ? (isCorrect 
-                    ? `<span class="badge-status-active" style="background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-weight:700; font-size:0.86rem; padding:5px 14px;"><span class="pulse-dot-sm"></span> Benar</span>` 
-                    : `<span style="display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:12px; font-size:0.86rem; font-weight:700; background:rgba(239,68,68,0.18); border:1px solid rgba(239,68,68,0.4); color:#f87171;">✕ Salah</span>`) 
-                : `<span style="display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:12px; font-size:0.82rem; font-weight:600; background:rgba(100,116,139,0.15); border:1px solid rgba(148,163,184,0.2); color:#94a3b8;">⏳ Belum Dijawab</span>`}
-            </td>
-            <td style="text-align:center;">
-              ${isAnswered 
-                ? (isCorrect 
-                    ? `<span class="table-score-pill" style="font-size:0.9rem;">⭐ +10 pts</span>` 
-                    : `<span class="table-score-pill" style="color:#f59e0b; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.12); font-size:0.9rem;">⭐ +2 pts</span>`) 
-                : `<span style="color:#64748b; font-size:0.86rem; font-family:var(--font-heading);">0 pts</span>`}
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function copyScoreboardSummary() {
-      const list = Object.values(classSubmissions);
-      let text = "🏆 *PAPAN SKOR LIVE KUIS TRANSITION WORDS & CONNECTORS*\n";
-      text += `📅 Tanggal: ${new Date().toLocaleDateString('id-ID')} | Sesi Kuis Live\n`;
-      text += `👥 Total Peserta: ${list.length} Mahasiswa\n\n`;
-
-      if (list.length > 0) {
-        list.sort((a, b) => (b.score || 0) - (a.score || 0));
-        text += "*Peringkat Kelas:*\n";
-        list.forEach((s, i) => {
-          const medal = i === 0 ? "🥇" : (i === 1 ? "🥈" : (i === 2 ? "🥉" : `${i + 1}.`));
-          text += `${medal} ${s.name} (${s.nip || '-'}) : ${s.score || 0} Pts (✓ ${s.correctCount || 0}/13)\n`;
-        });
-      }
-
-      text += "\nTerima kasih atas partisipasi aktif dalam presentasi Transition Words & Connectors!";
-
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Ringkasan papan skor live berhasil disalin! Silakan paste ke chat Zoom atau grup.");
-      }).catch(() => {
-        prompt("Salin ringkasan papan skor live ini:", text);
-      });
-    }
-
-    function clearScoreboard() {
-      if (confirm("Reset seluruh hasil jawaban dan skor kuis pada perangkat ini?")) {
-        liveQuestionsState = {};
-        try { localStorage.removeItem('quiz_live_state'); } catch (e) {}
-        currentQuestionIndex = 0;
-        broadcastCurrentStudentProgress();
-        renderFocusQuestion();
-        buildQuestionPills();
-        renderScoreboard();
-        updateScoreboardBadge();
         playSfx('click');
       }
     }
