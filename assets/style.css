@@ -647,31 +647,14 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
-  padding: 14px 18px;
+  padding: 12px 18px;
   margin-bottom: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-.strip-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  gap: 10px;
-}
-
-.navigator-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .question-pills-grid {
@@ -1995,21 +1978,14 @@ body {
     padding: 12px 14px;
     border-radius: 16px;
     margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 
-  .strip-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .navigator-label {
-    font-size: 0.78rem;
-  }
-
   .btn-reset-session {
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-size: 0.78rem;
     gap: 6px;
   }
