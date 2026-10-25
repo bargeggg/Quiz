@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <!-- Right Header: Sound FX Toggle & Live Session Badge -->
+        <!-- Right Header: Sound FX Toggle -->
         <div class="header-controls">
           <button class="sfx-toggle-btn" onclick="toggleSFX()" id="sfxToggleBtn" title="Toggle Sound Effects">
             <span id="sfxIconWrap">
@@ -52,11 +52,6 @@
               </svg>
             </span>
           </button>
-
-          <span class="badge badge-live" title="Interactive Presentation Screen">
-            <span class="pulse-dot"></span>
-            <span>Live</span>
-          </span>
         </div>
       </div>
     </header>
@@ -318,9 +313,6 @@
           <div class="explanation-card ${isCorrect ? 'is-correct' : 'is-wrong'}">
             <div class="explanation-header">
               ${outcomeBadge}
-              <span class="q-category-badge">
-                📘 ${escapeHtml(q.category)}
-              </span>
             </div>
 
             <div class="explanation-outcome-msg">
@@ -392,9 +384,6 @@
         <div class="q-card-header">
           <span class="q-counter-badge">
             Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
-          </span>
-          <span class="q-category-badge">
-            📘 ${escapeHtml(q.category)}
           </span>
         </div>
 
