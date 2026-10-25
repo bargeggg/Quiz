@@ -1808,6 +1808,403 @@ body {
 }
 
 /* ==========================================================================
+   FINAL SCORE CELEBRATION & COMPLETION BANNER
+   ========================================================================== */
+
+.strip-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* All Questions Completed Banner */
+.completion-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(99, 102, 241, 0.2));
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 14px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.completion-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.completion-trophy-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  flex-shrink: 0;
+}
+
+.completion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.completion-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.score-highlight {
+  color: #34d399;
+  font-weight: 900;
+  padding: 2px 8px;
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
+  margin-left: 4px;
+}
+
+.completion-sub {
+  font-size: 0.86rem;
+  color: #94a3b8;
+}
+
+.btn-open-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  color: white;
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-open-score:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+.btn-open-score:active {
+  transform: scale(0.97);
+}
+
+/* Score Pill in Strip Actions */
+.btn-strip-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: #34d399;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.2);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-strip-score:hover {
+  background: rgba(16, 185, 129, 0.28);
+  border-color: rgba(16, 185, 129, 0.7);
+  transform: translateY(-1px);
+}
+
+/* Final Score Celebration Modal */
+.score-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 18, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.score-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.score-modal-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.98), rgba(15, 23, 42, 0.99));
+  border: 1.5px solid rgba(99, 102, 241, 0.4);
+  border-radius: 24px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 45px rgba(99, 102, 241, 0.25);
+  padding: 28px 24px;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.score-modal-overlay.active .score-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.score-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.score-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #f87171;
+  transform: rotate(90deg);
+}
+
+.score-modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.score-complete-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.45);
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.score-modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.score-modal-subtitle {
+  font-size: 0.88rem;
+  color: #94a3b8;
+}
+
+.score-hero {
+  text-align: center;
+  margin: 18px 0;
+  padding: 22px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.score-circle-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.score-hero.score-perfect .score-circle-wrapper {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.08) 70%);
+  border: 3px solid #10b981;
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.45), inset 0 0 20px rgba(16, 185, 129, 0.25);
+}
+
+.score-hero.score-great .score-circle-wrapper {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(56, 189, 248, 0.08) 70%);
+  border: 3px solid #38bdf8;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.45), inset 0 0 20px rgba(56, 189, 248, 0.25);
+}
+
+.score-hero.score-good .score-circle-wrapper {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, rgba(99, 102, 241, 0.08) 70%);
+  border: 3px solid #6366f1;
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.45), inset 0 0 20px rgba(99, 102, 241, 0.25);
+}
+
+.score-hero.score-keepgoing .score-circle-wrapper {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0.08) 70%);
+  border: 3px solid #f59e0b;
+  box-shadow: 0 0 35px rgba(245, 158, 11, 0.45), inset 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.score-circle-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-val {
+  font-family: var(--font-heading);
+  font-size: 2.7rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.score-hero.score-perfect .score-val { color: #34d399; }
+.score-hero.score-great .score-val { color: #38bdf8; }
+.score-hero.score-good .score-val { color: #a5b4fc; }
+.score-hero.score-keepgoing .score-val { color: #fbbf24; }
+
+.score-max {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.score-grade-title {
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 6px;
+}
+
+.score-grade-desc {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.score-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.score-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-correct .stat-icon-wrap { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.card-wrong .stat-icon-wrap { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.card-accuracy .stat-icon-wrap { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+.card-total .stat-icon-wrap { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.text-emerald { color: #34d399 !important; }
+.text-rose { color: #f87171 !important; }
+.text-cyan { color: #38bdf8 !important; }
+.text-indigo { color: #a5b4fc !important; }
+
+.stat-value small {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.score-modal-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.score-modal-btn {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
    MOBILE & TABLET RESPONSIVE PERFECTION (SMARTPHONE / HP OPTIMIZED)
    ========================================================================== */
 
@@ -2071,6 +2468,55 @@ body {
     min-height: 46px;
     font-size: 0.88rem;
     padding: 8px 12px;
+  }
+
+  /* Completion Banner on Phone */
+  .completion-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 14px;
+    text-align: center;
+  }
+
+  .completion-banner-left {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .completion-trophy-badge {
+    margin: 0 auto;
+  }
+
+  .btn-open-score {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 16px;
+  }
+
+  /* Score Modal on Phone */
+  .score-modal-card {
+    padding: 22px 16px;
+    border-radius: 20px;
+  }
+
+  .score-modal-title {
+    font-size: 1.35rem;
+  }
+
+  .score-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .score-modal-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .score-modal-btn {
+    width: 100%;
   }
 }
 
