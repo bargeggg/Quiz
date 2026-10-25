@@ -104,6 +104,7 @@ body {
 
 /* Top Navbar */
 .top-navbar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -111,17 +112,27 @@ body {
   margin-bottom: 24px;
   background: rgba(11, 17, 33, 0.88);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
   gap: 16px;
-  flex-wrap: wrap;
 }
 
 .brand-wrapper {
   display: flex;
   align-items: center;
   gap: 14px;
+  padding-right: 54px;
+}
+
+.header-controls {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
 }
 
 .brand-icon {
@@ -1913,31 +1924,29 @@ body {
   }
 
   .top-navbar {
-    padding: 12px 14px;
-    border-radius: 16px;
+    position: relative;
+    padding: 14px 16px;
+    border-radius: 18px;
     margin-bottom: 14px;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .top-navbar-main-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .brand-wrapper {
-    gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 46px; /* Space for the bell button in top-right */
+    width: 100%;
   }
 
   .brand-icon {
     width: 36px;
     height: 36px;
     border-radius: 10px;
+    flex-shrink: 0;
   }
 
   .brand-icon svg {
@@ -1946,31 +1955,28 @@ body {
   }
 
   .brand-title {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     line-height: 1.25;
   }
 
   .brand-subtitle {
-    font-size: 0.72rem;
-    line-height: 1.2;
+    font-size: 0.74rem;
+    line-height: 1.35;
     color: #94a3b8;
   }
 
   .header-controls {
+    position: absolute;
+    top: 14px;
+    right: 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
+    z-index: 10;
   }
 
   .sfx-toggle-btn {
     width: 36px;
     height: 36px;
-  }
-
-  .badge-live {
-    padding: 4px 10px;
-    font-size: 0.72rem;
   }
 
   /* Question Strip / Navigator on Phone */
