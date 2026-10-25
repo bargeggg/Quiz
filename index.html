@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070a14" />
   <title>Interactive Quiz Show: Transition Words & Connectors</title>
 
   <!-- Prevent Aggressive Browser Caching -->
@@ -25,36 +26,38 @@
   <div class="container">
 
     <!-- Top Navigation Header -->
-    <header class="top-navbar" style="margin-bottom: 24px;">
-      <div class="brand-wrapper">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24">
-            <polygon
-              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-            </polygon>
-          </svg>
-        </div>
-        <div>
-          <h1 class="brand-title">Transition Words Quiz Show</h1>
-          <div class="brand-subtitle">Interactive Presentation • Elsa • Sofia • Irfan • Ahmad</div>
-        </div>
-      </div>
-
-      <!-- Right Header: Sound FX Toggle & Live Session Badge -->
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button class="sfx-toggle-btn" onclick="toggleSFX()" id="sfxToggleBtn" title="Toggle Sound Effects">
-          <span id="sfxIconWrap">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    <header class="top-navbar">
+      <div class="top-navbar-main-row">
+        <div class="brand-wrapper">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+              </polygon>
             </svg>
-          </span>
-        </button>
+          </div>
+          <div>
+            <h1 class="brand-title">Transition Words Quiz</h1>
+            <div class="brand-subtitle">Interactive Presentation • Elsa • Sofia • Irfan • Ahmad</div>
+          </div>
+        </div>
 
-        <span class="badge badge-live" title="Interactive Presentation Screen">
-          <span class="pulse-dot"></span>
-          <span>Live Session</span>
-        </span>
+        <!-- Right Header: Sound FX Toggle & Live Session Badge -->
+        <div class="header-controls">
+          <button class="sfx-toggle-btn" onclick="toggleSFX()" id="sfxToggleBtn" title="Toggle Sound Effects">
+            <span id="sfxIconWrap">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+          </button>
+
+          <span class="badge badge-live" title="Interactive Presentation Screen">
+            <span class="pulse-dot"></span>
+            <span>Live</span>
+          </span>
+        </div>
       </div>
     </header>
 
@@ -63,23 +66,18 @@
 
       <!-- Question Jump Strip (Navigator) -->
       <div class="question-strip-wrapper">
-        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+        <div class="strip-header">
           <span class="navigator-label">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
               <rect x="14" y="14" width="7" height="7"></rect>
               <rect x="3" y="14" width="7" height="7"></rect>
             </svg>
-            <span>Navigator Soal:</span>
+            <span>Navigator Soal (1–13)</span>
           </span>
-          <div class="question-pills-grid" id="questionPillsContainer">
-            <!-- Circular Pills 1 to 13 generated via JS -->
-          </div>
-        </div>
-        <div>
           <button class="btn-reset-session" onclick="resetAllQuestions()" title="Reset semua jawaban untuk sesi kuis baru">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 2v6h-6"></path>
               <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
               <path d="M3 22v-6h6"></path>
@@ -88,6 +86,9 @@
             <span>Reset Jawaban</span>
             <span class="badge-reset-count" id="badgeResetCount"></span>
           </button>
+        </div>
+        <div class="question-pills-grid" id="questionPillsContainer">
+          <!-- Circular Pills 1 to 13 generated via JS -->
         </div>
       </div>
 
@@ -98,16 +99,16 @@
         </div>
 
         <!-- Bottom Navigation Bar -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 20px; flex-wrap:wrap; gap:12px;">
-          <button class="btn btn-secondary" onclick="prevQuestion()" id="btnPrevQ">
+        <div class="bottom-nav-row">
+          <button class="btn btn-secondary btn-nav" onclick="prevQuestion()" id="btnPrevQ">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            <span>Previous Question</span>
+            <span>Previous</span>
           </button>
 
-          <button class="btn btn-primary" onclick="nextQuestion()" id="btnNextQ">
+          <button class="btn btn-primary btn-nav" onclick="nextQuestion()" id="btnNextQ">
             <span>Next Question</span>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -228,10 +229,10 @@
         if (state) {
           if (state.isCorrect) {
             stateClass = " correct";
-            statusBadge = `<span style="font-size:0.7rem; margin-left:2px;">✓</span>`;
+            statusBadge = `<span class="pill-status-dot">✓</span>`;
           } else {
             stateClass = " wrong";
-            statusBadge = `<span style="font-size:0.7rem; margin-left:2px;">✕</span>`;
+            statusBadge = `<span class="pill-status-dot">✕</span>`;
           }
         }
 
@@ -306,49 +307,45 @@
         const isExplanationOpen = !!showExplanationState[q.id];
 
         const outcomeBadge = isCorrect 
-          ? `<span style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.22); color:#34d399; border:1px solid rgba(16,185,129,0.45); padding:5px 14px; border-radius:99px; font-size:0.92rem; font-weight:800;"><span class="pulse-dot-sm"></span> ✅ JAWABAN BENAR</span>`
-          : `<span style="display:inline-flex; align-items:center; gap:6px; background:rgba(239,68,68,0.22); color:#f87171; border:1px solid rgba(239,68,68,0.45); padding:5px 14px; border-radius:99px; font-size:0.92rem; font-weight:800;">✕ JAWABAN KURANG TEPAT</span>`;
+          ? `<span class="outcome-badge-correct"><span class="pulse-dot-sm"></span> ✅ JAWABAN BENAR</span>`
+          : `<span class="outcome-badge-wrong">✕ JAWABAN KURANG TEPAT</span>`;
         
         const outcomeMsg = isCorrect
           ? `Tepat sekali! Pilihan Anda <strong>(${state.chosen})</strong> adalah jawaban yang benar.`
           : `Anda memilih opsi <strong>(${state.chosen})</strong>. Kunci jawaban yang benar adalah opsi <strong>(${q.correct})</strong>.`;
 
-        const borderStyle = isCorrect 
-          ? "border-left: 5px solid #10b981; border-color: rgba(16, 185, 129, 0.45); background: linear-gradient(135deg, rgba(16, 36, 26, 0.92), rgba(10, 20, 16, 0.98));" 
-          : "border-left: 5px solid #ef4444; border-color: rgba(239, 68, 68, 0.45); background: linear-gradient(135deg, rgba(38, 20, 24, 0.92), rgba(20, 12, 14, 0.98));";
-
         explanationHtml = `
-          <div class="explanation-card" style="${borderStyle}; margin-top:22px; padding:20px 24px; border-radius:var(--radius-lg); box-shadow:0 12px 30px rgba(0,0,0,0.4);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+          <div class="explanation-card ${isCorrect ? 'is-correct' : 'is-wrong'}">
+            <div class="explanation-header">
               ${outcomeBadge}
-              <span style="font-size:0.86rem; color:#a5b4fc; font-weight:700; background:rgba(99,102,241,0.2); border:1px solid rgba(99,102,241,0.4); padding:4px 12px; border-radius:8px;">
-                📘 Materi: ${escapeHtml(q.category)}
+              <span class="q-category-badge">
+                📘 ${escapeHtml(q.category)}
               </span>
             </div>
 
-            <div style="font-size:1.06rem; color:#f8fafc; margin-bottom:14px; font-weight:600; line-height:1.5;">
+            <div class="explanation-outcome-msg">
               ${outcomeMsg}
             </div>
 
             ${isExplanationOpen ? `
-              <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:14px; margin-top:14px; animation: fadeIn 0.25s ease;">
-                <div style="font-size:0.88rem; text-transform:uppercase; letter-spacing:0.6px; color:#38bdf8; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="explanation-body-box">
+                <div class="explanation-body-title">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="12" y1="16" x2="12" y2="12"></line>
                     <line x1="12" y1="8" x2="12.01" y2="8"></line>
                   </svg>
                   Pembahasan & Penjelasan Soal:
                 </div>
-                <div class="explanation-text" style="font-size:1rem; line-height:1.7; color:#f1f5f9; background: rgba(0,0,0,0.25); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                <div class="explanation-body-text">
                   ${escapeHtml(q.explanation || 'Pembahasan materi transisi kata untuk soal ini.')}
                 </div>
               </div>
             ` : ''}
 
-            <div style="margin-top:18px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.12); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <button class="btn btn-secondary btn-sm" onclick="toggleExplanation('${q.id}')" style="font-size:0.84rem; padding:7px 16px; border-color:rgba(56,189,248,0.4); color:#38bdf8; background:rgba(56,189,248,0.1); gap:6px;">
+            <div class="explanation-actions">
+              <div class="explanation-actions-left">
+                <button class="btn-toggle-explain" onclick="toggleExplanation('${q.id}')">
                   ${isExplanationOpen ? `
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -364,17 +361,17 @@
                   `}
                 </button>
 
-                <button class="btn btn-secondary btn-sm" onclick="resetCurrentQuestion()" style="font-size:0.84rem; padding:7px 16px; border-color:rgba(148,163,184,0.35); color:#cbd5e1; gap:6px;">
+                <button class="btn-retry-q" onclick="resetCurrentQuestion()">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="1 4 1 10 7 10"></polyline>
                     <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
                   </svg>
-                  <span>Coba Jawab Ulang</span>
+                  <span>Coba Lagi</span>
                 </button>
               </div>
 
               ${currentQuestionIndex < questionsData.pg.length - 1 ? `
-                <button class="btn btn-primary btn-sm" onclick="nextQuestion()" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
+                <button class="btn-advance-q" onclick="nextQuestion()">
                   <span>Lanjut Soal Berikutnya</span>
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -382,7 +379,7 @@
                   </svg>
                 </button>
               ` : `
-                <button class="btn btn-primary btn-sm" onclick="jumpToQuestion(0)" style="font-size:0.84rem; padding:7px 18px; gap:6px;">
+                <button class="btn-advance-q" onclick="jumpToQuestion(0)">
                   <span>🎉 Selesai (Kembali ke Soal 1)</span>
                 </button>
               `}
@@ -392,22 +389,20 @@
       }
 
       card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:8px;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="badge badge-room" style="font-size:0.92rem; padding:6px 14px; font-weight:800; background:rgba(99,102,241,0.18);">
-              Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
-            </span>
-          </div>
-          <span style="font-size:0.86rem; color:#a5b4fc; font-weight:700; background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); padding:4px 12px; border-radius:8px;">
+        <div class="q-card-header">
+          <span class="q-counter-badge">
+            Question ${currentQuestionIndex + 1} of ${questionsData.pg.length}
+          </span>
+          <span class="q-category-badge">
             📘 ${escapeHtml(q.category)}
           </span>
         </div>
 
-        <div class="passage-box" style="font-size: 1.26rem; line-height: 1.65; margin-bottom: 18px; color: #f8fafc; font-style: normal; border-left: 4px solid #6366f1;">
+        <div class="passage-box">
           "${escapeHtml(q.q)}"
         </div>
 
-        <p style="font-size: 1.05rem; font-weight: 700; color: #cbd5e1; margin-bottom: 18px;">
+        <p class="instruction-text">
           ${escapeHtml(q.instruction)}
         </p>
 
